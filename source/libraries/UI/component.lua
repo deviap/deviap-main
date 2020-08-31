@@ -1,5 +1,5 @@
 -- Copyright 2020 - Deviap (deviap.com)
--- Author(s): YOUR NAME, OTHER PERSON'S NAME
+-- Author(s): KISPERAL
 
 -- REPLACE WITH ONE LINE DESCRIPTION OF WHAT THIS FILE DOES
 return {}
