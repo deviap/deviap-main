@@ -30,6 +30,24 @@ local new = function()
 			@returns
 				nil
 		]]
+
+		max = max or min
+		pref = pref or max/2
+		weight = weight or 1
+
+		public.tabs[axis][tag] =
+		{
+			min = min;
+			max = max;
+			weight = weight;
+
+			tag = tag;
+		}
+
+		local relativeToTab = public.tabs[axis][relativeTo]
+		if relativeTo then
+			relativeToTab.relativeTab = public[axis][tag]
+		end
 	end
 
 	public.registerAnchorTab = function(axis, tag, offset)
@@ -48,9 +66,18 @@ local new = function()
 			@returns
 				nil
 		]]
+
+		public.tabs[axis][tag] =
+		{
+			tag = tag;
+			offset = offset;
+			relativeTabs = {};
+		}
+
+		public.anchors[axis][tag] = public.tabs[axis][tag]
 	end
 
-	public.pokeTab = function(axis, tag)
+	public.pokeTab = function(axis, tag)	
 		--[[
 			@description
 				pokey tab haha
@@ -64,6 +91,8 @@ local new = function()
 			@returns
 				tab, tab you wanna poke
 		]]
+
+		return public.tabs[axis][tag]
 	end
 
 	public.removeTab = function(axis, tag)
@@ -80,22 +109,32 @@ local new = function()
 			@returns
 				tab, tab that was relative to the tab removed.
 		]]
+
+		public.tab[axis][tag] = nil
+		public.anchors[axis][tag] = nil
 	end
 
 	public.isSafeToRemove = function(axis, tag)
 		--[[
 			@description
-				UNSAFE: removes tab and returns the tab(s) that was relative to it.
+				Is safe to remove?
 
 			@parameters
 				string, axis
-					Axis of tab to remove.
+					Axis of tab to test.
 				string, tag
-					Tag of the tab to remove.
+					Tag of the tab to test.
 
 			@returns
-				tab, tab that was relative to the tab removed.
+				boolean, is safe to remove?
 		]]
+
+		local tab = public.tab[axis][tag]
+		if tab.relativeTabs then
+			return #tab.relativeTabs > 0
+		else
+			return tab.relativeTab == true
+		end
 	end
 
 	public.resolveForAxis = function(axis, maxLength)
@@ -113,13 +152,22 @@ local new = function()
 	end
 
 	public.resolve = function(maxSize)
-			--[[
+		--[[
+			@parameter
+				vector2, maxSize
+
 			@description
 				Returns the resolved positions of all of the tabs.
 
 			@returns
 				{ x = resolveForAxis("x"); y = resolveForAxis("y") }
 		]]
+
+		return
+		{
+			public.resolveForAxis("x", maxSize.x);
+			public.resolveForAxis("y", maxSize.x);
+		}
 	end
 
 	return public
