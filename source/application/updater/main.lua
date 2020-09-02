@@ -11,6 +11,8 @@
     Dark Grey: 666666 // 102, 102, 102
     Light Blue: 679bce // 103, 155, 206
     Purple: 6767ce // 103, 103, 206
+    Orange: ff8a65 // 255, 138, 101
+    Yellow: ffb74d // 255, 183, 77
 ]]--
 
 local Container = core.construct("guiFrame", {
@@ -78,7 +80,7 @@ sleep(1)
 
 
 -- If Tevgit is overridden
-if not core.dev.localTevGit then
+if core.dev.localTevGit then
 
     core.construct("guiTextBox", {
         parent = Container,
@@ -100,7 +102,7 @@ if not core.dev.localTevGit then
         position = guiCoord(0.5, -150, 0.64, 10),
         backgroundColour = colour.rgb(246, 248, 250),
         backgroundAlpha = 1,
-        text = "/Users/sanjaybhadra/Desktop/deviap-main",
+        text = "/Users/username/Desktop/deviap-main",
         textColour = colour.rgb(1, 1, 1),
         textAlign = "middle",
         textSize = 15,
@@ -110,7 +112,7 @@ if not core.dev.localTevGit then
 end
 
 -- If barebones application
-if core.dev.localTevGit then
+if not core.dev.localTevGit then
     
     local infoLabel = core.construct("guiTextBox", {
         parent = Container,
