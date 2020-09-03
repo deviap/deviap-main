@@ -28,7 +28,7 @@ end
 local function getRelativeTabs(tab, array)
     --[[
         @description
-            Returns distance to give between given offset and tab
+            Returns all relative tabs from tab given with recursion
 
         @parameters
         tab, tab
@@ -75,7 +75,7 @@ local new = function()
                 How much weight is given to this tab (DEPENDS ON RESOLVER USED). Defaults to 1 if not defined.
 
             @returns
-                nil
+                tab, tab
         ]]
 
         max = max or min
@@ -118,14 +118,14 @@ local new = function()
                 The offset away from the border.
 
             @returns
-                nil
+                tab, tab
         ]]
 
         public.tabs[axis][tag] =
         {
-        tag = tag;
-        offset = offset;
-        relativeTabs = {};
+            tag = tag;
+            offset = offset;
+            relativeTabs = {};
         }
 
         return public.tabs[axis][tag]
@@ -134,7 +134,7 @@ local new = function()
     public.pokeTab = function(axis, tag)
         --[[
             @description
-                pokey tab haha
+                Returns tab with tag supplied
 
             @parameters
             string, axis
@@ -143,7 +143,7 @@ local new = function()
                 Tag of the tab you wanna poke.
 
             @returns
-                tab, tab you wanna poke
+                tab, tab which was poked
         ]]
 
         return public.tabs[axis][tag]
@@ -185,9 +185,9 @@ local new = function()
         local tab = public.tab[axis][tag]
 
         if tab.relativeTabs then
-            return #tab.relativeTabs > 0
+            return #tab.relativeTabs == 0
         else
-            return tab.relativeTab == true
+            return tab.relativeTab == nil
         end
     end
 
@@ -223,7 +223,7 @@ local new = function()
                     local relativeChildren = getRelativeTabs(relativeTab)
 
                     for _, relativeChild in pairs(relativeChildren) do
-                        local distance = getMinMaxFromOffset(relativeTab, lastOffset, maxLength)
+                        local distance = getMinMaxFromOffset(relativeChild, lastOffset, maxLength)
                         local lastOffset = lastOffset + distance
 
                         tabDict[relativeChild.tag] = lastOffset
