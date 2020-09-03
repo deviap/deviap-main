@@ -224,7 +224,7 @@ local new = function()
 
                     for _, relativeChild in pairs(relativeChildren) do
                         local distance = getMinMaxFromOffset(relativeChild, lastOffset, maxLength)
-                        local lastOffset = lastOffset + distance
+                        lastOffset = lastOffset + distance
 
                         tabDict[relativeChild.tag] = lastOffset
                     end
