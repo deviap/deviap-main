@@ -46,13 +46,13 @@ return function()
 				boolean, destroyChildren
 					If true, will destroy the children. Otherwise, it will de-parent the children
 					and return them back to you.
-			
+
 			@return
 				table, [children]
 		]]
 
 		local children = public.container.children
-		
+
 		if destroyChildren then
 			object:destroyChildren()
 			object:destroy()
@@ -61,11 +61,11 @@ return function()
 				object.parent = nil
 			end
 			object:destroy()
-			
+
 			return children
 		end
 	end
-	
+
 	public.addObject = function(tag, object)
 		--[[
 			@description
@@ -95,7 +95,7 @@ return function()
 
 		return objects[tag]
 	end
-	
+
 	public.removeObject = function(tag)
 		--[[
 			@description

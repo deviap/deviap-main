@@ -1,5 +1,3 @@
-local newTabulars = require("tevgit:source/libraries/UI/constraints/tabResolver.lua")
-
 local controllers =
 {
     verticalLayoutAuto = require("tevgit:source/libraries/UI/constraints/controllers/verticalLayoutAuto.lua");
@@ -21,5 +19,5 @@ return function(controllerName, ...)
 			table, interface
 	]]
 
-    return controllers[controllerName](...)
+	return controllers[controllerName](...)
 end
