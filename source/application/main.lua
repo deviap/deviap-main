@@ -11,30 +11,29 @@ require("tevgit:source/application/utilities/debug/keybinds.lua")
 --require("tevgit:source/application/updater/main.lua")
 
 local class = require("tevgit:source/libraries/UI/constraints/main.lua").newController
-
-local a = class("horizontialLayout")
+local i = 1
+local a = class("horizontialLayoutAuto")
 a.container.parent = core.interface
 a.container.size = guiCoord(1, 0, 1, 0)
-a.max = 100
 
 local obj1 = core.construct("guiFrame")
 obj1.backgroundColour = colour.random()
 
-a.objects[#a.objects+1] = obj1
-
+a.addObject(tonumber(i), obj1)
+i = i + 1
 local obj1 = core.construct("guiFrame")
 obj1.backgroundColour = colour.random()
 
-a.objects[#a.objects+1] = obj1
-
+a.addObject(tonumber(i), obj1)
+i = i + 1
 local obj1 = core.construct("guiFrame")
 obj1.backgroundColour = colour.random()
 
-a.objects[#a.objects+1] = obj1
-
+a.addObject(tonumber(i), obj1)
+i = i + 1
 local obj1 = core.construct("guiFrame")
 obj1.backgroundColour = colour.random()
 
-a.objects[#a.objects+1] = obj1
-
+a.addObject(tonumber(i), obj1)
+i = i + 1
 core.input:on("screenResized", a.refresh)

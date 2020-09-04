@@ -2,8 +2,8 @@ local controllers =
 {
     verticalLayoutAuto = require("tevgit:source/libraries/UI/constraints/controllers/verticalLayoutAuto.lua");
 	horizontialLayoutAuto = require("tevgit:source/libraries/UI/constraints/controllers/horizontialLayoutAuto.lua");
-	verticalLayout = require("tevgit:source/libraries/UI/constraints/controllers/verticalLayoutAuto.lua");
-	horizontialLayout = require("tevgit:source/libraries/UI/constraints/controllers/horizontialLayoutAuto.lua");
+	gridLayout = require("tevgit:source/libraries/UI/constraints/controllers/gridLayout.lua");
+	verticalNavLayout = require("tevgit:source/libraries/UI/constraints/controllers/verticalNavLayout.lua");
 }
 
 
