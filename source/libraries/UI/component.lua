@@ -2,4 +2,6 @@
 -- Author(s): KISPERAL
 
 -- REPLACE WITH ONE LINE DESCRIPTION OF WHAT THIS FILE DOES
-return {}
+local component = {}
+
+return component
