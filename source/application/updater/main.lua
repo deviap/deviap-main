@@ -195,7 +195,6 @@ core.construct("guiTextBox", {
 core.input:on("keyDown", function(key)
     if key == "KEY_RETURN" then
         -- Remove Updater / Splash Screen
-        print("container", container)
         container:destroy()
 
         -- Check if the user is authenticated
