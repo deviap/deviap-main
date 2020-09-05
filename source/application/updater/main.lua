@@ -1,19 +1,15 @@
 -- Copyright 2020 - Deviap (deviap.com)
 -- Author(s): Sanjay-B(Sanjay)
 
+-- One of three main entry points
 -- Updater & Splash Screen file: Updates Deviap Application w/ style
 -- Note: Ignores updating process when devgit is active / enabled
 
-local colourMap = {
-    terraCotta  = colour.rgb(229, 115, 115),
-    blue        = colour.rgb(62, 146, 204),
-    green       = colour.rgb(103, 206, 103),
-    darkGrey    = colour.rgb(102, 102, 102),
-    lightBlue   = colour.rgb(103, 155, 206),
-    purple      = colour.rgb(103, 103, 206),
-    orange      = colour.rgb(255, 138, 101),
-    yellow      = colour.rgb(255, 183, 77)
-}
+-- Essential Debug Utilities
+require("devgit:source/application/utilities/debug/output.lua")
+require("devgit:source/application/utilities/debug/keybinds.lua")
+
+local colourMap = require("devgit:source/application/utilities/colourScheme.lua")
 
 local container = core.construct("guiFrame", {
     parent = core.interface,
@@ -39,35 +35,12 @@ tween = core.tween:begin(pattern, 5, {
     tween:resume()
 end)
 
-local centerBackContainer = core.construct("guiFrame", {
-    parent = container,
-    size = guiCoord(0, 400, 0, 160),
-    position = guiCoord(0.5, -200, 0.5, -80),
-    backgroundColour = colour.rgb(255, 255, 255),
-    backgroundAlpha = 0.7
-})
-
-core.tween:begin(centerBackContainer, 0.5, {
-    position = guiCoord(0.5, -210, 0.5, -70),
-}, "linear")
-
-local centerContainer = core.construct("guiFrame", {
+local logoBg, logoShadow, logoText = require("devgit:source/application/utilities/logo.lua")({
     parent = container,
     size = guiCoord(0, 400, 0, 160),
     position = guiCoord(0.5, -200, 0.5, -80),
     backgroundColour = colour.rgb(255, 255, 255),
     backgroundAlpha = 0.98
-})
-
-local Header = core.construct("guiTextBox", {
-    parent = centerContainer,
-    size = guiCoord(1, 0, 1, -20), 
-    backgroundAlpha = 0,
-    text = "deviap",
-    textColour = colour.black(),
-    textAlign = "middle",
-    textSize = 140,
-    textFont = "devgit:assets/fonts/monofonto.ttf"
 })
 
 -- Move to effects module (or something similar)
@@ -84,7 +57,7 @@ local currentColourIndex = 1
 spawn(function() 
     while true do
         core.tween:begin(container, 4, { backgroundColour = colours[currentColourIndex] })
-        core.tween:begin(Header, 4, { textColour = colours[currentColourIndex] })
+        core.tween:begin(logoText, 4, { textColour = colours[currentColourIndex] })
         currentColourIndex = currentColourIndex + 1
         if currentColourIndex > #colours then currentColourIndex = 1 end
         sleep(4)
@@ -93,8 +66,8 @@ end)
 
 --
 sleep(3)
-core.tween:begin(centerBackContainer, 1, { position = guiCoord(0.5, -200, 0.4, -90) })
-core.tween:begin(centerContainer, 1, { position = guiCoord(0.5, -190, 0.4, -100) })
+core.tween:begin(logoShadow, 1, { position = guiCoord(0.5, -200, 0.4, -90) })
+core.tween:begin(logoBg, 1, { position = guiCoord(0.5, -190, 0.4, -100) })
 sleep(1)
 
 

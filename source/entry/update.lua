@@ -1,1 +1,0 @@
-require("devgit:source/application/main.lua")
