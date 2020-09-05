@@ -118,7 +118,7 @@ return {
             }
         }
 
-        if core.dev.localDevGit then
+        if core.dev.localDevGitEnabled then
             table.insert(btns, {
                 "Run workshop (in dev)",
                 "tools",

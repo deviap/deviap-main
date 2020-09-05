@@ -1171,7 +1171,7 @@
                     "description": "Mostly for internal use, represents what the user is currently doing.",
                     "hasSetter": true
                 },
-                "localDevGit": {
+                "localDevGitEnabled": {
                     "hasGetter": true,
                     "type": "string",
                     "description": "Returns path to local devgit",

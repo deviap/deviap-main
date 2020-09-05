@@ -10,7 +10,7 @@ core.construct("guiFrame", {
     backgroundAlpha = 0.75
 })
 
-if core.dev.localDevGit then
+if core.dev.localDevGitEnabled then
     core.construct("guiTextBox", {
         parent = core.coreInterface,
         size = guiCoord(0,40, 0, 8),
@@ -28,7 +28,7 @@ end
 
 local debug = false
 core.input:on("keyUp", function(key)
-    if key == "KEY_F1" and not core.dev.localDevGit and core.input:isKeyDown("KEY_LSHIFT") then
+    if key == "KEY_F1" and not core.dev.localDevGitEnabled and core.input:isKeyDown("KEY_LSHIFT") then
         core.dev:promptDevGit()
     elseif key == "KEY_F2" and core.input:isKeyDown("KEY_LSHIFT") then
         print("Reload")

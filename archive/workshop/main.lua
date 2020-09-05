@@ -19,7 +19,7 @@ local function init(dev)
 
     globals.dev = dev -- Set teverse.dev (previously workshop) instance as a global
     globals.user = core.networking.localClient -- Set & Streamline user instance as a global
-    globals.developerMode = not globals.dev.localDevGit -- Set developmode boolean as a global
+    globals.developerMode = not globals.dev.localDevGitEnabled -- Set developmode boolean as a global
 
     local loadingScreen = core.construct("guiFrame", {
         parent = dev.interface,
