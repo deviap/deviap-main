@@ -9,7 +9,7 @@ if core.dev.localDevGitEnabled then core.interface:child("outputWindow").visible
 core.input:on("keyDown", function(key)
 
     -- Output Window Enable / Disable
-    if key == "KEY_F1" and core.dev.localDevGitEnabled then core.interface:child("outputWindow").visible = not core.interface:child("outputWindow").visible
+    if key == "KEY_F1" then core.interface:child("outputWindow").visible = not core.interface:child("outputWindow").visible
 
     -- Hard Reset Application
     elseif key == "KEY_F2" and core.dev.localDevGitEnabled then core.apps:reset()

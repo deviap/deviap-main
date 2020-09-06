@@ -83,7 +83,7 @@ if core.dev.localDevGitEnabled then
         textColour = colour.rgb(1, 1, 1),
         textAlign = "middle",
         textSize = 18,
-        textFont = "tevurl:fonts/openSansBold.ttf",
+        textFont = "deviap:assets/fonts/openSansBold.ttf",
         textMultiline = true,
         textWrap = true
     })
@@ -98,7 +98,7 @@ if core.dev.localDevGitEnabled then
         textColour = colour.rgb(1, 1, 1),
         textAlign = "middle",
         textSize = 15,
-        textFont = "tevurl:fonts/firaCodeBold.otf",
+        textFont = "deviap:assets/fonts/sourceCodeProBold.ttf",
         strokeRadius = 3
     })
 
@@ -118,7 +118,7 @@ if not core.dev.localDevGitEnabled then
         textColour = colour.rgb(1, 1, 1),
         textAlign = "middle",
         textSize = 18,
-        textFont = "tevurl:fonts/openSansBold.ttf",
+        textFont = "deviap:assets/fonts/openSansBold.ttf",
         textMultiline = true,
         textWrap = true
     })

@@ -70,7 +70,7 @@ local text = core.construct("guiTextBox", {
     position = guiCoord(0, 40, 0, 0),
     text = "Login",
     textAlign = "middle",
-    textFont = "tevurl:fonts/openSansBold.ttf",
+    textFont = "deviap:fonts/openSansBold.ttf",
     textSize = 20,
     backgroundAlpha = 0,
     active = false
@@ -89,9 +89,8 @@ button:on("mouseExit", function()
 end)
 
 button:on("mouseLeftUp", function()
-    if _DEVICE:sub(0, 6) == "iPhone" or _DEVICE:sub(0, 4) == "iPad" then
-        teverse.openUrl("https://deviap.com/dashboard?client=2")
+    if _DEVICE:sub(0, 6) == "iPhone" or _DEVICE:sub(0, 4) == "iPad" then        core.openUrl("https://deviap.com/dashboard?client=2")
     else
-        teverse.openUrl("https://deviap.com/dashboard?client=1")
+        core.openUrl("https://deviap.com/dashboard?client=1")
     end
 end)

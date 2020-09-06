@@ -31,7 +31,7 @@ local headerText = core.construct("guiTextBox", {
     position = guiCoord(0, 0, 0, 0),
     backgroundAlpha = 0,
     text = " Console",
-    textFont = "tevurl:fonts/openSansBold.ttf",
+    textFont = "deviap:assets/fonts/openSansBold.ttf",
     textMultiline = true,
     textWrap = true
 })
@@ -110,7 +110,7 @@ spawn(function()
                 backgroundColour = colour.rgb(255, 255, 255),
                 text = data["message"],
                 textColour = data["colour"],
-                textFont = "tevurl:fonts/firaCodeBold.otf",
+                textFont = "deviap:assets/fonts/sourceCodeProBold.ttf",
                 textSize = 14,
                 textWrap = true,
                 visible = true
