@@ -142,11 +142,11 @@ if not core.dev.localDevGitEnabled then
         strokeRadius = 3
     })
 
-    core.networking:on("_update", function(message)
+    core.engine:on("updateMessage", function(message)
         infoLabel.text = message
     end)
 
-    core.networking:on("_downloadProgress", function(str)
+    core.engine:on("updateProgress", function(str)
         core.tween:begin(progressBarFrame, 0.2, { size = guiCoord(i/100, 0, 1, 0) })
     end)
 end

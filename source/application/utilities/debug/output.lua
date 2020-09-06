@@ -5,10 +5,11 @@
 
 local maxEntries = 19
 local debounce, contents = false, {}
+local coreInterface = core.engine.coreInterface
 local Container = core.construct("guiFrame", {
     parent = core.interface,
     name = "outputWindow", -- So, we can reference this later.
-    size = guiCoord(0, math.max(core.coreInterface.absoluteSize.x/3,150), 0, math.max(core.coreInterface.absoluteSize.y/3,200)),
+    size = guiCoord(0, math.max(coreInterface.absoluteSize.x/3,150), 0, math.max(coreInterface.absoluteSize.y/3,200)),
     position = guiCoord(0, 0, 0, 0),
     backgroundColour = colour(1, 1, 1),
     strokeWidth = 2,
