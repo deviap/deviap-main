@@ -70,12 +70,13 @@ return function()
 		--[[
 			@description
 				Add object
-
 			@parameter
 				string, tag
 					Tag.
 				guiObject, object
 					Object.
+			@return
+				nil
 		]]
 
 		objects[tag] = object
