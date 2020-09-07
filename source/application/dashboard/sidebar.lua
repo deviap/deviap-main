@@ -2,7 +2,7 @@ local controller = {}
 local colours = require("devgit:source/application/utilities/colourScheme.lua")
 
 controller.sidebar = core.construct("guiFrame", {
-    parent = teverse.interface,
+    parent = core.interface,
     size = guiCoord(0, 50, 1, 0),
     backgroundColour = colours.dark,
     clip = true
@@ -17,7 +17,7 @@ controller.activeBall = core.construct("guiFrame", {
 })
 
 controller.container = core.construct("guiFrame", {
-    parent = teverse.interface,
+    parent = core.interface,
     size = guiCoord(1, -50, 1, 0),
     position = guiCoord(0, 50, 0, 0),
     backgroundAlpha = 0,

@@ -6,7 +6,7 @@ require("devgit:source/application/utilities/debug/keybinds.lua")
 local colours = require("devgit:source/application/utilities/colourScheme.lua")
 
 local main = core.construct("guiFrame", {
-    parent = teverse.interface,
+    parent = core.interface,
     size = guiCoord(1, 0, 1, 0)
 })
 
