@@ -24,11 +24,11 @@ local function createNavBar()
 
 		local i = 0
 		local objects = public.container.children
-		local width = public.container.absoluteSize.x / count(objects)
+		local width = public.container.absoluteSize.y / count(objects)
 		for _, object in next, objects do
 			object.parent = public.container
-			object.size = guiCoord(0, width - public.offset, 0, 1)
-			object.position = guiCoord(0, width * i, 0, 0)
+			object.size = guiCoord(1, 0, 0, width - public.offset)
+			object.position = guiCoord(0, 0, 0, width * i)
 			i = i + 1
 		end
 	end
@@ -69,9 +69,9 @@ return function()
 	local public = {}
 
 	local resolver = newTabResolver()
-	resolver.registerAnchorTab("x", "start", 0)
-	resolver.registerRelativeTab("x", "end", "start", 0, 50)
-	resolver.registerRelativeTab("x", "neverEnding", "end", 0, math.huge)
+	resolver.registerAnchorTab("y", "start", 0)
+	resolver.registerRelativeTab("y", "end", "start", 0, 50)
+	resolver.registerRelativeTab("y", "neverEnding", "end", 0, math.huge)
 
 	public.container = core.construct("guiFrame")
 	public.secondaryObject = nil
@@ -88,13 +88,14 @@ return function()
 		
 		if public.secondaryObject then
 			public.secondaryObject.parent = public.container
-			local resolved = resolver.resolveForAxis("x", public.container.absoluteSize.x)
+			print(public.container.absoluteSize.y)
+			local resolved = resolver.resolveForAxis("y", public.container.absoluteSize.y)
 
-			public.navBar.container.size = guiCoord(0, resolved["end"], 1, 0)
+			public.navBar.container.size = guiCoord(1, 0, 0, resolved["end"])
 			public.navBar.container.position = guiCoord(0, 0, 0, 0)
 
-			public.secondaryObject.position = guiCoord(0, resolved["end"], 0, 0)
-			public.secondaryObject.size = guiCoord(0, resolved["neverEnding"] - resolved["end"], 1, 0)
+			public.secondaryObject.position = guiCoord(0, 0, 0, resolved["end"])
+			public.secondaryObject.size = guiCoord(1, 0, 0, resolved["neverEnding"])
 		end
 
 		public.navBar.refresh()

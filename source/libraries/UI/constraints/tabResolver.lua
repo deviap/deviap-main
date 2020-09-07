@@ -20,9 +20,8 @@ local function getMinMaxFromOffset(tab, offset, maxLength)
 			integer, Distance to give between given offset and tab.
 	]]
 
-	local availableSpace = (maxLength - offset) - tab.max
-
-	return (availableSpace >= tab.max) and tab.max or tab.min
+	local availableSpace = maxLength - offset
+	return (availableSpace > tab.max) and tab.max or availableSpace
 end
 
 local function getRelativeTabs(tab, array)

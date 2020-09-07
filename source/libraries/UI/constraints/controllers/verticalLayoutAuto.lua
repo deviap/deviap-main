@@ -1,4 +1,6 @@
 local count = function(x)
+	--[[
+	]]
 	local c = 0
 	for _,_ in next, x do
 		c = c + 1

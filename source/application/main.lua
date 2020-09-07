@@ -12,28 +12,10 @@ require("tevgit:source/application/utilities/debug/keybinds.lua")
 
 local class = require("tevgit:source/libraries/UI/constraints/main.lua").newController
 local i = 1
-local a = class("horizontialLayoutAuto")
+local a = class("verticalNavLayout")
 a.container.parent = core.interface
 a.container.size = guiCoord(1, 0, 1, 0)
-
-local obj1 = core.construct("guiFrame")
-obj1.backgroundColour = colour.random()
-
-a.addObject(tonumber(i), obj1)
-i = i + 1
-local obj1 = core.construct("guiFrame")
-obj1.backgroundColour = colour.random()
-
-a.addObject(tonumber(i), obj1)
-i = i + 1
-local obj1 = core.construct("guiFrame")
-obj1.backgroundColour = colour.random()
-
-a.addObject(tonumber(i), obj1)
-i = i + 1
-local obj1 = core.construct("guiFrame")
-obj1.backgroundColour = colour.random()
-
-a.addObject(tonumber(i), obj1)
-i = i + 1
+a.secondaryObject = core.construct("guiFrame")
+a.secondaryObject.backgroundColour = colour.random()
+a.navBar.container.backgroundColour = colour.black()
 core.input:on("screenResized", a.refresh)
