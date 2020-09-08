@@ -52,13 +52,13 @@ function enumerable:resolveValue(value)
 
     --[[
         @Description
-            Creates a new basic state object
-        
+            Recursively iterates through the singleton tree and return the key or value of the enum with either that key or value.        
         @Params
-            Bool, UseSpawn
-                Whether or not to create a new thread for every function (Reccomended)
+            any, value
+                The key/value to resolve for.
         @Returns
-            Table, StateObject
+            any
+                The resolved key or value. Nil if not found.
     ]]
 
     local t = type(value)
