@@ -1,6 +1,14 @@
 local newTabResolver = require("tevgit:source/libraries/UI/constraints/tabResolver.lua")
 
 local count = function(x)
+	--[[
+		@description
+			Counts the number of fields in a given table. Why does this need-
+		@parameter
+			table, x
+		@returns
+			integer, c
+	]]
 	local c = 0
 	for _,_ in next, x do
 		c = c + 1
@@ -10,7 +18,14 @@ end
 
 
 local function createNavBar()
-	--local resolver = newTabResolver()
+	--[[
+		@description
+			Make a new navbar.
+		@parameter
+			nil
+		@returns
+			nil
+	]]
 	local public = {}
 
 	public.offset = 5
@@ -20,6 +35,10 @@ local function createNavBar()
 		--[[
 			@description
 				Refreshes the container.
+			@parameter
+				nil
+			@returns
+				nil
 		]]
 
 		local i = 0
@@ -37,12 +56,10 @@ local function createNavBar()
 		--[[
 			@description
 				Destroys the layout and what it stands for.
-
 			@parameter
 				boolean, destroyChildren
 					If true, will destroy the children. Otherwise, it will de-parent the children
 					and return them back to you.
-			
 			@return
 				table, [children]
 		]]
@@ -66,6 +83,14 @@ local function createNavBar()
 end
 
 return function()
+	--[[
+		@description
+			It makes a new horizontial layout with a nav-bar.
+		@parameter
+			nil
+		@returns
+			table, public
+	]]
 	local public = {}
 
 	local resolver = newTabResolver()
@@ -83,6 +108,10 @@ return function()
 		--[[
 			@description
 				Refreshes the layout.
+			@parameter
+				nil
+			@returns
+				nil
 		--]]
 
 		

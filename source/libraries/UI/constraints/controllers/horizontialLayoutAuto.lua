@@ -25,6 +25,10 @@ return function()
 		--[[
 			@description
 				Refreshes the container.
+			@parameter
+				nil
+			@returns
+				nil
 		]]
 
 		local i = 0
@@ -41,12 +45,10 @@ return function()
 		--[[
 			@description
 				Destroys the layout and what it stands for.
-
 			@parameter
 				boolean, destroyChildren
 					If true, will destroy the children. Otherwise, it will de-parent the children
 					and return them back to you.
-
 			@return
 				table, [children]
 		]]
@@ -115,4 +117,4 @@ return function()
 	end
 
 	return public
-end;
+end

@@ -14,6 +14,9 @@ return function()
 			Creates a new verticalLayoutAuto that automatically fits itself.
 			So, that means there is no minimum or maximum really.
 
+		@parameter
+			nil
+
 		@returns
 			table, interface
 	]]
@@ -27,6 +30,12 @@ return function()
 		--[[
 			@description
 				Refreshes the container.
+			
+			@parameter
+				nil
+			
+			@returns
+				nil
 		]]
 
 		local i = 0
@@ -78,6 +87,9 @@ return function()
 					Tag.
 				guiObject, object
 					Object.
+			
+			@returns
+				nil
 		]]
 
 		objects[tag] = object
@@ -116,4 +128,4 @@ return function()
 	end
 
 	return public
-end;
+end

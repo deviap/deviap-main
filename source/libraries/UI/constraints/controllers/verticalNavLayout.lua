@@ -20,6 +20,10 @@ local function createNavBar()
 		--[[
 			@description
 				Refreshes the container.
+			@parameter
+				nil
+			@returns
+				nil
 		]]
 
 		local i = 0

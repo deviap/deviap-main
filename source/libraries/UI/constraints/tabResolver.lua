@@ -52,7 +52,7 @@ end
 
 local new = function()
 	local public = {}
-	public.tabs = { x = {}; y = {} }
+	public.tabs = { x = {}, y = {} }
 
 	public.registerRelativeTab = function(axis, tag, relativeTo, min, max, pref, weight)
 		--[[
@@ -83,11 +83,11 @@ local new = function()
 
 		public.tabs[axis][tag] =
 		{
-			min = min;
-			max = max;
-			weight = weight;
+			min = min,
+			max = max,
+			weight = weight,
 
-			tag = tag;
+			tag = tag,
 		}
 
 		local relativeToTab = public.tabs[axis][relativeTo]
@@ -122,9 +122,9 @@ local new = function()
 
 		public.tabs[axis][tag] =
 		{
-			tag = tag;
-			offset = offset;
-			relativeTabs = {};
+			tag = tag,
+			offset = offset,
+			relativeTabs = {},
 		}
 
 		return public.tabs[axis][tag]
@@ -243,13 +243,13 @@ local new = function()
 				Returns the resolved positions of all of the tabs.
 
 			@returns
-				{ x = resolveForAxis("x"); y = resolveForAxis("y") }
+				{ x = resolveForAxis("x"), y = resolveForAxis("y") }
 		]]
 
 		return
 		{
-			public.resolveForAxis("x", maxSize.x);
-			public.resolveForAxis("y", maxSize.y);
+			public.resolveForAxis("x", maxSize.x),
+			public.resolveForAxis("y", maxSize.y),
 		}
 	end
 
