@@ -3,9 +3,13 @@
 
 -- This is the actual start file. (../core/dashboard/main.lua) is still enforced so, we're forced to use it. 
 
-
--- Essential Debug
-require("tevgit:source/application/utilities/reload.lua")
+-- Essential Debug Utilities
+require("tevgit:source/application/utilities/debug/output.lua")
+require("tevgit:source/application/utilities/debug/keybinds.lua")
 
 -- List of stuff that updates
 require("tevgit:source/application/updater/main.lua")
+local UI = require("tevgit:source/libraries/UI/main.lua")
+local Enum = UI.Enum
+
+Enum:
