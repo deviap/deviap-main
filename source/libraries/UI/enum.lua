@@ -20,7 +20,6 @@ local function recursiveIterate(table, callback)
 end
 
 function enumerable:newEnum(directory, name, value)
-
     --[[
         @Description
             Adds an enum value to the singleton tree
@@ -36,7 +35,7 @@ function enumerable:newEnum(directory, name, value)
         @Returns
             nil
     ]]
-
+  
     local curDirectory = self.tree
 
     for _, dirName in pairs(string.split(directory, "/")) do
@@ -49,7 +48,6 @@ function enumerable:newEnum(directory, name, value)
 end
 
 function enumerable:resolveValue(value)
-
     --[[
         @Description
             Recursively iterates through the singleton tree and return the key or value of the enum with either that key or value.        
