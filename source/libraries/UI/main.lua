@@ -8,8 +8,8 @@
 return {
     -- class = require("../path")
     -- Classes are camelCase.
-    Component = require("tevgit:source/libraries/UI/component.lua"),
-    Constraints = require("tevgit:source/libraries/UI/constraints/main.lua"),
-    Enum = require("tevgit:source/libraries/UI/enum.lua"),
-    States = require("tevgit:source/libraries/UI/states.lua")
+    Component = require("devgit:source/libraries/UI/component.lua"),
+    Constraints = require("devgit:source/libraries/UI/constraints.lua"),
+    Enum = require("devgit:source/libraries/UI/enum.lua"),
+    States = require("devgit:source/libraries/UI/states.lua")
 }
