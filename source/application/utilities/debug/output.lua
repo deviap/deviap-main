@@ -5,11 +5,10 @@
 
 local maxEntries = 19
 local debounce, contents = false, {}
-local coreInterface = core.engine.coreInterface
 local Container = core.construct("guiFrame", {
     parent = core.interface,
     name = "outputWindow", -- So, we can reference this later.
-    size = guiCoord(0, math.max(coreInterface.absoluteSize.x/3,150), 0, math.max(coreInterface.absoluteSize.y/3,200)),
+    size = guiCoord(0, math.max(core.interface.absoluteSize.x/3,150), 0, math.max(core.interface.absoluteSize.y/3,200)),
     position = guiCoord(0, 0, 0, 0),
     backgroundColour = colour(1, 1, 1),
     strokeWidth = 2,
@@ -32,7 +31,7 @@ local headerText = core.construct("guiTextBox", {
     position = guiCoord(0, 0, 0, 0),
     backgroundAlpha = 0,
     text = " Console",
-    textFont = "deviap:assets/fonts/openSansBold.ttf",
+    textFont = "deviap:fonts/openSansBold.ttf",
     textMultiline = true,
     textWrap = true
 })
@@ -111,7 +110,7 @@ spawn(function()
                 backgroundColour = colour.rgb(255, 255, 255),
                 text = data["message"],
                 textColour = data["colour"],
-                textFont = "deviap:assets/fonts/sourceCodeProBold.ttf",
+                --textFont = "deviap:fonts/firaCodeBold.otf",
                 textSize = 14,
                 textWrap = true,
                 visible = true
