@@ -13,12 +13,6 @@ return function(parent)
         size = guiCoord(0, 178, 0, 48),
     }
 
-    -- Bind render to state subscriber
-    infoButton.states.subscribe(infoButton.render)
-
-	-- Enable the button
-	infoButton.states.dispatch({ type = "enable" })
-
     -- When the button is pressed, say hello!
     infoButton.states.subscribe(function(newState)
         if newState.active then
