@@ -81,7 +81,7 @@ return function(props)
 			self.container.backgroundColour = colour.hex("#E0E0E0")
 			self.child.backgroundColour = colour.hex("#E0E0E0")
 			self.child.textColour = colour.hex("#8D8D8D")
-			self.child.strokeColour = colour.hex("#FFFFFF")
+			self.child.strokeColour = colour.hex("#EAEAEA")
 		end
 
 		if state.active then
@@ -91,25 +91,19 @@ return function(props)
 				strokeAlpha = 1,
 			}, "outCirc")
 		else
-			core.tween:begin(self.child, 0.5, {
-				size = guiCoord(1, 0, 1, 0),
-				position = guiCoord(0, 0, 0, 0),
-				strokeAlpha = 0,
-			}, "outCirc")
-		end
-
-		if state.hovering and not state.active then
-			core.tween:begin(self.child, 0.5, {
-				size = guiCoord(1, -8, 1, -8),
-				position = guiCoord(0, 4, 0, 4),
-				strokeAlpha = 0.5,
-			}, "outCirc")
-		elseif not state.active then
-			core.tween:begin(self.child, 0.5, {
-				size = guiCoord(1, -8, 1, -8),
-				position = guiCoord(0, 4, 0, 4),
-				strokeAlpha = 0,
-			}, "outCirc")
+			if state.hovering then
+				core.tween:begin(self.child, 0.5, {
+					size = guiCoord(1, -8, 1, -8),
+					position = guiCoord(0, 4, 0, 4),
+					strokeAlpha = 0.5,
+				}, "outCirc")
+			else
+				core.tween:begin(self.child, 0.5, {
+					size = guiCoord(1, 0, 1, 0),
+					position = guiCoord(0, 0, 0, 0),
+					strokeAlpha = 0,
+				}, "outCirc")
+			end
 		end
 	end
 

@@ -6,7 +6,6 @@
 local Button = require("devgit:source/libraries/UI/components/textButton.lua")
 
 return function(parent)
-
     -- Example Button Constructor
     local infoButton = Button {
         parent = parent,
@@ -16,18 +15,19 @@ return function(parent)
 
 	-- Bind mouse controls to button states
 	infoButton.child:on("mouseEnter", function() infoButton.states.dispatch({ type = "hover" }) end)
-    infoButton.child:on("mouseExit", function() infoButton.states.dispatch({ type = "unhover" }) end)
+    infoButton.child:on("mouseExit", function() infoButton.states.dispatch({ type = "unhover" }) infoButton.states.dispatch({ type = "deactivate" }) end)
     infoButton.child:on("mouseLeftUp", function() infoButton.states.dispatch({ type = "deactivate" }) end)
 	infoButton.child:on("mouseLeftDown", function() infoButton.states.dispatch({ type = "activate" }) end)
 
     -- Bind render to state subscriber
     infoButton.states.subscribe(infoButton.render)
 
-	-- Disable
-	infoButton.states.dispatch({ type = "enable" })
-    -- When state is 'focused' invoke action
+	-- Enable the button
+	infoButton.states.dispatch({ type = "disable" })
+
+    -- When the button is pressed, say hello!
     infoButton.states.subscribe(function(newState)
-        if newState.focused then
+        if newState.active then
             print("Hello world!")
         end
     end)
