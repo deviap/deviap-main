@@ -44,20 +44,27 @@ local buttonStates =
 		self.child.backgroundColour = colour.hex("#03A9F4")
 		self.child.textColour = colour.hex("#FFFFFF")
 		self.child.strokeColour = colour.hex("#FFFFFF")
-		self.child.size = guiCoord(1, -10, 1, -10)
-		self.child.position = guiCoord(0, 5, 0, 5)
-		self.child.strokeWidth = 2
-		self.child.strokeAlpha = 0.5
+
+		core.tween:begin(self.child, 0.5, {
+			size = guiCoord(1, -8, 1, -8),
+			position = guiCoord(0, 4, 0, 4),
+			strokeWidth = 2,
+			strokeAlpha = 0.4,
+		}, "outCirc", function() end)
 	end,
 	focused = function(self)
 		self.container.backgroundColour = colour.hex("#03A9F4")
 		self.child.backgroundColour = colour.hex("#03A9F4")
 		self.child.textColour = colour.hex("#FFFFFF")
-		self.child.size = guiCoord(1, -10, 1, -10)
-		self.child.position = guiCoord(0, 5, 0, 5)
+		core.tween:begin(self.child, 0.5, {
+			size = guiCoord(1, -10, 1, -10),
+			position = guiCoord(0, 5, 0, 5),
+			strokeWidth = 2,
+			strokeAlpha = 1,
+		}, "outCirc", function() end)
+		
 		self.child.strokeColour = colour.hex("#FFFFFF")
-		self.child.strokeWidth = 2
-		self.child.strokeAlpha = 1
+
 	end,
 	disabled = function(self)
 		self.container.backgroundColour = colour.hex("#E0E0E0")
@@ -96,8 +103,8 @@ return function(props)
 	
     self.child:on("mouseEnter", function() self.states.dispatch({ type = "hovered" }) end)
     self.child:on("mouseExit", function() self.states.dispatch({ type = "active" }) end)
-    self.child:on("mouseLeftDown", function() self.states.dispatch({ type = "focused" }) end)
-	self.child:on("mouseLeftUp", function() self.states.dispatch({ type = "enabled" }) end)
+    self.child:on("mouseLeftUp", function() self.states.dispatch({ type = "focused" }) end)
+	self.child:on("mouseLeftDown", function() self.states.dispatch({ type = "enabled" }) end)
 	
     return self
 end
