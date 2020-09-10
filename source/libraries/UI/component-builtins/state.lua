@@ -3,8 +3,20 @@
 
 -- Creates a stateful instance
 
-local function insertInGap(list, value)
-    local function helper(oldKey)
+local function insertInGap(array, value)
+	--[[
+		@description
+			Takes a given array and inserts the value at the closest nil gap.
+		
+		@parameters
+			table, array
+			any, value
+
+		@return
+			integer, location
+	]]
+
+	local function helper(oldKey)
         local newKey = next(list, oldKey)
         oldKey = oldKey or 0
 
@@ -19,12 +31,33 @@ local function insertInGap(list, value)
 end
 
 return function(reducer, startingState)
+	--[[
+		@description
+			Makes a new state. Rip-off of redux. Sue me.
+		@parameters
+			function, reducer
+				Must be a pure function that doesn't mutate the old state.
+			any, startingState
+		@return
+			table, interface
+	]]
+
     local state = startingState or reducer(nil, {})
     local subscribers = {}
     local interface = {}
 
-    interface.dispatch = function(action)
-        newState = reducer(state, action)
+	interface.dispatch = function(action)
+		--[[
+			@description
+				Dispatch an action to update the state
+			@parameters
+				table, action
+					{ type = "actionName", arg1 = 1, ...}
+			@returns
+				nil
+		]]
+
+        local newState = reducer(state, action)
 
         for _, callback in next, subscribers do
             coroutine.wrap(callback)(newState, state, action)
@@ -33,17 +66,35 @@ return function(reducer, startingState)
         state = newState
     end
 
-    interface.getState = function()
+	interface.getState = function()
+		--[[
+			@description
+				getState
+			@parameter
+				nil
+			@returns
+				any, state
+		]]
+
         return state
     end
 
-    interface.subscribe = function(callback)
+	interface.subscribe = function(callback)
+		--[[
+			@description
+				Bind a function to be invoked whenever a dispatch occurs.
+			@parameter
+				function, callback
+			@returns
+				function, unsubscribe
+		]]
+
         local location = insertInGap(subscribers, callback)
 
         return function()
             subscribers[location] = nil
         end
-    end
+	end
 
     return interface
 end
