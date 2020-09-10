@@ -17,12 +17,12 @@ local function insertInGap(array, value)
 	]]
 
 	local function helper(oldKey)
-        local newKey = next(list, oldKey)
+        local newKey = next(array, oldKey)
         oldKey = oldKey or 0
 
-        if newKey == nil then list[oldKey + 1] = value return oldKey + 1 end
+        if newKey == nil then array[oldKey + 1] = value return oldKey + 1 end
         if type(newKey) ~= "number" then error("Got a mixed table or dictionary as argument #1 (expected array).") end
-        if newKey - 1 ~= oldKey then list[newKey - 1] = value return newKey - 1 end
+        if newKey - 1 ~= oldKey then array[newKey - 1] = value return newKey - 1 end
 
         return helper(newKey)
     end
