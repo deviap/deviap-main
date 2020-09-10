@@ -113,6 +113,6 @@ return function(props)
 	end
 
 	self.states.subscribe(self.render)
-	
+	self.states.dispatch({ type = "enabled" })
     return self
 end
