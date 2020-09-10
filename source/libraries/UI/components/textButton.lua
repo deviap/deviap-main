@@ -4,7 +4,7 @@
 -- Creates a button instance
 
 local createBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
-local State = require("devgit:source/libraries/state/main.lua")
+local newState = require("devgit:source/libraries/state/main.lua")
 
 local function reducer(state, action)
 	--[[
@@ -16,65 +16,35 @@ local function reducer(state, action)
 		@returns
 			any, newState
 	]]
+	state = state or {}
 
-    state = state or "active"
-    return action.type or state
-end
+	local newState = 
+	{
+		active = state.active, 
+		hovering = state.hovering, 
+		enabled = state.enabled,
+		text = state.text or "    Primary Button"
+	}
 
-local buttonStates =
-{
-	active = function(self)
-		self.container.backgroundColour = colour.hex("#03A9F4")
-		self.child.backgroundColour = colour.hex("#03A9F4")
-		self.child.textColour = colour.hex("#FFFFFF")
-		self.child.position = guiCoord(0, 0, 0, 0)
-		self.child.size = guiCoord(1, 0, 1, 0)
-		self.child.strokeAlpha = 0
-	end,
-	enabled = function(self)
-		self.container.backgroundColour = colour.hex("#03A9F4")
-		self.child.backgroundColour = colour.hex("#03A9F4")
-		self.child.textColour = colour.hex("#FFFFFF")
-		self.child.position = guiCoord(0, 0, 0, 0)
-		self.child.size = guiCoord(1, 0, 1, 0)
-		self.child.strokeAlpha = 0
-	end,
-	hovered = function(self)
-		self.container.backgroundColour = colour.hex("#03A9F4")
-		self.child.backgroundColour = colour.hex("#03A9F4")
-		self.child.textColour = colour.hex("#FFFFFF")
-		self.child.strokeColour = colour.hex("#FFFFFF")
-
-		core.tween:begin(self.child, 0.5, {
-			size = guiCoord(1, -8, 1, -8),
-			position = guiCoord(0, 4, 0, 4),
-			strokeWidth = 2,
-			strokeAlpha = 0.4,
-		}, "outCirc", function() end)
-	end,
-	focused = function(self)
-		self.container.backgroundColour = colour.hex("#03A9F4")
-		self.child.backgroundColour = colour.hex("#03A9F4")
-		self.child.textColour = colour.hex("#FFFFFF")
-		core.tween:begin(self.child, 0.5, {
-			size = guiCoord(1, -10, 1, -10),
-			position = guiCoord(0, 5, 0, 5),
-			strokeWidth = 2,
-			strokeAlpha = 1,
-		}, "outCirc", function() end)
-		
-		self.child.strokeColour = colour.hex("#FFFFFF")
-
-	end,
-	disabled = function(self)
-		self.container.backgroundColour = colour.hex("#E0E0E0")
-		self.child.backgroundColour = colour.hex("#E0E0E0")
-		self.child.textColour = colour.hex("#8D8D8D")
-		self.child.position = guiCoord(0, 0, 0, 0)
-		self.child.size = guiCoord(1, 0, 1, 0)
-		self.child.strokeAlpha = 0
+	-- Might want to change to a lookup table.
+	if action.type == "activate" then
+		newState.active = true
+	elseif action.type == "deactivate" then
+		newState.active = false
+	elseif action.type == "enable" then
+		newState.enabled = true
+	elseif action.type == "disable" then
+		newState.enabled = false
+	elseif action.type == "hover" then
+		newState.hovering = true
+	elseif action.type == "unhover" then
+		newState.hovering = false
+	elseif action.type == "setText" then
+		newState.text = "    "..action.text
 	end
-}
+
+	return newState
+end
 
 return function(props)
 	--[[
@@ -89,30 +59,59 @@ return function(props)
 	local self = createBaseComponent(props)
 	
 	self.container = core.construct("guiFrame", self.props)
-	
-	self.text = "Primary button"
 
     self.child = core.construct("guiTextBox", {
         parent = self.container,
         size = guiCoord(1, 0, 1, 0),
-        text = "    "..self.text,
-        textAlign = enums.align.middleLeft
+		textAlign = enums.align.middleLeft,
+		strokeWidth = 2,
 	})
 	
-	self.setText = function(text)
-		self.text = text
-		self.child.text = "    "..self.text
+	self.states = newState(reducer)
+
+	self.render = function(state)
+		self.child.text = state.text
+
+		if state.enabled then
+			self.container.backgroundColour = colour.hex("#03A9F4")
+			self.child.backgroundColour = colour.hex("#03A9F4")
+			self.child.textColour = colour.hex("#FFFFFF")
+			self.child.strokeColour = colour.hex("#FFFFFF")
+		else
+			self.container.backgroundColour = colour.hex("#E0E0E0")
+			self.child.backgroundColour = colour.hex("#E0E0E0")
+			self.child.textColour = colour.hex("#8D8D8D")
+			self.child.strokeColour = colour.hex("#FFFFFF")
+		end
+
+		if state.active then
+			core.tween:begin(self.child, 0.5, {
+				size = guiCoord(1, -10, 1, -10),
+				position = guiCoord(0, 5, 0, 5),
+				strokeAlpha = 1,
+			}, "outCirc")
+		else
+			core.tween:begin(self.child, 0.5, {
+				size = guiCoord(1, 0, 1, 0),
+				position = guiCoord(0, 0, 0, 0),
+				strokeAlpha = 0,
+			}, "outCirc")
+		end
+
+		if state.hovering and not state.active then
+			core.tween:begin(self.child, 0.5, {
+				size = guiCoord(1, -8, 1, -8),
+				position = guiCoord(0, 4, 0, 4),
+				strokeAlpha = 0.5,
+			}, "outCirc")
+		elseif not state.active then
+			core.tween:begin(self.child, 0.5, {
+				size = guiCoord(1, -8, 1, -8),
+				position = guiCoord(0, 4, 0, 4),
+				strokeAlpha = 0,
+			}, "outCirc")
+		end
 	end
 
-	self.states = State(reducer, "active")
-    self.render = function(state)
-		buttonStates[state](self)
-	end
-	
-    self.child:on("mouseEnter", function() self.states.dispatch({ type = "hovered" }) end)
-    self.child:on("mouseExit", function() self.states.dispatch({ type = "active" }) end)
-    self.child:on("mouseLeftUp", function() self.states.dispatch({ type = "focused" }) end)
-	self.child:on("mouseLeftDown", function() self.states.dispatch({ type = "enabled" }) end)
-	
     return self
 end
