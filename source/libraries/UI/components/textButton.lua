@@ -68,6 +68,12 @@ return function(props)
 	})
 	
 	self.states = newState(reducer)
+	
+	-- Bind mouse controls to button states
+	self.child:on("mouseEnter", function() self.states.dispatch({ type = "hover" }) end)
+    self.child:on("mouseExit", function() self.states.dispatch({ type = "unhover" }) self.states.dispatch({ type = "deactivate" }) end)
+    self.child:on("mouseLeftUp", function() self.states.dispatch({ type = "deactivate" }) end)
+	self.child:on("mouseLeftDown", function() self.states.dispatch({ type = "activate" }) end)
 
 	self.render = function(state)
 		self.child.text = state.text
