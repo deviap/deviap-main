@@ -4,7 +4,7 @@
 -- All keybinds used for debugging internally. Devgit has to be overridden to enable all but the Devgit Prompt
 
 local graphicsDebug = false
---if core.dev.localDevGitEnabled then core.interface:child("outputWindow").visible = true end -- Set to true if devgit is overridden, otherwise hide it.
+if core.dev.localDevGitEnabled then core.interface:child("outputWindow").visible = true end -- Set to true if devgit is overridden, otherwise hide it.
 
 core.input:on("keyDown", function(key)
 
