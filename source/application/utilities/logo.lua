@@ -27,7 +27,7 @@ return function(properties, textColour)
         size = guiCoord(1, 0, 0.9, 0), 
         backgroundAlpha = 0,
         text = "deviap",
-        textColour = textColour and textColour or colour.black(),
+        textColour = textColour or colour.black(),
         textAlign = "middle",
         textSize = mainBackdrop.absoluteSize.y * 0.9,
         textFont = "devgit:assets/fonts/monofonto.ttf"

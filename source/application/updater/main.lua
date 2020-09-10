@@ -164,5 +164,5 @@ core.input:on("keyDown", function(key)
 
         -- If user is not authenticated
         -- Push to Login 
-    end 
+	end
 end)
