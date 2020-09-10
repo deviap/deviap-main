@@ -13,17 +13,11 @@ return function(parent)
         size = guiCoord(0, 178, 0, 48),
     }
 
-	-- Bind mouse controls to button states
-	infoButton.child:on("mouseEnter", function() infoButton.states.dispatch({ type = "hover" }) end)
-    infoButton.child:on("mouseExit", function() infoButton.states.dispatch({ type = "unhover" }) infoButton.states.dispatch({ type = "deactivate" }) end)
-    infoButton.child:on("mouseLeftUp", function() infoButton.states.dispatch({ type = "deactivate" }) end)
-	infoButton.child:on("mouseLeftDown", function() infoButton.states.dispatch({ type = "activate" }) end)
-
     -- Bind render to state subscriber
     infoButton.states.subscribe(infoButton.render)
 
 	-- Enable the button
-	infoButton.states.dispatch({ type = "disable" })
+	infoButton.states.dispatch({ type = "enable" })
 
     -- When the button is pressed, say hello!
     infoButton.states.subscribe(function(newState)
