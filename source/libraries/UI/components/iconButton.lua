@@ -4,7 +4,7 @@
 -- Creates an icon button instance
 
 local createBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
-local State = require("devgit:source/libraries/state/main.lua")
+local newState = require("devgit:source/libraries/state/main.lua")
 
 local function reducer(state, action)
 	--[[
@@ -16,63 +16,40 @@ local function reducer(state, action)
 		@returns
 			any, newState
 	]]
+	state = state or {}
 
-    state = state or "active"
-    return action.type or state
-end
+	local newState = 
+	{
+		active = state.active, 
+		hovering = state.hovering, 
+		enabled = state.enabled,
+		iconId = state.iconId or "plus"
+	}
 
-local buttonStates =
-{
-	active = function(self)
-		self.container.backgroundColour = colour.hex("#03A9F4")
-		self.child.backgroundColour = colour.hex("#03A9F4")
-		self.child.iconColour = colour.hex("#FFFFFF")
-		self.child.position = guiCoord(0, 0, 0, 0)
-		self.child.size = guiCoord(1, 0, 1, 0)
-		self.child.strokeAlpha = 0
-	end,
-	enabled = function(self)
-		self.container.backgroundColour = colour.hex("#03A9F4")
-		self.child.backgroundColour = colour.hex("#03A9F4")
-		self.child.iconColour = colour.hex("#FFFFFF")
-		self.child.position = guiCoord(0, 0, 0, 0)
-		self.child.size = guiCoord(1, 0, 1, 0)
-		self.child.strokeAlpha = 0
-	end,
-	hovered = function(self)
-		self.container.backgroundColour = colour.hex("#03A9F4")
-		self.child.backgroundColour = colour.hex("#03A9F4")
-		self.child.iconColour = colour.hex("#FFFFFF")
-		self.child.strokeColour = colour.hex("#FFFFFF")
-		self.child.size = guiCoord(1, -10, 1, -10)
-		self.child.position = guiCoord(0, 5, 0, 5)
-		self.child.strokeWidth = 2
-		self.child.strokeAlpha = 0.5
-	end,
-	focused = function(self)
-		self.container.backgroundColour = colour.hex("#03A9F4")
-		self.child.backgroundColour = colour.hex("#03A9F4")
-		self.child.iconColour = colour.hex("#FFFFFF")
-		self.child.size = guiCoord(1, -10, 1, -10)
-		self.child.position = guiCoord(0, 5, 0, 5)
-		self.child.strokeColour = colour.hex("#FFFFFF")
-		self.child.strokeWidth = 2
-		self.child.strokeAlpha = 1
-	end,
-	disabled = function(self)
-		self.container.backgroundColour = colour.hex("#E0E0E0")
-		self.child.backgroundColour = colour.hex("#E0E0E0")
-		self.child.iconColour = colour.hex("#8D8D8D")
-		self.child.position = guiCoord(0, 0, 0, 0)
-		self.child.size = guiCoord(1, 0, 1, 0)
-		self.child.strokeAlpha = 0
+	-- Might want to change to a lookup table.
+	if action.type == "activate" then
+		newState.active = true
+	elseif action.type == "deactivate" then
+		newState.active = false
+	elseif action.type == "enable" then
+		newState.enabled = true
+	elseif action.type == "disable" then
+		newState.enabled = false
+	elseif action.type == "hover" then
+		newState.hovering = true
+	elseif action.type == "unhover" then
+		newState.hovering = false
+	elseif action.type == "setIconId" then
+		newState.iconId = action.iconId
 	end
-}
+
+	return newState
+end
 
 return function(props)
 	--[[
 		@description
-			Button with states
+			Icon Button with states
 		@parameter
 			table, props
 		@returns
@@ -81,32 +58,61 @@ return function(props)
 
 	local self = createBaseComponent(props)
 	
-    self.container = core.construct("guiFrame", self.props)
-
-    self.icon = "plus"
+	self.container = core.construct("guiFrame", self.props)
 
     self.child = core.construct("guiIcon", {
         parent = self.container,
         size = guiCoord(1, 0, 1, 0),
-        iconId = self.icon,
         iconMax = 24,
         clip = false
     })
+	
+	self.states = newState(reducer, { enabled = true })
+	
+	self.child:on("mouseEnter", function() self.states.dispatch({ type = "hover" }) end)
+    self.child:on("mouseExit", function() self.states.dispatch({ type = "unhover" }) self.states.dispatch({ type = "deactivate" }) end)
+    self.child:on("mouseLeftUp", function() self.states.dispatch({ type = "deactivate" }) end)
+	self.child:on("mouseLeftDown", function() self.states.dispatch({ type = "activate" }) end)
 
-    self.setIcon = function(icon)
-        self.icon = icon
-        self.child.iconId = icon 
-    end
+	self.render = function(state)
+		self.child.iconId = state.iconId
 
-	self.states = State(reducer, "active")
-    self.render = function(state)
-		buttonStates[state](self)
+		if state.enabled then
+			self.container.backgroundColour = colour.hex("#03A9F4")
+			self.child.backgroundColour = colour.hex("#03A9F4")
+			self.child.iconColour = colour.hex("#FFFFFF")
+			self.child.strokeColour = colour.hex("#FFFFFF")
+		else
+			self.container.backgroundColour = colour.hex("#E0E0E0")
+			self.child.backgroundColour = colour.hex("#E0E0E0")
+			self.child.iconColour = colour.hex("#8D8D8D")
+			self.child.strokeColour = colour.hex("#EAEAEA")
+		end
+
+		if state.active then
+			core.tween:begin(self.child, 0.1, {
+				size = guiCoord(1, -10, 1, -10),
+				position = guiCoord(0, 5, 0, 5),
+				strokeAlpha = 1,
+			}, "outCirc")
+		else
+			if state.hovering then
+				core.tween:begin(self.child, 0.1, {
+					size = guiCoord(1, -8, 1, -8),
+					position = guiCoord(0, 4, 0, 4),
+					strokeAlpha = 0.5,
+				}, "outCirc")
+			else
+				core.tween:begin(self.child, 0.1, {
+					size = guiCoord(1, 0, 1, 0),
+					position = guiCoord(0, 0, 0, 0),
+					strokeAlpha = 0,
+				}, "outCirc")
+			end
+		end
 	end
-	
-    self.child:on("mouseEnter", function() self.states.dispatch({ type = "hovered" }) end)
-    self.child:on("mouseExit", function() self.states.dispatch({ type = "active" }) end)
-    self.child:on("mouseLeftDown", function() self.states.dispatch({ type = "focused" }) end)
-	self.child:on("mouseLeftUp", function() self.states.dispatch({ type = "enabled" }) end)
-	
+
+	self.states.subscribe(self.render)
+	self.states.dispatch({ type = "enabled" })
     return self
 end
