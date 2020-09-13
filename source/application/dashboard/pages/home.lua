@@ -10,7 +10,7 @@ return function(parent)
     local infoButton = checkBox {
         parent = parent,
         position = guiCoord(0.5, -60, 0.5, -20),
-        size = guiCoord(0, 178, 0, 48)
+        size = guiCoord(0, 120, 0, 18)
     }
 
     -- When the button is pressed, say hello!
