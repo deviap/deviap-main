@@ -3,140 +3,124 @@
 
 -- Creates a checkbox instance
 
-local createBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
+local newBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
 local newState = require("devgit:source/libraries/state/main.lua")
 
 local function reducer(state, action)
 	--[[
 		@description
-			Reduces action to a new state.
+			Reducers action to a new state
 		@parameter
 			any, state
 			table, action
 		@returns
-			any, newState
+			any, state
 	]]
-	state = state or {}
+	state = state or { enabled = true, mode = "idle" }
+	local newState = { enabled = state.enabled, mode = state.mode }
 
-	local newState = 
-	{
-		active = state.active, 
-		hovering = state.hovering, 
-        enabled = state.enabled,
-		text = state.text or "Checkbox item"
-	}
-
-	-- Might want to change to a lookup table.
-	if action.type == "enabled" then
+	if action.type == "enable" then
 		newState.enabled = true
-	elseif action.type == "hover" then
-        newState.hovering = true
-    elseif action.type == "unhover" then
-		newState.hovering = false
-	elseif action.type == "activate" then
-		newState.active = true
-	elseif action.type == "focusActivate" then
-		newState.enabled = true
-	elseif action.type == "disabled" then
+	elseif action.type == "disable" then
 		newState.enabled = false
-	elseif action.type == "skeleton" then
-		newState.enabled = false
-	elseif action.type == "setText" then
-		newState.text = action.text
+	elseif action.type == "setMode" then
+		newState.mode = action.mode
 	end
 
 	return newState
 end
 
 return function(props)
-	--[[
+    --[[
 		@description
-			Checkbox with states
+			Creates a base component
 		@parameter
 			table, props
 		@returns
 			table, component
 	]]
+    props.text = props.text or ""
 
-	local self = createBaseComponent(props)
-	
-    self.container = core.construct("guiFrame", self.props)
-    
-    self.selected = false
+    local self = newBaseComponent(props)
+    self.container.size = guiCoord(0, 120, 0, 18)
+    self.container.backgroundAlpha = 0
 
-    core.construct("guiFrame", {
+    local box = core.construct("guiFrame", {
         name = "box",
         parent = self.container,
-        size = guiCoord(0, 16, 0, 16),
-        position = guiCoord(0, 2, 0, 1),
-        strokeColour = colour.hex("#212121"),
-        strokeWidth = 1,
-        strokeAlpha = 1
+        active = true,
     })
 
-    core.construct("guiIcon", {
+    local boxIcon = core.construct("guiIcon", {
         name = "boxIcon",
-        parent = self.container:child("box"),
-        size = guiCoord(1, 0, 1, 0),
-        position = guiCoord(0, 0, 0, 0),
-        iconId = "check",
-        iconMax = 10,
-        iconColour = colour.hex("#FFFFFF"),
-        backgroundColour = colour.hex("#212121"),
-        backgroundAlpha = 1,
+        parent = box,
         visible = false
     })
 
-    core.construct("guiTextBox", {
+    local textBox = core.construct("guiTextBox", {
         name = "textBox",
         parent = self.container,
-        size = guiCoord(1, -25, 1, 0),
-        position = guiCoord(0, 25, 0, 0),
-        backgroundAlpha = 1,
-        text = self.text
+        active = false
     })
-    
-	
-	self.states = newState(reducer, { enabled = true })
-	
-	self.container:child("box"):on("mouseEnter", function() self.states.dispatch({ type = "hover" }) end)
-    self.container:child("box"):on("mouseExit", function() self.states.dispatch({ type = "unhover" }) self.states.dispatch({ type = "deactivate" }) end)
-    self.container:child("box"):on("mouseLeftUp", function() self.states.dispatch({ type = "deactivate" }) end)
-    self.container:child("box"):on("mouseLeftDown", function() self.states.dispatch({ type = "activate" }) end)
 
-	self.render = function(state)
-        self.container:child("textBox").text = state.text
+    box:on("mouseEnter", function() self.state.dispatch { type = "setMode", mode = "hover"} end)
+	box:on("mouseExit", function() self.state.dispatch { type = "setMode", mode = "idle" } end)
+    box:on("mouseLeftDown", function() self.state.dispatch { type = "setMode", mode = "active"} end)
+    boxIcon:on("mouseLeftDown", function() self.state.dispatch { type = "setMode", mode = "active"} end)
+    boxIcon:on("mouseEnter", function() self.state.dispatch { type = "setMode", mode = "hover"} end)
+    boxIcon:on("mouseExit", function() self.state.dispatch { type = "setMode", mode = "idle"} end)
 
-        if state.enabled then
-			self.container:child("box").strokeAlpha = 1
-            self.container:child("textBox").textColour = colour.hex("#212121")
-            self.container:child("box"):child("boxIcon").backgroundColour = colour.hex("#212121")
-		else
-            self.container:child("box").strokeAlpha = 0.1
-            self.container:child("textBox").textColour = colour.hex("#E0E0E0")
-            self.container:child("box"):child("boxIcon").backgroundColour = colour.hex("#E0E0E0")
-		end
+    self.state = newState(reducer)
+    self.selected = false
+
+    self.render = function()
+        --[[
+			@description
+				Renders the component
+			@parameter
+				nil
+			@returns
+				nil
+        ]]
         
-        if state.active then
-            self.container:child("box"):child("boxIcon").visible = true
-            core.tween:begin(self.container:child("box"), 0.1, {
-                strokeColour = colour.hex("#212121")
-            }, "outCirc")
-            self.selected = not self.selected
-        else
-            if state.hovering then
-				core.tween:begin(self.container:child("box"), 0.1, {
-                    strokeColour = colour.hex("#03A9F4")
-                }, "outCirc")
-            else
-				core.tween:begin(self.container:child("box"), 0.1, {
-                    strokeColour = colour.hex("#212121")
-                }, "outCirc")
-			end
-		end
-	end
+        box.name = "box"
+        box.size = guiCoord(0, 16, 0, 16)
+        box.position = guiCoord(0, 2, 0, 1)
+        box.strokeWidth = 1
+        box.strokeAlpha = 1
 
-	self.states.subscribe(self.render)
-	self.states.dispatch({ type = "enabled" })
+        boxIcon.size = guiCoord(1, 0, 1, 0)
+        boxIcon.position = guiCoord(0, 0, 0, 0)
+        boxIcon.iconId = "check"
+        boxIcon.iconMax = 10
+        boxIcon.iconColour = colour.hex("#FFFFFF")
+        boxIcon.backgroundColour = colour.hex("#212121")
+        boxIcon.backgroundAlpha = 1
+
+        textBox.size = guiCoord(1, -25, 1, 0)
+        textBox.position = guiCoord(0, 25, 0, 0)
+        textBox.backgroundAlpha = 1
+        textBox.text = props.text
+    end
+
+    self.state.subscribe(function(state)
+        if state.enabled then
+            if state.mode == "hover" then
+                box.strokeColour = colour.hex("#03A9F4")
+            elseif state.mode == "active" then
+                boxIcon.visible = not self.selected
+                self.selected = not self.selected
+            elseif state.mode == "idle" then
+                box.strokeColour = colour.hex("#212121")
+            end
+        else -- disabled
+            box.strokeAlpha = 0.1
+            textBox.textColour = colour.hex("#E0E0E0")
+            boxIcon.backgroundColour = colour.hex("#E0E0E0")
+        end
+
+        self.render()
+    end)
+
     return self
 end
