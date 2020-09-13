@@ -48,10 +48,15 @@ return function(props)
 			table, component
 	]]
 	props.textSize = props.textSize or 16
-	props.text = ""
-	props.iconId = ""
+	props.text = props.text or ""
+	props.iconId = props.iconId or ""
 	
 	local self = newBaseComponent(props)
+
+	-- Determine fixed sizing based on props.
+	if props.text ~= "" then self.container.size = guiCoord(0, 178, 0, 48)
+	else self.container.size = guiCoord(0, 48, 0, 48) end
+
 	local label = core.construct("guiTextBox", {
 		active = false,
 		parent = self.container,
@@ -79,7 +84,7 @@ return function(props)
 		label.position = guiCoord(0, props.textSize, 0, 0)
 		label.textSize = props.textSize
 		label.size = guiCoord(0, label.textDimensions.x, 1, 0)
-		--label.textAlign = "middle"
+		label.textAlign = "middle"
 		label.textColour = props.secondaryColour
 
 		icon.backgroundAlpha = 0
