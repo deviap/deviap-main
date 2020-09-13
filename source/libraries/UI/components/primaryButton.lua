@@ -1,3 +1,8 @@
+-- Copyright 2020 - Deviap (deviap.com)
+-- Author(s): utrain, Sanjay-B(Sanjay)
+
+-- Creates a primary button instance
+
 local newBaseButton = require("tevgit:source/libraries/UI/components/baseButton.lua")
 
 return function(props)
@@ -15,12 +20,12 @@ return function(props)
 	self.state.subscribe(function(state)
 		if state.enabled then
 			if state.mode == "hover" then
-				props.containerBackgroundColour = colour.hex("#19a4e3")
+				props.containerBackgroundColour = colour.hex("#03A9F4")
 				props.containerBackgroundAlpha = 1
 				props.secondaryColour = colour(1, 1, 1)
 				props.borderWidth = 1
-				props.borderAlpha = 0
-				props.borderInset = 4
+				props.borderAlpha = 1
+				props.borderInset = 2
 			elseif state.mode == "disable" then
 				props.containerBackgroundColour = colour.hex("#03A9F4")
 				props.containerBackgroundAlpha = 1
@@ -40,15 +45,15 @@ return function(props)
 				props.containerBackgroundAlpha = 1
 				props.secondaryColour = colour(1, 1, 1)
 				props.borderWidth = 1
-				props.borderAlpha = 0
+				props.borderAlpha = 1
 				props.borderInset = 2
 			elseif state.mode == "idle" then
 				props.containerBackgroundColour = colour.hex("#03A9F4")
 				props.containerBackgroundAlpha = 1
 				props.secondaryColour = colour(1, 1, 1)
 				props.borderWidth = 1
-				props.borderAlpha = 1
-				props.borderInset = 2
+				props.borderAlpha = 0
+				props.borderInset = 4
 			end
 		else -- disabled
 			props.containerBackgroundColour = colour.hex("#03A9F4")
