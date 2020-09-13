@@ -33,13 +33,6 @@ return function(props)
 				props.borderWidth = 1
 				props.borderAlpha = 0
 				props.borderInset = 4
-			elseif state.mode == "focused" then
-				props.containerBackgroundColour = colour.hex("#03A9F4")
-				props.containerBackgroundAlpha = 1
-				props.secondaryColour = colour(1, 1, 1)
-				props.borderWidth = 1
-				props.borderAlpha = 1
-				props.borderInset = 2
 			elseif state.mode == "active" then
 				props.containerBackgroundColour = colour.hex("#03A9F4")
 				props.containerBackgroundAlpha = 1
