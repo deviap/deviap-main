@@ -90,7 +90,7 @@ return function(props)
 		icon.backgroundAlpha = 0
 		icon.position = guiCoord(1, -props.textSize * 2, 0, 0)
 		icon.size = guiCoord(0, props.textSize, 1, 0)
-		icon.iconId = "plus"
+		icon.iconId = props.iconId or ""
 		icon.iconColour = props.secondaryColour
 
 		oldRender()
