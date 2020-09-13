@@ -19,11 +19,12 @@ return function(parent)
 
 	local b = button {
 		parent = parent,
+		position = guiCoord(0.5, -0, 0.5, -0),
 		iconId = "plus",
 		text = "Primary button"
 	}
 
-	b.container.position = guiCoord(0.5, -0, 0.5, -0)
+	--b.container.position = guiCoord(0.5, -0, 0.5, -0)
 
 	b.render()
 
