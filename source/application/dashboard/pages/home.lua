@@ -3,14 +3,13 @@
 
 -- Home (default) page-view
 
-local button = require("devgit:source/libraries/UI/components/primaryButton.lua")
+local checkbox = require("devgit:source/libraries/UI/components/checkbox.lua")
 
 return function(parent)
 
-	local _button = button {
+	local _checkbox = checkbox {
 		parent = parent,
 		position = guiCoord(0.5, -0, 0.5, -0),
-		iconId = "plus",
-		text = "Primary button"
+		text = "Checkbox item"
 	}.render()
 end
