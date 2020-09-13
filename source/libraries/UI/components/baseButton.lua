@@ -1,71 +1,52 @@
-local newState = require("devgit:source/libraries/state/main.lua")
+-- Copyright 2020 - Deviap (deviap.com)
+-- Author(s): Sanjay-B(Sanjay), utrain
 
-local function reducer(state, action)
-	return action.type or "enabled"
-end
+-- Creates a button instance
 
 --[[
-states = 
-{
-	mode = "hover" or "focus" or "active" or "enabled" or "disabled"
-}
-
-props =
-{
-	parent
-	containerBackgroundColour
-	containerBackgroundAlpha
-	secondaryColour
-	borderWidth
-	borderAlpha
-	borderInset
-}
+	core.tween:begin(self.child, 0.1, {
+		size = guiCoord(1, -10, 1, -10),
+		position = guiCoord(0, 5, 0, 5),
+		strokeAlpha = 1,
+	}, "outCirc")
 ]]
 
+local newBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
+
 return function(props)
-	props.containerBackgroundColour = props.containerBackgroundColour or colour.hex("#03A9F4")
-	props.containerBackgroundAlpha = props.containerBackgroundAlpha or 1
-	props.secondaryColour = props.secondaryColour or colour(1, 1, 1)
-	props.borderWidth = props.borderWidth or 1
-	props.borderAlpha = props.borderAlpha or 0
-	props.borderInset = props.borderInset or 2
+	props.fontSize = props.fontSize or 16
 
-	local self = {}
-	self.container = core.construct("guiFrame", {
-		parent = props.parent,
-		size = guiCoord(0, 200, 0, 200),
-		position = guiCoord(0.0, -0, 0.0, -0),
-		backgroundColour = props.containerBackgroundColour,
-		backgroundAlpha = props.containerBackgroundAlpha
-	})
-
-	local border = core.construct("guiFrame", {
-		parent = self.container,
-		backgroundAlpha = 0,
-		size = guiCoord(1, -props.borderInset * 2, 1, -props.borderInset * 2),
-		position = guiCoord(0, props.borderInset, 0, props.borderInset),
-		strokeColour = props.secondaryColour,
-		strokeAlpha = props.borderAlpha,
-		strokeWidth = props.borderWidth,
-	})
-
-	self.state = newState(reducer)
+	local self = newBaseComponent(props)
+	local label = core.construct("guiTextBox")
+	local icon = core.construct("guiIcon")
 
 	self.render = function()
-		-- Make into tweens later. I want to first kill myself.
-		self.container.backgroundColour = props.containerBackgroundColour
-		self.container.backgroundAlpha = props.containerBackgroundAlpha
+		label.backgroundAlpha = 1
+		label.text = props.text
+		label.position = guiCoord(0, props.fontSize, 0, 0)
+		label.size = guiCoord(0, label.textDimnesion.x, 1, 0)
+		label.fontSize = props.fontSize
+		label.textColour = props.secondaryColour
 
-		border.strokeColour = props.secondaryColour
-		border.strokeAlpha = props.borderAlpha
-		border.strokeWidth = props.borderWidth
+		icon.backgroundAlpha = 1
+		icon.position = guiCoord(0, label.textDimnesion.x + props.fontSize * 2, 0, 0)
+		icon.size = guiCoord(props.fontSize, 0,  0, 1)
+		icon.iconId = props.iconId
+		icon.iconColour = props.secondaryColour
+
+		self.render()
 	end
 
-	self.updateProps = function(newProps)
-		for propName, propValue in next, newProps do
-			props[propName] = propValue
+	self.state.subscribe(function(state)
+		if state == "enable" then
+			--CHANGE PROPS
+		elseif state == "disable" then
+		elseif state == "hover" then
+		elseif state == "active" then
+		elseif state == "disable" then
 		end
-	end
 
+		self.render()
+	end)
 	return self
 end

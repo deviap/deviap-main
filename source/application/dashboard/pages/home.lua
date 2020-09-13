@@ -17,7 +17,7 @@ local button = require("devgit:source/libraries/UI/components/baseButton.lua")
 ]]
 return function(parent)
 
-	button {
+	local b = button {
 		parent = parent,
 		borderInset = 5,
 		containerBackgroundColour = colour.random(),
@@ -26,6 +26,9 @@ return function(parent)
 		borderWidth = 2,
 		borderAlpha = 1,
 	}
+
+	b.size = guiCoord(0, 200, 0, 200)
+	b.position = guiCoord(0.0, -0, 0.0, -0)
 	--[[
     -- Example Button Constructor
     local infoButton = checkBox {
