@@ -127,7 +127,9 @@ if not core.dev.localDevGitEnabled then
     core.input:on("keyDown", function(key)
         if key == "KEY_RETURN" then
             -- Remove Updater / Splash Screen
-            container:destroy()
+			container:destroy()
+		end
+	end)
 
     core.engine:on("updateMessage", function(message)
         infoLabel.text = message
