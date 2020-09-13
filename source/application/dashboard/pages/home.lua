@@ -16,13 +16,13 @@ local button = require("devgit:source/libraries/UI/components/primaryButton.lua"
 }
 ]]
 return function(parent)
-	print("OK")
+
 	local b = button {
 		parent = parent,
-		iconId = "plus"
+		iconId = "plus",
+		text = "Primary button"
 	}
 
-	b.container.size = guiCoord(0, 178, 0, 48)
 	b.container.position = guiCoord(0.5, -0, 0.5, -0)
 
 	b.render()
