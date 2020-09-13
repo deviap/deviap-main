@@ -1,3 +1,8 @@
+-- Copyright 2020 - Deviap (deviap.com)
+-- Author(s): utrain, Sanjay-B(Sanjay)
+
+-- Create a base component instance
+
 return function(props)
 	--[[
 		@description
@@ -43,7 +48,7 @@ return function(props)
 				nil
 		]]
 
-		-- Make into tweens later. I want to first kill myself.
+		-- Make into tweens later.
 		self.container.backgroundColour = props.containerBackgroundColour
 		self.container.backgroundAlpha = props.containerBackgroundAlpha
 
