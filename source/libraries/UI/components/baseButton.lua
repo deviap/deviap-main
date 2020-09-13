@@ -48,12 +48,13 @@ return function(props)
 			table, component
 	]]
 	props.textSize = props.textSize or 16
+	props.text = ""
+	props.iconId = ""
 	
 	local self = newBaseComponent(props)
 	local label = core.construct("guiTextBox", {
 		active = false,
 		parent = self.container,
-		text = "Hello Worlds"
 	})
 	local icon = core.construct("guiIcon", {
 		active = false,
@@ -74,16 +75,17 @@ return function(props)
 		]]
 
 		label.backgroundAlpha = 0
-		--label.text = props.text
+		label.text = props.text
 		label.position = guiCoord(0, props.textSize, 0, 0)
-		label.size = guiCoord(0, label.textDimensions.x, 1, 0)
 		label.textSize = props.textSize
+		label.size = guiCoord(0, label.textDimensions.x, 1, 0)
+		--label.textAlign = "middle"
 		label.textColour = props.secondaryColour
 
 		icon.backgroundAlpha = 0
-		icon.position = guiCoord(0, label.textDimensions.x + props.textSize * 2, 0, 0)
+		icon.position = guiCoord(1, -props.textSize * 2, 0, 0)
 		icon.size = guiCoord(0, props.textSize, 1, 0)
-		--icon.iconId = props.iconId
+		icon.iconId = "plus"
 		icon.iconColour = props.secondaryColour
 
 		oldRender()

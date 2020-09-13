@@ -50,7 +50,7 @@ return function(props)
 				props.borderAlpha = 1
 				props.borderInset = 2
 			end
-		else
+		else -- disabled
 			props.containerBackgroundColour = colour.hex("#03A9F4")
 			props.containerBackgroundAlpha = 1
 			props.secondaryColour = colour(1, 1, 1)

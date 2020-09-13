@@ -19,9 +19,10 @@ return function(parent)
 	print("OK")
 	local b = button {
 		parent = parent,
+		iconId = "plus"
 	}
 
-	b.container.size = guiCoord(0, 200, 0, 200)
+	b.container.size = guiCoord(0, 178, 0, 48)
 	b.container.position = guiCoord(0.5, -0, 0.5, -0)
 
 	b.render()
