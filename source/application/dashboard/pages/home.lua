@@ -3,7 +3,7 @@
 
 -- Home (default) page-view
 
-local button = require("devgit:source/libraries/UI/components/baseButton.lua")
+local button = require("devgit:source/libraries/UI/components/primaryButton.lua")
 --[[props =
 {
 	parent
@@ -16,19 +16,16 @@ local button = require("devgit:source/libraries/UI/components/baseButton.lua")
 }
 ]]
 return function(parent)
-
+	print("OK")
 	local b = button {
 		parent = parent,
-		borderInset = 5,
-		containerBackgroundColour = colour.random(),
-		containerBackgroundAlpha = 1,
-		secondaryColour = colour.random(),
-		borderWidth = 2,
-		borderAlpha = 1,
 	}
 
-	b.size = guiCoord(0, 200, 0, 200)
-	b.position = guiCoord(0.0, -0, 0.0, -0)
+	b.container.size = guiCoord(0, 200, 0, 200)
+	b.container.position = guiCoord(0.5, -0, 0.5, -0)
+
+	b.render()
+
 	--[[
     -- Example Button Constructor
     local infoButton = checkBox {

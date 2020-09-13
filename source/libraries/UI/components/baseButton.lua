@@ -12,41 +12,82 @@
 ]]
 
 local newBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
+local newState = require("devgit:source/libraries/state/main.lua")
 
-return function(props)
-	props.fontSize = props.fontSize or 16
+local function reducer(state, action)
+	--[[
+		@description
+			Reducers action to a new state
+		@parameter
+			any, state
+			table, action
+		@returns
+			any, state
+	]]
+	state = state or { enabled = true, mode = "idle" }
+	local newState = { enabled = state.enabled, mode = state.mode }
 
-	local self = newBaseComponent(props)
-	local label = core.construct("guiTextBox")
-	local icon = core.construct("guiIcon")
-
-	self.render = function()
-		label.backgroundAlpha = 1
-		label.text = props.text
-		label.position = guiCoord(0, props.fontSize, 0, 0)
-		label.size = guiCoord(0, label.textDimnesion.x, 1, 0)
-		label.fontSize = props.fontSize
-		label.textColour = props.secondaryColour
-
-		icon.backgroundAlpha = 1
-		icon.position = guiCoord(0, label.textDimnesion.x + props.fontSize * 2, 0, 0)
-		icon.size = guiCoord(props.fontSize, 0,  0, 1)
-		icon.iconId = props.iconId
-		icon.iconColour = props.secondaryColour
-
-		self.render()
+	if action.type == "enable" then
+		newState.enabled = true
+	elseif action.type == "disable" then
+		newState.enabled = false
+	elseif action.type == "setMode" then
+		newState.mode = action.mode
 	end
 
-	self.state.subscribe(function(state)
-		if state == "enable" then
-			--CHANGE PROPS
-		elseif state == "disable" then
-		elseif state == "hover" then
-		elseif state == "active" then
-		elseif state == "disable" then
-		end
+	return newState
+end
 
-		self.render()
-	end)
+return function(props)
+	--[[
+		@description
+			Creates a base component
+		@parameter
+			table, props
+		@returns
+			table, component
+	]]
+	props.textSize = props.textSize or 16
+	
+	local self = newBaseComponent(props)
+	local label = core.construct("guiTextBox", {
+		active = false,
+		parent = self.container,
+		text = "Hello Worlds"
+	})
+	local icon = core.construct("guiIcon", {
+		active = false,
+		parent = self.container
+	})
+	
+	self.state = newState(reducer)
+
+	local oldRender = self.render
+	self.render = function()
+		--[[
+			@description
+				Renders the component
+			@parameter
+				nil
+			@returns
+				nil
+		]]
+
+		label.backgroundAlpha = 0
+		--label.text = props.text
+		label.position = guiCoord(0, props.textSize, 0, 0)
+		label.size = guiCoord(0, label.textDimensions.x, 1, 0)
+		label.textSize = props.textSize
+		label.textColour = props.secondaryColour
+
+		icon.backgroundAlpha = 0
+		icon.position = guiCoord(0, label.textDimensions.x + props.textSize * 2, 0, 0)
+		icon.size = guiCoord(0, props.textSize, 1, 0)
+		--icon.iconId = props.iconId
+		icon.iconColour = props.secondaryColour
+
+		oldRender()
+	end
+
 	return self
 end

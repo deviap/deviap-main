@@ -98,7 +98,7 @@ return function(props)
     
 	
 	self.states = newState(reducer, { enabled = true })
-    
+	
 	self.container:child("box"):on("mouseEnter", function() self.states.dispatch({ type = "hover" }) end)
     self.container:child("box"):on("mouseExit", function() self.states.dispatch({ type = "unhover" }) self.states.dispatch({ type = "deactivate" }) end)
     self.container:child("box"):on("mouseLeftUp", function() self.states.dispatch({ type = "deactivate" }) end)
