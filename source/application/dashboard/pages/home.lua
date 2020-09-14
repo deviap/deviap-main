@@ -3,11 +3,11 @@
 
 -- Home (default) page-view
 
-local button = require("devgit:source/libraries/UI/components/buttons/tertiaryButton.lua")
+local button = require("devgit:source/libraries/UI/components/buttons/warningButton.lua")
 
 return function(parent)
-
-	local _checkbox = checkbox {
+	print("error")
+	local _button = button {
 		parent = parent,
 		position = guiCoord(0.5, -0, 0.5, -0),
 		text = "Checkbox item"
