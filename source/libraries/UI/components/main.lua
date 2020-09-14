@@ -1,1 +1,0 @@
--- This is the future entry-point for components.

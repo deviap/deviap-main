@@ -24,15 +24,31 @@ local function reducer(state, action)
 		@returns
 			any, state
 	]]
-	state = state or { enabled = true, mode = "idle" }
-	local newState = { enabled = state.enabled, mode = state.mode }
+	state = state or
+	{
+		enabled = true,
+		active = false,
+		hover = false,
+	}
+
+	local newState = { enabled = state.enabled, active = state.active, hovering = state.hovering }
 
 	if action.type == "enable" then
 		newState.enabled = true
 	elseif action.type == "disable" then
 		newState.enabled = false
-	elseif action.type == "setMode" then
-		newState.mode = action.mode
+	elseif action.type == "activate" then
+		newState.active = true
+	elseif action.type == "deactivate" then
+		newState.active = false
+	elseif action.type == "hover" then
+		newState.hovering = true
+	elseif action.type == "unhover" then
+		newState.hovering = false
+	elseif action.type == "reset" then
+		newState.enabled = true
+		newState.active = false
+		newState.hovering = false
 	end
 
 	return newState
@@ -61,6 +77,7 @@ return function(props)
 		active = false,
 		parent = self.container,
 	})
+
 	local icon = core.construct("guiIcon", {
 		active = false,
 		parent = self.container
@@ -68,7 +85,6 @@ return function(props)
 	
 	self.state = newState(reducer)
 
-	local oldRender = self.render
 	self.render = function()
 		--[[
 			@description
@@ -93,7 +109,7 @@ return function(props)
 		icon.iconId = props.iconId or ""
 		icon.iconColour = props.secondaryColour
 
-		oldRender()
+		self.render()
 	end
 
 	return self

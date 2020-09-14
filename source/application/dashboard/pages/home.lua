@@ -3,7 +3,7 @@
 
 -- Home (default) page-view
 
-local button = require("devgit:source/libraries/UI/components/primaryButton.lua")
+local button = require("devgit:source/libraries/UI/components/buttons/primaryButton.lua")
 
 return function(parent)
 
