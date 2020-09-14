@@ -6,6 +6,7 @@ local newBaseButton = require("tevgit:source/libraries/UI/components/buttons/bas
 
 return function(props)
 	-- Defaults
+	props.containerBackgroundColour = colour.hex("#333333")
 	props.secondaryColour = colour(1, 1, 1)
 	props.containerBackgroundAlpha = 1
 	props.borderWidth = 2
@@ -20,18 +21,17 @@ return function(props)
 	self.state.subscribe(function(state)
 		if state.enabled then
 			props.secondaryColour = colour(1, 1, 1)
-			props.borderWidth = 2
 
 			if state.active then
-				props.containerBackgroundColour = colour.hex("#12a4e6")
+				props.containerBackgroundColour = colour.hex("#4f4f4f")
 				props.borderAlpha = 1
 				props.borderInset = 5
 			elseif state.hovering then
-				props.containerBackgroundColour = colour.hex("#14b1f7")
+				props.containerBackgroundColour = colour.hex("#424242")
 				props.borderAlpha = 0.4
 				props.borderInset = 4
 			else
-				props.containerBackgroundColour = colour.hex("#03A9F4")
+				props.containerBackgroundColour = colour.hex("#333333")
 				props.borderAlpha = 0
 				props.borderInset = 2
 			end

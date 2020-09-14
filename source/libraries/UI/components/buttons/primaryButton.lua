@@ -20,7 +20,6 @@ return function(props)
 	self.state.subscribe(function(state)
 		if state.enabled then
 			props.secondaryColour = colour(1, 1, 1)
-			props.borderWidth = 2
 
 			if state.active then
 				props.containerBackgroundColour = colour.hex("#12a4e6")

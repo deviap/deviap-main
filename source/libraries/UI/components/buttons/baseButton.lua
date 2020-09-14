@@ -85,6 +85,7 @@ return function(props)
 	
 	self.state = newState(reducer)
 
+	local oldRender = self.render
 	self.render = function()
 		--[[
 			@description
@@ -109,7 +110,7 @@ return function(props)
 		icon.iconId = props.iconId or ""
 		icon.iconColour = props.secondaryColour
 
-		self.render()
+		oldRender()
 	end
 
 	return self
