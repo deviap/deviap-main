@@ -74,8 +74,14 @@ controller.addButton = function(text, icon, cb)
     end)
 
     if cb then
-        local gui = cb(controller.container)
+        local page = core.construct("guiFrame", {
+            parent = controller.container,
+            size = guiCoord(1, 0, 1, 0),
+            position = guiCoord(0,0, 0, 0),
+            backgroundAlpha = 0
+        })
         
+        local gui = cb(page)
     end
 end
 

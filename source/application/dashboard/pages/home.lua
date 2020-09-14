@@ -4,6 +4,7 @@
 -- Home (default) page-view
 
 local button = require("devgit:source/libraries/UI/components/buttons/tertiaryButton.lua")
+local checkbox = require("devgit:source/libraries/UI/components/checkbox.lua")
 
 return function(parent)
 
