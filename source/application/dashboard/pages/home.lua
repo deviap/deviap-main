@@ -3,13 +3,13 @@
 
 -- Home (default) page-view
 
-local button = require("devgit:source/libraries/UI/components/buttons/warningButton.lua")
+local button = require("devgit:source/libraries/UI/components/dropDown.lua")
 
 return function(parent)
 	print("error")
 	local _button = button {
 		parent = parent,
 		position = guiCoord(0.5, -0, 0.5, -0),
-		text = "Checkbox item"
+		text = "Checkbox item",
 	}.render()
 end
