@@ -1,27 +1,6 @@
 -- Copyright 2020 - Deviap (deviap.com)
 
 local newBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
-local newState = require("devgit:source/libraries/state/main.lua")
-
-local function reducer(state, action)
-	--[[
-		@description
-			Reducers action to a new state
-		@parameter
-			any, state
-			table, action
-		@returns
-			any, state
-	]]
-	state = state or { vertical = false }
-	local newState = { vertical = state.vertical }
-
-	if action.type == "setVertical" then
-		newState.vertical = action == true
-	end
-
-	return newState
-end
 
 return function(props)
     --[[
@@ -46,8 +25,7 @@ return function(props)
 
     props.progress = props.progress or 0
     props.steps = props.steps or {}
-
-    self.state = newState(reducer)
+    props.vertical = props.vertical or false
 
     self.render = function()
         --[[
@@ -59,23 +37,29 @@ return function(props)
 				nil
         ]]
 
+        if props.size then
+            self.container.size = props.size
+        end
+
         local s = 1/#props.steps
-        for i,v in pairs (props.steps) do
-            v.container.parent = self.container
-            v.container.position = guiCoord(s*(i-1), 0, 0, 6)
-            v.container.size = guiCoord(s, 0, 1, 0)
-        end
+        if props.vertical then
+            for i,v in pairs (props.steps) do
+                v.container.parent = self.container
+                v.container.position = guiCoord(0, 6, s*(i-1), 0)
+                v.container.size = guiCoord(1, -6, s, 0)
+            end
 
-        progressBar.size = guiCoord(props.progress * s, 0, 0, 2)
+            progressBar.size = guiCoord(0, 2, props.progress * s, 0)
+        else
+            for i,v in pairs (props.steps) do
+                v.container.parent = self.container
+                v.container.position = guiCoord(s*(i-1), 0, 0, 6)
+                v.container.size = guiCoord(s, 0, 1, -6)
+            end
+
+            progressBar.size = guiCoord(props.progress * s, 0, 0, 2)
+        end
     end
-
-    self.state.subscribe(function(state)
-        if state.vertical then
-
-        end
-
-        self.render()
-    end)
 
     self.render()
 
