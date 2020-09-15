@@ -122,5 +122,7 @@ return function(props)
         self.render()
     end)
 
+    self.render()
+
     return self
 end
