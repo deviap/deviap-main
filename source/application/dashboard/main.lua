@@ -11,7 +11,8 @@ local main = core.construct("guiFrame", {
 })
 
 local sidebar = require("devgit:source/application/dashboard/sidebar.lua")
-sidebar.addButton("Home", "th", require("devgit:source/application/dashboard/pages/home.lua"))
+sidebar.addButton("test", "adb", require("devgit:source/application/dashboard/pages/components.lua"))
+sidebar.addButton("Home", "home", require("devgit:source/application/dashboard/pages/home.lua"))
 sidebar.addButton("Apps", "book")
 sidebar.addButton("Develop", "code")
-sidebar.addButton("Tutorials", "graduation-cap")
+sidebar.addButton("Tutorials", "school")

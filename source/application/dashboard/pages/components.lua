@@ -1,0 +1,48 @@
+-- Copyright 2020 - Deviap (deviap.com)
+
+local button = require("devgit:source/libraries/UI/components/buttons/dangerButton.lua")
+local checkbox = require("devgit:source/libraries/UI/components/checkbox.lua")
+local progressStep = require("devgit:source/libraries/UI/components/progress/progressStep.lua")
+local progressIndicator = require("devgit:source/libraries/UI/components/progress/progressIndicator.lua")
+
+return function(parent)
+	local _button = button {
+		parent = parent,
+		position = guiCoord(0, 310, 0, 10),
+		text = "Button item"
+    }
+    
+	local _checkbox = checkbox {
+		parent = parent,
+		position = guiCoord(0,310, 0, 80),
+		text = "Checkbox item"
+	}
+    
+	local _progressStep1 = progressStep {
+        text = "Progress Step 1",
+        label = "optional label"
+    }
+    
+	local _progressStep2 = progressStep {
+		text = "Progress Step 2"
+    }
+
+	local _progressStep3 = progressStep {
+		text = "Progress Step 3"
+    }
+
+    local _progressIndicator = progressIndicator {
+		parent = parent,
+        position = guiCoord(0, 20, 0, 230),
+        steps = {
+            _progressStep1,
+            _progressStep2,
+            _progressStep3
+        },
+        progress = 2
+    }
+    
+    _progressStep1.state.dispatch { type = "setMode", mode = "complete" }
+    _progressStep2.state.dispatch { type = "setMode", mode = "current" }
+    _progressStep3.state.dispatch { type = "setMode", mode = "invalid"}
+end

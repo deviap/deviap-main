@@ -113,5 +113,7 @@ return function(props)
 		oldRender()
 	end
 
+	self.render()
+	
 	return self
 end

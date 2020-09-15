@@ -26,6 +26,7 @@ controller.container = core.construct("guiFrame", {
 
 local currentY = 10
 local btns = {}
+local pages = {}
 
 controller.addButton = function(text, icon, cb)
     local btn = core.construct("guiIcon", {
@@ -78,9 +79,26 @@ controller.addButton = function(text, icon, cb)
             parent = controller.container,
             size = guiCoord(1, 0, 1, 0),
             position = guiCoord(0,0, 0, 0),
-            backgroundAlpha = 0
+            backgroundAlpha = 0,
+            visible = false
         })
-        
+
+        if #btns == 1 then
+            page.visible = true
+        end
+
+        table.insert(pages, page)
+
+        btn:on("mouseLeftDown", function()
+            for _,v in pairs(pages) do
+                v.visible = false
+            end
+            core.tween:begin(controller.activeBall, 0.3, {
+                position = guiCoord(1, -4, 0, btn.position.offset.y + 20 - 4)
+            }, "inOutQuad")
+            page.visible = true
+        end)
+
         local gui = cb(page)
     end
 end
