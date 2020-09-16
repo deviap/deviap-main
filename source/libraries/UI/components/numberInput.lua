@@ -32,7 +32,7 @@ return function(props)
         name = "btn",
 		active = false,
         parent = increaseContainer,
-        iconId = "keyboard_arrow_up",
+        iconId = "arrow_drop_up",
         position = guiCoord(0, 0, 1, -14),
         size = guiCoord(0.9, 0, 0, 16),
         iconMax = 16,
@@ -46,7 +46,7 @@ return function(props)
     }
 
     local decreaseBtn = decreaseContainer:child("btn")
-    decreaseBtn.iconId = "keyboard_arrow_down"
+    decreaseBtn.iconId = "arrow_drop_down"
     decreaseBtn.position = guiCoord(0, 0, 0, -2)
 
     decreaseContainer:on("mouseLeftUp", function()
