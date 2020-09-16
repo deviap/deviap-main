@@ -2,19 +2,50 @@
 
 local button = require("devgit:source/libraries/UI/components/buttons/dangerButton.lua")
 local checkbox = require("devgit:source/libraries/UI/components/checkbox.lua")
+local textInput = require("devgit:source/libraries/UI/components/textInput.lua")
 local progressStep = require("devgit:source/libraries/UI/components/progress/progressStep.lua")
 local progressIndicator = require("devgit:source/libraries/UI/components/progress/progressIndicator.lua")
 
 return function(parent)
 	local _button = button {
 		parent = parent,
-		position = guiCoord(0, 310, 0, 10),
-		text = "Button item"
+		position = guiCoord(0, 310, 0, 40),
+        text = "Button item"
+    }
+    
+	textInput {
+		parent = parent,
+        position = guiCoord(0,510, 0, 40),
+        size = guiCoord(0, 300, 0, 30),
+        label = "Label optional",
+        helper = "Helper optional",
+        placeholder = "Optional Placeholder"
+    }
+    
+	local email = textInput {
+		parent = parent,
+        position = guiCoord(0,510, 0, 100),
+        size = guiCoord(0, 300, 0, 30),
+        placeholder = "Username",
+        helper = "Usually your email address"
+    }
+
+    email.input:on("keyUp", function()
+        email.state.dispatch { 
+            type = "invalidate",
+            error = "Bad email address..." 
+        }
+    end)
+
+	textInput {
+		parent = parent,
+        position = guiCoord(0,510, 0, 160),
+        size = guiCoord(0, 300, 0, 30),
     }
     
 	local _checkbox = checkbox {
 		parent = parent,
-		position = guiCoord(0,310, 0, 80),
+		position = guiCoord(0,310, 0, 160),
 		text = "Checkbox item"
 	}
     
