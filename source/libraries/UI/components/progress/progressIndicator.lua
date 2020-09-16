@@ -13,7 +13,7 @@ return function(props)
     ]]
 
     local self = newBaseComponent(props)
-    self.container.size = guiCoord(0, 512, 0, 34)
+    self.container.size = guiCoord(0, 512, 0, 38)
     self.container.backgroundAlpha = 0
 
     local progressBar = core.construct("guiFrame", {

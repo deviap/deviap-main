@@ -40,7 +40,7 @@ return function(props)
     props.label = props.label or ""
 
     local self = newBaseComponent(props)
-    self.container.size = guiCoord(0, 120, 0, 34)
+    self.container.size = guiCoord(0, 120, 0, 38)
     self.container.backgroundAlpha = 0
 
     local box = core.construct("guiIcon", {

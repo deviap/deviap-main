@@ -6,11 +6,60 @@ local textInput = require("devgit:source/libraries/UI/components/textInput.lua")
 local numberInput = require("devgit:source/libraries/UI/components/numberInput.lua")
 local progressStep = require("devgit:source/libraries/UI/components/progress/progressStep.lua")
 local progressIndicator = require("devgit:source/libraries/UI/components/progress/progressIndicator.lua")
+local tab = require("devgit:source/libraries/UI/components/tabs/tab.lua")
+local tabs = require("devgit:source/libraries/UI/components/tabs/tabs.lua")
 
 return function(parent)
+    
+    -- Tabs --
+
+    local tabs = tabs {
+        parent = parent,
+        position = guiCoord(0, 10, 0, 400),
+        isContainer = true
+    }
+
+	local tab1 = tab {
+        label = "tab 1"
+    }
+
+    local txt = core.construct("guiTextBox", {
+        parent = parent,
+        position = guiCoord(0, 10, 0, 450),
+        text = "text"
+    })
+
+    tabs.addTab(tab1, txt)
+
+	local tab2 = tab {
+        label = "tab 2",
+    }
+
+    local txt2 = core.construct("guiTextBox", {
+        parent = parent,
+        position = guiCoord(0, 10, 0, 450),
+        text = "text2"
+    })
+
+    tabs.addTab(tab2, txt2)
+
+	local tab3 = tab {
+        label = "tab 3",
+    }
+
+    local txt3 = core.construct("guiTextBox", {
+        parent = parent,
+        position = guiCoord(0, 10, 0, 450),
+        text = "text3"
+    })
+
+    tabs.addTab(tab3, txt3)
+
+    -- other crap --
+    
 	local _button = button {
 		parent = parent,
-		position = guiCoord(0, 310, 0, 40),
+		position = guiCoord(0, 310, 0, 60),
         text = "Button item"
     }
     

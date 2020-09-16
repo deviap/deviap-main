@@ -127,12 +127,12 @@ return function(props)
 
     self.input = input
 
-	local borderBottom = core.construct("guiFrame", {
+	local borderBottom = core.construct("guiLine", {
 		active              = false,
         parent              = self.container,
-        backgroundColour    = colour.hex("8d8d8d"),
-        size                = guiCoord(1, 0, 0, 1),
-        position            = guiCoord(0, 0, 1, -1)
+        lineColour          = colour.hex("8d8d8d"),
+        pointA              = guiCoord(0, 0, 1, -1),
+        pointB              = guiCoord(1, 0, 1, -1)
     })
     
 	local activeBorder = core.construct("guiFrame", {
