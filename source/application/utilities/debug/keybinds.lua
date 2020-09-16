@@ -4,7 +4,7 @@
 -- All keybinds used for debugging internally. Devgit has to be overridden to enable all but the Devgit Prompt
 
 local graphicsDebug = false
-if core.dev.localDevGitEnabled then core.interface:child("outputWindow").visible = true end -- Set to true if devgit is overridden, otherwise hide it.
+--if core.dev.localDevGitEnabled then core.interface:child("outputWindow").visible = true end -- Set to true if devgit is overridden, otherwise hide it.
 
 core.input:on("keyDown", function(key)
 
@@ -12,7 +12,7 @@ core.input:on("keyDown", function(key)
     if key == "KEY_F1" then core.interface:child("outputWindow").visible = not core.interface:child("outputWindow").visible
 
     -- Hard Reset Application
-    elseif key == "KEY_F2" and core.dev.localDevGitEnabled then core.apps:reset()
+    elseif key == "KEY_F2" and core.dev.localDevGitEnabled then core.apps:loadDashboard()
 
     -- Prompts Devgit
     elseif key == "KEY_F3" then core.dev:promptDevGit()
