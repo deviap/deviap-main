@@ -3,15 +3,11 @@ local newButton = require("devgit:source/libraries/UI/components/buttons/baseBut
 return function(props)
 	local self = newButton(props)
 
-	-- Make a frame be the container and have a seperate menu frame
-	-- Reason: cool transition effect for opening, makes it gradually appear without changing size.
+	-- TODO: Layer a main frame that changes size and another frame that is child to be the actual menu.
 	self.menu = core.construct("guiFrame", {
 		visible = false,
-		backgroundColour = colour.random(),
 		parent = self.container,
 		position = guiCoord(0, 0, 1, 0),
-		active = false,
-		zIndex = 100
 	})
 
 	self.container:on("mouseEnter", function() self.state.dispatch { type = "hover" } end)
@@ -25,26 +21,25 @@ return function(props)
 	end)
 
 	self.state.subscribe(function(state)
-		self.menu.visible = false
-
 		if state.enabled then
 			props.secondaryColour = colour(1, 1, 1)
 
 			if state.active then
 				self.menu.visible = true
 				props.containerBackgroundColour = colour.hex("#12a4e6")
-				props.borderAlpha = 1
 				props.borderInset = 5
 			elseif state.hovering then
+				self.menu.visible = false
 				props.containerBackgroundColour = colour.hex("#14b1f7")
-				props.borderAlpha = 0.4
 				props.borderInset = 4
 			else
 				props.containerBackgroundColour = colour.hex("#03A9F4")
+				self.menu.visible = false
 				props.borderAlpha = 0
 				props.borderInset = 2
 			end
 		else -- disabled
+			self.menu.visible = false
 			props.containerBackgroundColour = colour.hex("#E0E0E0")
 			props.secondaryColour = colour.hex("EAEAEA")
 			props.borderAlpha = 0
@@ -64,7 +59,7 @@ end
 		buttonText
 		buttonIcon
 
-		menuContainer (0, 0, 1, 0)
+		menuContainer
 			elementA
 			elementB
 ]]
