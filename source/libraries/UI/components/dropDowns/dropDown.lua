@@ -8,6 +8,7 @@ return function(props)
 		visible = false,
 		parent = self.container,
 		position = guiCoord(0, 0, 1, 0),
+		backgroundColour = colour.random() -- debug
 	})
 
 	self.container:on("mouseEnter", function() self.state.dispatch { type = "hover" } end)

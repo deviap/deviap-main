@@ -14,11 +14,11 @@ end
 return function(props)
 	local self = newDropdown(props)
 	self._buttons = {}
-	self.addButton = function(tag, useThisObjectInstead)
-		-- Define the button here, should use the baseButton as well, base.
+	self.addButton = function(tag)
 	end
 	self.removeButton = function(tag)
-		-- Remove it via destruction... shit we don't have .destroy... Next commit!
+		self._buttons[tag].destroy()
+		self._buttons[tag] = nil
 	end
 	self.getButton = function(tag)
 		-- Case you want to bind to hover to preview option?
@@ -29,6 +29,7 @@ return function(props)
 	local oldRender = self.render
 	self.render = function()
 		local heightOfButton = self.menu.absoluteSize.y / #self._buttons
+
 		local i = 0
 		for _, button in next, self._buttons do
 			button.size = guiCoord(1, 0, 0, heightOfButton)
@@ -37,5 +38,6 @@ return function(props)
 
 		oldRender()
 	end
+
 	return self
 end
