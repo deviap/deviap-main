@@ -73,7 +73,8 @@ return function(props)
 	props.textSize = props.textSize or 16
 	props.placeholder = props.placeholder or ""
 	props.label = props.label or ""
-	props.helper = props.helper or ""
+    props.helper = props.helper or ""
+    props.text = props.text or ""
 	
 	local self = newBaseComponent(props)
     self.container.backgroundAlpha = 0
@@ -121,7 +122,7 @@ return function(props)
         position            = guiCoord(0, 15, 0, 5),
         textEditable        = true,
         textAlign           = "middleLeft",
-        text                = props.placeholder
+        text                = props.text == "" and props.placeholder or props.text
     })
 
     self.input = input
@@ -149,6 +150,7 @@ return function(props)
 	local icon = core.construct("guiIcon", {
 		active = false,
         parent = inputContainer,
+        name = "icon",
         iconId = "error",
         position = guiCoord(1, -40, 0, 0),
         size = guiCoord(0, 40, 1, 0),
@@ -159,7 +161,7 @@ return function(props)
         visible = false
     })
     
-    local isPlaceholder = true
+    local isPlaceholder = props.text == ""
 
     -- Focus the textbox if the user clicks the surrounding area (inc label, helper text)
     self.container:on("mouseLeftUp", function() 

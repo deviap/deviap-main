@@ -3,6 +3,7 @@
 local button = require("devgit:source/libraries/UI/components/buttons/dangerButton.lua")
 local checkbox = require("devgit:source/libraries/UI/components/checkbox.lua")
 local textInput = require("devgit:source/libraries/UI/components/textInput.lua")
+local numberInput = require("devgit:source/libraries/UI/components/numberInput.lua")
 local progressStep = require("devgit:source/libraries/UI/components/progress/progressStep.lua")
 local progressIndicator = require("devgit:source/libraries/UI/components/progress/progressIndicator.lua")
 
@@ -37,12 +38,12 @@ return function(parent)
         }
     end)
 
-	textInput {
+	local num = numberInput {
 		parent = parent,
         position = guiCoord(0,510, 0, 160),
         size = guiCoord(0, 300, 0, 30),
     }
-    
+
 	local _checkbox = checkbox {
 		parent = parent,
 		position = guiCoord(0,310, 0, 160),
