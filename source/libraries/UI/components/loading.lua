@@ -23,21 +23,21 @@ return function(props)
     self.container.size = guiCoord(0, 50, 0, 50)
 
     local shadow = core.construct("guiImage", {
-        parent = self.container,
-        size = guiCoord(1, -12, 1, -12),
-        position = guiCoord(0, 6, 0, 6),
-        image = "deviap:img/spinner.png",
+        parent          = self.container,
+        size            = guiCoord(1, -12, 1, -12),
+        position        = guiCoord(0, 6, 0, 6),
+        image           = "deviap:img/spinner.png",
         backgroundAlpha = 0,
-        imageColour = colour(0, 0, 0),
-        imageAlpha = 0.25
+        imageColour     = colour(0, 0, 0),
+        imageAlpha  = 0.25
     })
 
     local icon = shadow:clone {
-        parent = shadow,
-        position = guiCoord(0, 1, 0, 1),
-        size = guiCoord(1, -2, 1, -2),
+        parent      = shadow,
+        position    = guiCoord(0, 1, 0, 1),
+        size        = guiCoord(1, -2, 1, -2),
         imageColour = colour(1, 1, 1),
-        imageAlpha = 1
+        imageAlpha  = 1
     }
 
     local oldRender = self.render

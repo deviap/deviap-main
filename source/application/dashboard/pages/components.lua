@@ -9,6 +9,7 @@ local progressIndicator = require("devgit:source/libraries/UI/components/progres
 local tab = require("devgit:source/libraries/UI/components/tabs/tab.lua")
 local tabs = require("devgit:source/libraries/UI/components/tabs/tabs.lua")
 local loading = require("devgit:source/libraries/UI/components/loading.lua")
+local toggle = require("devgit:source/libraries/UI/components/toggle.lua")
 
 return function(parent)
     
@@ -128,11 +129,17 @@ return function(parent)
     _progressStep2.state.dispatch { type = "setMode", mode = "current" }
     _progressStep3.state.dispatch { type = "setMode", mode = "invalid"}
 
-
-
 	local load = loading {
 		parent = parent,
 		position = guiCoord(0,310, 0, 250)
 	}
     load.spin()
+
+
+	toggle {
+		parent = parent,
+        position = guiCoord(0,310, 0, 300),
+        label = "Spaghetti?",
+        on = true
+	}
 end

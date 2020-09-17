@@ -148,17 +148,17 @@ return function(props)
 	})
 
 	local icon = core.construct("guiIcon", {
-		active = false,
-        parent = inputContainer,
-        name = "icon",
-        iconId = "error",
-        position = guiCoord(1, -40, 0, 0),
-        size = guiCoord(0, 40, 1, 0),
-        iconMax = 16,
-        iconColour = colour.hex('da1e28'),
-        backgroundAlpha = 1,
-        backgroundColour = inputContainer.backgroundColour,
-        visible = false
+		active              = false,
+        parent              = inputContainer,
+        name                = "icon",
+        iconId              = "error",
+        position            = guiCoord(1, -40, 0, 0),
+        size                = guiCoord(0, 40, 1, 0),
+        iconMax             = 16,
+        iconColour          = colour.hex('da1e28'),
+        backgroundAlpha     = 1,
+        backgroundColour    = inputContainer.backgroundColour,
+        visible             = false
     })
     
     local isPlaceholder = props.text == ""
