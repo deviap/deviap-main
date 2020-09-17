@@ -8,6 +8,7 @@ local progressStep = require("devgit:source/libraries/UI/components/progress/pro
 local progressIndicator = require("devgit:source/libraries/UI/components/progress/progressIndicator.lua")
 local tab = require("devgit:source/libraries/UI/components/tabs/tab.lua")
 local tabs = require("devgit:source/libraries/UI/components/tabs/tabs.lua")
+local loading = require("devgit:source/libraries/UI/components/loading.lua")
 
 return function(parent)
     
@@ -56,7 +57,7 @@ return function(parent)
     tabs.addTab(tab3, txt3)
 
     -- other crap --
-    
+
 	local _button = button {
 		parent = parent,
 		position = guiCoord(0, 310, 0, 60),
@@ -126,4 +127,12 @@ return function(parent)
     _progressStep1.state.dispatch { type = "setMode", mode = "complete" }
     _progressStep2.state.dispatch { type = "setMode", mode = "current" }
     _progressStep3.state.dispatch { type = "setMode", mode = "invalid"}
+
+
+
+	local load = loading {
+		parent = parent,
+		position = guiCoord(0,310, 0, 250)
+	}
+    load.spin()
 end
