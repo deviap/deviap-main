@@ -1,4 +1,4 @@
-local newTabResolver = require("tevgit:source/libraries/UI/constraints/tabResolver.lua")
+local newTabResolver = require("devgit:source/libraries/UI/constraints/tabResolver.lua")
 
 local count = function(x)
 	local c = 0

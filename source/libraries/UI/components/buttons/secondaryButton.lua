@@ -2,7 +2,7 @@
 -- Author(s): utrain, Sanjay-B(Sanjay)
 
 -- Creates a primary button instance
-local newBaseButton = require("tevgit:source/libraries/UI/components/buttons/baseButton.lua")
+local newBaseButton = require("devgit:source/libraries/UI/components/buttons/baseButton.lua")
 
 return function(props)
 	-- Defaults

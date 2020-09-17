@@ -2,7 +2,7 @@
 -- Author(s): utrain, Sanjay-B(Sanjay)
 
 -- Creates a primary button instance
-local newTextInput = require("tevgit:source/libraries/UI/components/textInput.lua")
+local newTextInput = require("devgit:source/libraries/UI/components/textInput.lua")
 
 return function(props)
     props.step = props.step or 10
