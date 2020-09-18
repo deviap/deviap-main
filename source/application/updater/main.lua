@@ -1,89 +1,81 @@
 -- Copyright 2020 - Deviap (deviap.com)
 -- Author(s): Sanjay-B(Sanjay)
 
+-- One of three main entry points
 -- Updater & Splash Screen file: Updates Deviap Application w/ style
--- Note: Ignores updating process when tevgit is active / enabled
+-- Note: Ignores updating process when devgit is active / enabled
 
---[[
-    Terra Cotta: e57373 // 229, 115, 115
-    Blue: 3e92cc // 62, 146, 204
-    Green: 67ce67 // 103, 206, 103
-    Dark Grey: 666666 // 102, 102, 102
-    Light Blue: 679bce // 103, 155, 206
-    Purple: 6767ce // 103, 103, 206
-    Orange: ff8a65 // 255, 138, 101
-    Yellow: ffb74d // 255, 183, 77
-]]--
+-- Essential Debug Utilities
+require("devgit:source/application/utilities/debug/output.lua")
+require("devgit:source/application/utilities/debug/keybinds.lua")
 
-local Container = core.construct("guiFrame", {
+local colourMap = require("devgit:source/application/utilities/colourScheme.lua")
+
+local container = core.construct("guiFrame", {
     parent = core.interface,
     size = guiCoord(1, 0, 1, 100),
     position = guiCoord(0, 0, 0, -50),
-    backgroundColour = colour.rgb(1, 1, 1)
+    backgroundColour = colour.black()
 })
 
-local centerBackContainer = core.construct("guiFrame", {
-    parent = Container,
-    size = guiCoord(0, 400, 0, 200),
-    position = guiCoord(0.5, -200, 0.5, -100),
-    backgroundColour = colour.rgb(255, 255, 255),
-    backgroundAlpha = 0.7
+local pattern = core.construct("guiImage", {
+    parent = container,
+    size = guiCoord(1, 0, 1, 0),
+    backgroundAlpha = 0,
+    image = "devgit:assets/images/tile.png",
+    patternScaleValues = false,
+    imageBottomRight = vector2(120, 120)
 })
 
-local centerContainer = core.construct("guiFrame", {
-    parent = Container,
-    size = guiCoord(0, 400, 0, 200),
-    position = guiCoord(0.5, -190, 0.5, -110),
+local tween;
+tween = core.tween:begin(pattern, 5, {
+    imageTopLeft = vector2(-120, 120)
+}, "linear", function()
+    tween:reset()
+    tween:resume()
+end)
+
+local logoBg, logoShadow, logoText = require("devgit:source/application/utilities/logo.lua")({
+    parent = container,
+    size = guiCoord(0, 400, 0, 160),
+    position = guiCoord(0.5, -200, 0.5, -80),
     backgroundColour = colour.rgb(255, 255, 255),
     backgroundAlpha = 0.98
 })
 
-local Header = core.construct("guiTextBox", {
-    parent = centerContainer,
-    size = guiCoord(0, 400, 0, 200), 
-    position = guiCoord(0.5, -200, 0.5, -100),
-    backgroundAlpha = 0,
-    text = "deviap",
-    textColour = colour.rgb(1, 1, 1),
-    textAlign = "middle",
-    textSize = 140,
-    textFont = "tevgit:fonts/monofonto.ttf"
-})
-
 -- Move to effects module (or something similar)
-local Colors = {
-    [1] = colour.rgb(102, 102, 102), 
-    [2] = colour.rgb(103, 155, 206), 
-    [3] = colour.rgb(103, 155, 206), 
-    [4] = colour.rgb(62, 146, 204), 
-    [5] = colour.rgb(103, 206, 103),
-    [6] = colour.rgb(229, 115, 115), 
-    [7] = colour.rgb(1, 1, 1)
+local colours = {
+    colourMap.purple,
+    colourMap.lightBlue, 
+    colourMap.blue, 
+    colourMap.green,
+    colourMap.terraCotta,
 }
 
-local Count = 1
+local currentColourIndex = 1
 
 spawn(function() 
-    while sleep(4) do
-        core.tween:begin(Container, 4, { backgroundColour = Colors[Count] })
-        core.tween:begin(Header, 4, { textColour = Colors[Count] })
-        Count = Count + 1
-        if Count == 7 then Count = 1 end
+    while true do
+        core.tween:begin(container, 4, { backgroundColour = colours[currentColourIndex] })
+        core.tween:begin(logoText, 4, { textColour = colours[currentColourIndex] })
+        currentColourIndex = currentColourIndex + 1
+        if currentColourIndex > #colours then currentColourIndex = 1 end
+        sleep(4)
     end
 end)
 
 --
-sleep(5)
-core.tween:begin(centerBackContainer, 1, { position = guiCoord(0.5, -200, 0.4, -100) })
-core.tween:begin(centerContainer, 1, { position = guiCoord(0.5, -190, 0.4, -110) })
+sleep(3)
+core.tween:begin(logoShadow, 1, { position = guiCoord(0.5, -200, 0.4, -90) })
+core.tween:begin(logoBg, 1, { position = guiCoord(0.5, -190, 0.4, -100) })
 sleep(1)
 
 
--- If Tevgit is overridden
-if core.dev.localTevGit then
+-- If devgit is overridden
+if core.dev.localDevGitEnabled then
 
     core.construct("guiTextBox", {
-        parent = Container,
+        parent = container,
         size = guiCoord(0, 370, 0, 100),
         position = guiCoord(0.5, -185, 0.58, -30),
         backgroundAlpha = 0,
@@ -91,31 +83,34 @@ if core.dev.localTevGit then
         textColour = colour.rgb(1, 1, 1),
         textAlign = "middle",
         textSize = 18,
-        textFont = "tevurl:fonts/openSansBold.ttf",
+        textFont = "deviap:assets/fonts/openSansBold.ttf",
         textMultiline = true,
         textWrap = true
     })
 
-    core.construct("guiTextBox", {
-        parent = Container,
+    local pathUi = core.construct("guiTextBox", {
+        parent = container,
         size = guiCoord(0, 300, 0, 30),
         position = guiCoord(0.5, -150, 0.64, 10),
         backgroundColour = colour.rgb(246, 248, 250),
         backgroundAlpha = 1,
-        text = "/Users/username/Desktop/deviap-main",
+        text = core.dev.localDevGitPath,
         textColour = colour.rgb(1, 1, 1),
         textAlign = "middle",
         textSize = 15,
-        textFont = "tevurl:fonts/firaCodeBold.otf",
+        textFont = "deviap:assets/fonts/sourceCodeProBold.ttf",
         strokeRadius = 3
     })
+
+    pathUi.size = guiCoord(0, pathUi.textDimensions.x + 30, 0, 30)
+    pathUi.position = guiCoord(0.5, -pathUi.size.offset.x/2, 0.64, 10)
 end
 
 -- If barebones application
-if not core.dev.localTevGit then
+if not core.dev.localDevGitEnabled then
     
     local infoLabel = core.construct("guiTextBox", {
-        parent = Container,
+        parent = container,
         size = guiCoord(0, 370, 0, 100),
         position = guiCoord(0.5, -185, 0.58, -40),
         backgroundAlpha = 0,
@@ -123,7 +118,7 @@ if not core.dev.localTevGit then
         textColour = colour.rgb(1, 1, 1),
         textAlign = "middle",
         textSize = 18,
-        textFont = "tevurl:fonts/openSansBold.ttf",
+        textFont = "deviap:assets/fonts/openSansBold.ttf",
         textMultiline = true,
         textWrap = true
     })
@@ -137,27 +132,24 @@ if not core.dev.localTevGit then
         strokeRadius = 3
     })
 
-    local progressBarFrame = core.construct("guiGradientFrame", {
-        parent = progressBarContainer,
-        size = guiCoord(0, 0, 1, 0),
-        position = guiCoord(0, 0, 0, 0),
-        backgroundColour = colour.rgb(129, 231, 129),
-        backgroundColourB = colour.rgb(103, 206, 103),
-        backgroundAlpha = 1,
-        strokeRadius = 3
-    })
+    core.input:on("keyDown", function(key)
+        if key == "KEY_RETURN" then
+            -- Remove Updater / Splash Screen
+			container:destroy()
+		end
+	end)
 
-    core.networking:on("_update", function(message)
+    core.engine:on("updateMessage", function(message)
         infoLabel.text = message
     end)
 
-    core.networking:on("_downloadProgress", function(str)
+    core.engine:on("updateProgress", function(str)
         core.tween:begin(progressBarFrame, 0.2, { size = guiCoord(i/100, 0, 1, 0) })
     end)
 end
 
 core.construct("guiTextBox", {
-    parent = Container,
+    parent = container,
     size = guiCoord(0, 370, 0, 100),
     position = guiCoord(0.5, -185, 0.7, -30),
     backgroundAlpha = 0,
@@ -182,5 +174,5 @@ core.input:on("keyDown", function(key)
 
         -- If user is not authenticated
         -- Push to Login 
-    end 
+	end
 end)
