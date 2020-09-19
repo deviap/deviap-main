@@ -1,13 +1,4 @@
 -- Copyright 2020 - Deviap (deviap.com)
--- Author(s): Sanjay-B(Sanjay)
-
--- One of three main entry points
--- Updater & Splash Screen file: Updates Deviap Application w/ style
--- Note: Ignores updating process when devgit is active / enabled
-
--- Essential Debug Utilities
-require("devgit:source/application/utilities/debug/output.lua")
-require("devgit:source/application/utilities/debug/keybinds.lua")
 
 local colourMap = require("devgit:source/application/utilities/colourScheme.lua")
 

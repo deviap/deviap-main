@@ -1,9 +1,5 @@
 -- Copyright 2020 - Deviap (deviap.com)
 
--- Essential Debug Utilities
-require("devgit:source/application/utilities/debug/output.lua")
-require("devgit:source/application/utilities/debug/keybinds.lua")
-
 local colourMap = require("devgit:source/application/utilities/colourScheme.lua")
 
 local container = core.construct("guiFrame", {

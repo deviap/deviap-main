@@ -1,11 +1,25 @@
 local controller = {}
 local colours = require("devgit:source/application/utilities/colourScheme.lua")
+local breakpointer = require("devgit:source/libraries/UI-breakpointer/main.lua")
 
 controller.sidebar = core.construct("guiFrame", {
     parent = core.interface,
-    size = guiCoord(0, 50, 1, 0),
     backgroundColour = colours.dark,
-    clip = true
+    strokeColour = colours.orange,
+    strokeWidth = 2,
+    strokeAlpha = 1,
+    clip = true,
+    zIndex = 10
+})
+
+breakpointer:bind(controller.sidebar, "xs", {
+    size = guiCoord(1, 0, 0, 50),
+    position = guiCoord(0, 0, 1, -50),
+})
+
+breakpointer:bind(controller.sidebar, "sm", {
+    size = guiCoord(0, 50, 1, 0),
+    position = guiCoord(0, 0, 0, 0),
 })
 
 controller.activeBall = core.construct("guiFrame", {
@@ -14,6 +28,14 @@ controller.activeBall = core.construct("guiFrame", {
     position = guiCoord(1, -4, 0, 30 - 4),
     backgroundColour = colours.orange,
     strokeRadius = 4
+})
+
+breakpointer:bind(controller.activeBall, "xs", {
+    visible = false
+})
+
+breakpointer:bind(controller.activeBall, "sm", {
+    visible = true
 })
 
 controller.container = core.construct("guiFrame", {
@@ -28,14 +50,24 @@ local currentY = 10
 local btns = {}
 local pages = {}
 
-controller.addButton = function(text, icon, cb)
+controller.register = function(module)
+    local pageDetail = require(module)
+
     local btn = core.construct("guiIcon", {
         parent = controller.sidebar,
         size = guiCoord(0, 40, 0, 40),
-        position = guiCoord(0, 5, 0, currentY),
-        iconId = icon,
+        iconId = pageDetail.iconId,
+        iconType = pageDetail.iconType,
         iconMax = 24,
         clip = false
+    })
+
+    breakpointer:bind(btn, "xs", {
+        position = guiCoord(0, currentY, 0, 5)
+    })
+
+    breakpointer:bind(btn, "sm", {
+        position = guiCoord(0, 5, 0, currentY)
     })
 
     table.insert(btns, btn)
@@ -47,7 +79,7 @@ controller.addButton = function(text, icon, cb)
         size = guiCoord(1, 20, 0, 20),
         position = guiCoord(0, -10, 0, 30),
         textSize = 14,
-        text = text,
+        text = pageDetail.name,
         textAlign = "middle",
         backgroundAlpha = 0,
         textColour = colour.white(),
@@ -74,33 +106,31 @@ controller.addButton = function(text, icon, cb)
         }, "inOutQuad")
     end)
 
-    if cb then
-        local page = core.construct("guiFrame", {
-            parent = controller.container,
-            size = guiCoord(1, 0, 1, 0),
-            position = guiCoord(0,0, 0, 0),
-            backgroundAlpha = 0,
-            visible = false
-        })
+    local page = core.construct("guiFrame", {
+        parent = controller.container,
+        size = guiCoord(1, -40, 1, -20),
+        position = guiCoord(0, 20, 0, 20),
+        backgroundAlpha = 0,
+        visible = false
+    })
 
-        if #btns == 1 then
-            page.visible = true
-        end
-
-        table.insert(pages, page)
-
-        btn:on("mouseLeftDown", function()
-            for _,v in pairs(pages) do
-                v.visible = false
-            end
-            core.tween:begin(controller.activeBall, 0.3, {
-                position = guiCoord(1, -4, 0, btn.position.offset.y + 20 - 4)
-            }, "inOutQuad")
-            page.visible = true
-        end)
-
-        local gui = cb(page)
+    if #btns == 1 then
+        page.visible = true
     end
+
+    table.insert(pages, page)
+
+    btn:on("mouseLeftDown", function()
+        for _,v in pairs(pages) do
+            v.visible = false
+        end
+        core.tween:begin(controller.activeBall, 0.3, {
+            position = guiCoord(1, -4, 0, btn.position.offset.y + 20 - 4)
+        }, "inOutQuad")
+        page.visible = true
+    end)
+
+    local gui = pageDetail.construct(page)
 end
 
 return controller
