@@ -1,5 +1,4 @@
 -- Copyright 2020 - Deviap (deviap.com)
--- Author(s): KISPERAL
 
 -- PROVIDES A SINGLETON CLASS TO CREATE ENUMS, AND RESOLVE THOSE ENUMS
 

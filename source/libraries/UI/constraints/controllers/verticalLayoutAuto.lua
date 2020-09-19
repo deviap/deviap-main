@@ -1,3 +1,5 @@
+-- Copyright 2020 - Deviap (deviap.com)
+
 local count = function(x)
 	--[[
 	]]

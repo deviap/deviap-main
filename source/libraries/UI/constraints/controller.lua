@@ -1,3 +1,5 @@
+-- Copyright 2020 - Deviap (deviap.com)
+
 local controllers =
 {
     verticalLayoutAuto = require("devgit:source/libraries/UI/constraints/controllers/verticalLayoutAuto.lua"),

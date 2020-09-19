@@ -1,3 +1,5 @@
+-- Copyright 2020 - Deviap (deviap.com)
+
 local components =
 {
 	button = require("devgit:source/libraries/UI/components/button.lua"),
