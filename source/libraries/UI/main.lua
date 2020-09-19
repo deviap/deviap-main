@@ -1,5 +1,4 @@
 -- Copyright 2020 - Deviap (deviap.com)
--- Author(s): Sanjay-B(Sanjay)
 
 -- Entry point for UI library.
 
