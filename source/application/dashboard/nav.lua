@@ -13,7 +13,7 @@ controller.sidebar = core.construct("guiFrame", {
 })
 
 breakpointer:bind(controller.sidebar, "xs", {
-    size = guiCoord(1, 0, 0, 50),
+    size = guiCoord(1, 0, 0, 150),
     position = guiCoord(0, 0, 1, -50),
 })
 
