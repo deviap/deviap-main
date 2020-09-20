@@ -77,11 +77,15 @@ return function(props)
 	
 	-- Instance tooltip component when size fits icon button.
 	else 
-		self.container.size = guiCoord(0, 48, 0, 48) 
-		self.tooltip = tooltip { parent = self.container, position = guiCoord(0.5, (self.container.size.offset.x/2)-53, 0.5, (self.container.size.offset.y/2)+5), text = "Halloween" } 
-		self.tooltip.state.dispatch { type = "disable" } 
-		self.container:on("mouseEnter", function() self.tooltip.state.dispatch { type = "enable" } end)
-		self.container:on("mouseExit", function() self.tooltip.state.dispatch { type = "disable" } end)
+		self.container.size = guiCoord(0, 48, 0, 48)
+
+		-- If tooltip is specified in props, create tooltip.
+		if props.tooltip then  
+			self.tooltip = tooltip { parent = self.container, position = guiCoord(0.5, (self.container.size.offset.x/2)-53, 0.5, (self.container.size.offset.y/2)+5), text = props.tooltip } 
+			self.tooltip.state.dispatch { type = "disable" } 
+			self.container:on("mouseEnter", function() self.tooltip.state.dispatch { type = "enable" } end)
+			self.container:on("mouseExit", function() self.tooltip.state.dispatch { type = "disable" } end)
+		end
 	end
 
 	local label = core.construct("guiTextBox", {
