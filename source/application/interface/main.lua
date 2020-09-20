@@ -42,8 +42,8 @@ end)
 if core.input.hasScreenKeyboard then
     local settingsButton = core.construct("guiFrame", {
         parent          = core.engine.coreInterface,
-        size            = guiCoord(0, 50, 0, 50),
-        position        = guiCoord(1, -25, 1, core.input.screenPaddingBottom - 25),
+        size            = guiCoord(0, 70, 0, 70),
+        position        = guiCoord(1, -35, 1, core.input.screenPaddingBottom - 35),
         strokeRadius    = 25,
         dropShadowAlpha = 0.35,
         strokeAlpha     = 0.2,
