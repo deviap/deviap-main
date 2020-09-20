@@ -11,8 +11,8 @@ core.construct("guiFrame", {
     parent              = core.interface,
     size                = guiCoord(1, 0, 0, 100),
     position            = guiCoord(0, 0, 0, -100),
-    backgroundColour    = colour.rgb(103, 103, 206),
-    backgroundAlpha     = 0.75
+    backgroundColour    = colour.rgb(255, 138, 101),
+    --backgroundAlpha     = 0.75
 })
 
 if core.dev.localDevGitEnabled then
