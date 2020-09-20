@@ -39,7 +39,7 @@ core.input:on("keyUp", function(key)
     end
 end)
 
-if core.input.hasScreenKeyboard then
+if core.input.hasScreenKeyboard or true then
     local settingsButton = core.construct("guiFrame", {
         parent          = core.engine.coreInterface,
         size            = guiCoord(0, 40, 0, 40),
