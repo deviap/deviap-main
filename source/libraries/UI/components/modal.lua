@@ -19,7 +19,7 @@ return function(props)
 	]]
     props.containerBackgroundAlpha = 1
     props.containerBackgroundColour = colour(1,1,1)
-    props.size = props.size or guiCoord(0, 400, 0, 300)
+    props.size = props.size or guiCoord(0, 300, 0, 400)
 
     local self = newBaseComponent(props)
 
