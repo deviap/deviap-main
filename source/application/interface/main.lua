@@ -45,7 +45,6 @@ if core.input.hasScreenKeyboard then
         size            = guiCoord(0, 80, 0, 80),
         position        = guiCoord(1, -40, 1, core.input.screenPaddingBottom - 40),
         strokeRadius    = 40,
-        dropShadowAlpha = 0.35,
         strokeAlpha     = 0.2,
         backgroundAlpha = 0.25,
         zIndex          = 1000
@@ -55,7 +54,7 @@ if core.input.hasScreenKeyboard then
         parent          = settingsButton,
         active          = false,
         size            = guiCoord(0, 20, 0, 20),
-        position        = guiCoord(0, 6, 0, 6),
+        position        = guiCoord(0, 8, 0, 8),
         backgroundAlpha = 0,
         iconId          = "build",
         iconColour      = colour.black(),
