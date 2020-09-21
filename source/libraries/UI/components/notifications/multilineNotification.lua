@@ -68,6 +68,7 @@ return function(props)
 		size = guiCoord(0, 80, 0, 30),
 		text = "Info notification",
 		textAlign = "middleLeft",
+		textFont = "deviap:fonts/openSansBold.ttf",
         textSize = 12,
         textColour = colour.hex("#ffffff")
 	})
