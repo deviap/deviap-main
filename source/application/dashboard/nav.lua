@@ -40,10 +40,18 @@ breakpointer:bind(controller.activeBall, "sm", {
 
 controller.container = core.construct("guiFrame", {
     parent = core.interface,
-    size = guiCoord(1, -50, 1, 0),
-    position = guiCoord(0, 50, 0, 0),
     backgroundAlpha = 0,
     clip = true
+})
+
+breakpointer:bind(controller.container, "xs", {
+    size = guiCoord(1, 0, 1, 0),
+    position = guiCoord(0, 0, 0, 0),
+})
+
+breakpointer:bind(controller.container, "sm", {
+    size = guiCoord(1, -50, 1, 0),
+    position = guiCoord(0, 50, 0, 0),
 })
 
 local currentY = 10

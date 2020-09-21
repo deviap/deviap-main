@@ -11,7 +11,7 @@ core.construct("guiFrame", {
     parent              = core.interface,
     size                = guiCoord(1, 0, 0, 100),
     position            = guiCoord(0, 0, 0, -100),
-    backgroundColour    = colour.rgb(255, 138, 101),
+    backgroundColour    = colour.rgb(40, 40, 50),
     --backgroundAlpha     = 0.75
 })
 
