@@ -17,10 +17,13 @@ return {
 
 		})
 
-		local _checkbox = checkbox {
-			parent = parent,
-			position = guiCoord(0.5, -0, 0.5, -0),
-			text = "Checkbox item"
-		}
+		core.http:get("https://deviap.com/api/v1/users/me", {["Authorization"] = "Bearer " .. core.engine:getUserToken()}, function(status, body)
+			local user = core.json:decode(body)
+			local _checkbox = checkbox {
+				parent = parent,
+				position = guiCoord(0.5, -0, 0.5, -0),
+				text = user.profileImage
+			}
+		end)
 	end
 }
