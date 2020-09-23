@@ -96,5 +96,29 @@ return function(reducer, startingState)
         end
 	end
 
+	interface.getReducer = function()
+		--[[
+			@description
+				Returns the current reducer. Use case: extending a state.
+			@parameter
+				nil
+			@returns
+				function, reducer
+		]]
+		return reducer
+	end
+
+	interface.replaceReducer = function(newReducer)
+		--[[
+			@description
+				Replaces the current reducer with a new reducer.
+			@parameter
+				function, newReducer
+			@returns
+				nil
+		]]
+		reducer = newReducer
+	end
+
     return interface
 end

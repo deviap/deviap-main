@@ -18,14 +18,12 @@ end
 
 return function(props)
 	local self = newDropdown(props)
-	self.menu.backgroundAlpha = 0.5
-	self.menu.name = "special"
 
 	self._buttons = {}
 	self.addButton = function(tag)
 		local button = newButton({
 			parent = self.menu,
-			text = "hello!"
+			text = tag,
 		})
 
 		self._buttons[tag] = button
@@ -55,6 +53,14 @@ return function(props)
 
 		oldRender()
 	end
+
+	local oldReducer = self.state.getReducer()
+	self.state.replaceReducer(function(state, action)
+		local r1 = oldReducer(state, action)
+		r1.selectedButton = reducer(state, action)
+
+		return r1
+	end)
 
 	self.render()
 	return self
