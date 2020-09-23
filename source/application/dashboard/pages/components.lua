@@ -16,7 +16,7 @@ return function(parent)
     
 	textInput {
 		parent = parent,
-        position = guiCoord(0,510, 0, 40),
+        position = guiCoord(0,0, 0, 40),
         size = guiCoord(0, 300, 0, 30),
         label = "Label optional",
         helper = "Helper optional",

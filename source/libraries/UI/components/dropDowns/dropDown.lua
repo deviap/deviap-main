@@ -7,6 +7,7 @@ return function(props)
 	self.menu = core.construct("guiFrame", {
 		visible = false,
 		parent = self.container,
+		size = guiCoord(0, 100, 0, 100),
 		position = guiCoord(0, 0, 1, 0),
 		backgroundColour = colour.random() -- debug
 	})
@@ -22,6 +23,7 @@ return function(props)
 	end)
 
 	self.state.subscribe(function(state)
+		self.menu.visible = false
 		if state.enabled then
 			props.secondaryColour = colour(1, 1, 1)
 

@@ -3,12 +3,12 @@
 
 -- Home (default) page-view
 
-local button = require("devgit:source/libraries/UI/components/dropDowns/dropDown.lua")
+local dropDown = require("devgit:source/libraries/UI/components/dropDowns/dropDownOptions.lua")
 
 return function(parent)
-	local _checkbox = checkbox {
+	dropDown({
 		parent = parent,
-		position = guiCoord(0.5, -0, 0.5, -0),
-		text = "Checkbox item",
-	}.render()
+		position = guiCoord(0,200,0,200),
+		text = "owo"
+	}).render()
 end

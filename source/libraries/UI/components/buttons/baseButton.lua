@@ -69,10 +69,6 @@ return function(props)
 	
 	local self = newBaseComponent(props)
 
-	-- Determine fixed sizing based on props.
-	if props.text ~= "" then self.container.size = guiCoord(0, 178, 0, 48)
-	else self.container.size = guiCoord(0, 48, 0, 48) end
-
 	local label = core.construct("guiTextBox", {
 		active = false,
 		parent = self.container,
