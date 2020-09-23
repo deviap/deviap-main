@@ -13,6 +13,7 @@
 
 local newBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
 local newState = require("devgit:source/libraries/state/main.lua")
+local tooltip = require("devgit:source/libraries/UI/components/tooltip.lua")
 
 local function reducer(state, action)
 	--[[
@@ -69,6 +70,27 @@ return function(props)
 	
 	local self = newBaseComponent(props)
 
+<<<<<<< HEAD
+=======
+	self.tooltip = nil
+
+	-- Determine fixed sizing based on props.
+	if props.text ~= "" then self.container.size = guiCoord(0, 178, 0, 48)
+	
+	-- Instance tooltip component when size fits icon button.
+	else 
+		self.container.size = guiCoord(0, 48, 0, 48)
+
+		-- If tooltip is specified in props, create tooltip.
+		if props.tooltip then  
+			self.tooltip = tooltip { parent = self.container, position = guiCoord(0.5, (self.container.size.offset.x/2)-53, 0.5, (self.container.size.offset.y/2)+5), text = props.tooltip } 
+			self.tooltip.state.dispatch { type = "disable" } 
+			self.container:on("mouseEnter", function() self.tooltip.state.dispatch { type = "enable" } end)
+			self.container:on("mouseExit", function() self.tooltip.state.dispatch { type = "disable" } end)
+		end
+	end
+
+>>>>>>> 870cebdbff6c7935c2b2cc53182b2e6160deff33
 	local label = core.construct("guiTextBox", {
 		active = false,
 		parent = self.container,

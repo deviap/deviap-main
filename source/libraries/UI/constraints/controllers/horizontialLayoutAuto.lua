@@ -1,3 +1,5 @@
+-- Copyright 2020 - Deviap (deviap.com)
+
 local count = function(x)
 	local c = 0
 	for _,_ in next, x do

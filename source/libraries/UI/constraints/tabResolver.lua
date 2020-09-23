@@ -1,5 +1,4 @@
 -- Copyright 2020 - Deviap (deviap.com)
--- Author(s): utrain, Ya
 
 -- Constraints using tabs. Weights are not implemented as of late.
 

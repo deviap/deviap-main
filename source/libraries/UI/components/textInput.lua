@@ -127,12 +127,12 @@ return function(props)
 
     self.input = input
 
-	local borderBottom = core.construct("guiFrame", {
+	local borderBottom = core.construct("guiLine", {
 		active              = false,
         parent              = self.container,
-        backgroundColour    = colour.hex("8d8d8d"),
-        size                = guiCoord(1, 0, 0, 1),
-        position            = guiCoord(0, 0, 1, -1)
+        lineColour          = colour.hex("8d8d8d"),
+        pointA              = guiCoord(0, 0, 1, -1),
+        pointB              = guiCoord(1, 0, 1, -1)
     })
     
 	local activeBorder = core.construct("guiFrame", {
@@ -148,17 +148,17 @@ return function(props)
 	})
 
 	local icon = core.construct("guiIcon", {
-		active = false,
-        parent = inputContainer,
-        name = "icon",
-        iconId = "error",
-        position = guiCoord(1, -40, 0, 0),
-        size = guiCoord(0, 40, 1, 0),
-        iconMax = 16,
-        iconColour = colour.hex('da1e28'),
-        backgroundAlpha = 1,
-        backgroundColour = inputContainer.backgroundColour,
-        visible = false
+		active              = false,
+        parent              = inputContainer,
+        name                = "icon",
+        iconId              = "error",
+        position            = guiCoord(1, -40, 0, 0),
+        size                = guiCoord(0, 40, 1, 0),
+        iconMax             = 16,
+        iconColour          = colour.hex('da1e28'),
+        backgroundAlpha     = 1,
+        backgroundColour    = inputContainer.backgroundColour,
+        visible             = false
     })
     
     local isPlaceholder = props.text == ""

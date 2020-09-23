@@ -2,7 +2,7 @@
 -- Author(s): utrain, Sanjay-B(Sanjay)
 
 -- Creates a primary button instance
-local newTextInput = require("tevgit:source/libraries/UI/components/textInput.lua")
+local newTextInput = require("devgit:source/libraries/UI/components/textInput.lua")
 
 return function(props)
     props.step = props.step or 10
@@ -29,20 +29,20 @@ return function(props)
     })
 
     local increaseBtn = core.construct("guiIcon", {
-        name = "btn",
-		active = false,
-        parent = increaseContainer,
-        iconId = "arrow_drop_up",
-        position = guiCoord(0, 0, 1, -14),
-        size = guiCoord(0.9, 0, 0, 16),
-        iconMax = 16,
-        iconColour = colour.hex("161616")
+        name        = "btn",
+		active      = false,
+        parent      = increaseContainer,
+        iconId      = "arrow_drop_up",
+        position    = guiCoord(0, 0, 1, -14),
+        size        = guiCoord(0.9, 0, 0, 16),
+        iconMax     = 16,
+        iconColour  = colour.hex("161616")
     })
 
     local decreaseContainer = increaseContainer:clone {
-        name = "decrease",
-        parent = inputContainer,
-        position = guiCoord(1, -30, 0.5, 0),
+        name        = "decrease",
+        parent      = inputContainer,
+        position    = guiCoord(1, -30, 0.5, 0),
     }
 
     local decreaseBtn = decreaseContainer:child("btn")

@@ -1,4 +1,4 @@
-local breakpointer = require("tevgit:source/libraries/UI-breakpointer/main.lua")
+local breakpointer = require("devgit:source/libraries/UI-breakpointer/main.lua")
 
 local btn = core.construct("guiTextBox", {
     parent = core.interface,
