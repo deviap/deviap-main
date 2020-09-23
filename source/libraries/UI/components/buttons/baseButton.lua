@@ -70,8 +70,6 @@ return function(props)
 	
 	local self = newBaseComponent(props)
 
-<<<<<<< HEAD
-=======
 	self.tooltip = nil
 
 	-- Determine fixed sizing based on props.
@@ -90,7 +88,6 @@ return function(props)
 		end
 	end
 
->>>>>>> 870cebdbff6c7935c2b2cc53182b2e6160deff33
 	local label = core.construct("guiTextBox", {
 		active = false,
 		parent = self.container,
