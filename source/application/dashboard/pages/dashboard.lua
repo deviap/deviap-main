@@ -37,7 +37,7 @@ return {
 				appCard {
 					parent = layout.container,
 					name = app.name,
-					image = "https://cdn.deviap.com" .. (app.icon or "")
+					image = "https://cdn.deviap.com/" .. (app.icon or "")
 				}
 			end
 		end)

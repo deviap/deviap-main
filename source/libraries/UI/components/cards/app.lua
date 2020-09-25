@@ -37,7 +37,8 @@ return function(props)
         name                = "image",
         parent              = self.container,
         active              = false,
-        backgroundAlpha     = 0,
+        backgroundAlpha     = 0.5,
+        backgroundColour = colour(1, 0, 0),
         size                = guiCoord(1, 0, 1, -30),
         position            = guiCoord(0, 0, 0, 0)
     })
@@ -55,7 +56,6 @@ return function(props)
         
         label.text = props.name
         image.image = props.image
-
         oldRender()
 	end
 
