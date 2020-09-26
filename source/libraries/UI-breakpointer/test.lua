@@ -1,10 +1,11 @@
 local breakpointer = require("devgit:source/libraries/UI-breakpointer/main.lua")
 
-local btn = core.construct("guiTextBox", {
-    parent = core.interface,
-    size = guiCoord(0, 32, 0, 32),
-    position = guiCoord(0.5, -16, 0.5, -16)
-})
+local btn = core.construct(
+            				"guiTextBox", {
+					parent = core.interface,
+					size = guiCoord(0, 32, 0, 32),
+					position = guiCoord(0.5, -16, 0.5, -16)
+				})
 
 breakpointer:bind(btn, "xs", {backgroundColour = colour(1, 0, 0)})
 

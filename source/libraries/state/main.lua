@@ -2,7 +2,7 @@
 -- Author(s): utrain
 -- Creates a stateful instance
 local function insertInGap(array, value)
-    --[[
+	--[[
 		@description
 			Takes a given array and inserts the value at the closest nil gap.
 		
@@ -14,31 +14,30 @@ local function insertInGap(array, value)
 			integer, location
 	]]
 
-    local function helper(oldKey)
-        local newKey = next(array, oldKey)
-        oldKey = oldKey or 0
+	local function helper(oldKey)
+		local newKey = next(array, oldKey)
+		oldKey = oldKey or 0
 
-        if newKey == nil then
-            array[oldKey + 1] = value
-            return oldKey + 1
-        end
-        if type(newKey) ~= "number" then
-            error(
-                "Got a mixed table or dictionary as argument #1 (expected array).")
-        end
-        if newKey - 1 ~= oldKey then
-            array[newKey - 1] = value
-            return newKey - 1
-        end
+		if newKey == nil then
+			array[oldKey + 1] = value
+			return oldKey + 1
+		end
+		if type(newKey) ~= "number" then
+			error("Got a mixed table or dictionary as argument #1 (expected array).")
+		end
+		if newKey - 1 ~= oldKey then
+			array[newKey - 1] = value
+			return newKey - 1
+		end
 
-        return helper(newKey)
-    end
+		return helper(newKey)
+	end
 
-    return helper()
+	return helper()
 end
 
 return function(reducer, startingState)
-    --[[
+	--[[
 		@description
 			Makes a new state. Rip-off of redux. Sue me.
 		@parameters
@@ -49,12 +48,12 @@ return function(reducer, startingState)
 			table, interface
 	]]
 
-    local state = startingState or reducer(nil, {})
-    local subscribers = {}
-    local interface = {}
+	local state = startingState or reducer(nil, {})
+	local subscribers = {}
+	local interface = {}
 
-    interface.dispatch = function(action)
-        --[[
+	interface.dispatch = function(action)
+		--[[
 			@description
 				Dispatch an action to update the state
 			@parameters
@@ -64,17 +63,15 @@ return function(reducer, startingState)
 				nil
 		]]
 
-        local newState = reducer(state, action)
+		local newState = reducer(state, action)
 
-        for _, callback in next, subscribers do
-            coroutine.wrap(callback)(newState, state, action)
-        end
+		for _, callback in next, subscribers do coroutine.wrap(callback)(newState, state, action) end
 
-        state = newState
-    end
+		state = newState
+	end
 
-    interface.getState = function()
-        --[[
+	interface.getState = function()
+		--[[
 			@description
 				getState
 			@parameter
@@ -83,11 +80,11 @@ return function(reducer, startingState)
 				any, state
 		]]
 
-        return state
-    end
+		return state
+	end
 
-    interface.subscribe = function(callback)
-        --[[
+	interface.subscribe = function(callback)
+		--[[
 			@description
 				Bind a function to be invoked whenever a dispatch occurs.
 			@parameter
@@ -96,13 +93,13 @@ return function(reducer, startingState)
 				function, unsubscribe
 		]]
 
-        local location = insertInGap(subscribers, callback)
+		local location = insertInGap(subscribers, callback)
 
-        return function() subscribers[location] = nil end
-    end
+		return function() subscribers[location] = nil end
+	end
 
-    interface.getReducer = function()
-        --[[
+	interface.getReducer = function()
+		--[[
 			@description
 				Returns the current reducer. Use case: extending a state.
 			@parameter
@@ -110,11 +107,11 @@ return function(reducer, startingState)
 			@returns
 				function, reducer
 		]]
-        return reducer
-    end
+		return reducer
+	end
 
-    interface.replaceReducer = function(newReducer)
-        --[[
+	interface.replaceReducer = function(newReducer)
+		--[[
 			@description
 				Replaces the current reducer with a new reducer.
 			@parameter
@@ -122,8 +119,8 @@ return function(reducer, startingState)
 			@returns
 				nil
 		]]
-        reducer = newReducer
-    end
+		reducer = newReducer
+	end
 
-    return interface
+	return interface
 end
