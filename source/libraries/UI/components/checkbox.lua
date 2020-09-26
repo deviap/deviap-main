@@ -106,7 +106,7 @@ return function(props)
     self.state.subscribe(function(state)
         if state.enabled then
             if state.mode == "hover" then
-                box.strokeColour = colour.hex("#03A9F4")
+                box.strokeColour = colour.hex("#0f62fe")
             elseif state.mode == "active" then
                 boxIcon.visible = not self.selected
                 self.selected = not self.selected

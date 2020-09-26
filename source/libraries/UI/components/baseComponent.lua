@@ -61,6 +61,10 @@ return function(props)
 		border.strokeWidth = props.borderWidth
 	end
 
+	self.destroy = function()
+		self.container:destroy()
+	end
+
 	self.props = props
 
 	return self

@@ -55,7 +55,7 @@ return function(props)
         icon.imageColour = props.colour
     end
 
-    local spinThread = false
+    spinThread = false
     self.spin = function()
         if not spinThread then
             spinThread = true
