@@ -1,9 +1,7 @@
 -- Copyright 2020 - Deviap (deviap.com)
-
-local components =
-{
+local components = {
 	button = require("devgit:source/libraries/UI/components/button.lua"),
-	baseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua"),
+	baseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
 }
 
 return function(name, props)
@@ -18,4 +16,3 @@ return function(name, props)
 	]]
 	return components[name](props)
 end
-	

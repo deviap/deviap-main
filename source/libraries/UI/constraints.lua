@@ -1,7 +1,5 @@
 -- Copyright 2020 - Deviap (deviap.com)
-
-return
-{
+return {
 	newTabResolver = require("devgit:source/libraries/UI/constraints/tabResolver.lua"),
-	newController = require("devgit:source/libraries/UI/constraints/controller.lua"),
+	newController = require("devgit:source/libraries/UI/constraints/controller.lua")
 }

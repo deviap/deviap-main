@@ -3,7 +3,11 @@ local newButton = require("devgit:source/libraries/UI/components/buttons/seconda
 local newState = require("devgit:source/libraries/state/main.lua")
 
 local count = function(x)
-	local c = 0 for _,_ in next, x do c = c + 1 end return c
+	local c = 0
+	for _, _ in next, x do
+		c = c + 1
+	end
+	return c
 end
 
 local function reducer(state, action)
@@ -12,7 +16,7 @@ local function reducer(state, action)
 	elseif action.type == "selectButton" then
 		return action.newButton
 	end
-	
+
 	return nil
 end
 
@@ -21,10 +25,7 @@ return function(props)
 
 	self._buttons = {}
 	self.addButton = function(tag)
-		local button = newButton({
-			parent = self.menu,
-			text = tag,
-		})
+		local button = newButton({parent = self.menu, text = tag})
 
 		self._buttons[tag] = button
 

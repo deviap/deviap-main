@@ -12,13 +12,17 @@ return function(props)
 		backgroundColour = colour.random() -- debug
 	})
 
-	self.container:on("mouseEnter", function() self.state.dispatch { type = "hover" } end)
-	self.container:on("mouseExit", function() self.state.dispatch { type = "unhover" } end)
-	self.container:on("mouseLeftDown", function() 
+	self.container:on("mouseEnter", function()
+		self.state.dispatch {type = "hover"}
+	end)
+	self.container:on("mouseExit", function()
+		self.state.dispatch {type = "unhover"}
+	end)
+	self.container:on("mouseLeftDown", function()
 		if self.state.getState().active then
-			self.state.dispatch { type = "deactivate" }
+			self.state.dispatch {type = "deactivate"}
 		else
-			self.state.dispatch { type = "activate" } 
+			self.state.dispatch {type = "activate"}
 		end
 	end)
 
@@ -50,7 +54,6 @@ return function(props)
 
 		self.render()
 	end)
-
 
 	return self
 end

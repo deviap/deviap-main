@@ -1,8 +1,6 @@
 -- Copyright 2020 - Deviap (deviap.com)
 -- Author(s): Sanjay-B(Sanjay), utrain
-
 -- Creates a button instance
-
 local createBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
 local newState = require("devgit:source/libraries/state/main.lua")
 
@@ -18,10 +16,9 @@ local function reducer(state, action)
 	]]
 	state = state or {}
 
-	local newState = 
-	{
-		active = state.active, 
-		hovering = state.hovering, 
+	local newState = {
+		active = state.active,
+		hovering = state.hovering,
 		enabled = state.enabled,
 		text = state.text or "    Primary Button"
 	}
@@ -40,7 +37,7 @@ local function reducer(state, action)
 	elseif action.type == "unhover" then
 		newState.hovering = false
 	elseif action.type == "setText" then
-		newState.text = "    "..action.text
+		newState.text = "    " .. action.text
 	end
 
 	return newState
@@ -57,22 +54,31 @@ return function(props)
 	]]
 
 	local self = createBaseComponent(props)
-	
+
 	self.container = core.construct("guiFrame", self.props)
 
-    self.child = core.construct("guiTextBox", {
-        parent = self.container,
-        size = guiCoord(1, 0, 1, 0),
+	self.child = core.construct("guiTextBox", {
+		parent = self.container,
+		size = guiCoord(1, 0, 1, 0),
 		textAlign = enums.align.middleLeft,
-		strokeWidth = 2,
+		strokeWidth = 2
 	})
-	
-	self.states = newState(reducer, { enabled = true })
-	
-	self.child:on("mouseEnter", function() self.states.dispatch({ type = "hover" }) end)
-    self.child:on("mouseExit", function() self.states.dispatch({ type = "unhover" }) self.states.dispatch({ type = "deactivate" }) end)
-    self.child:on("mouseLeftUp", function() self.states.dispatch({ type = "deactivate" }) end)
-	self.child:on("mouseLeftDown", function() self.states.dispatch({ type = "activate" }) end)
+
+	self.states = newState(reducer, {enabled = true})
+
+	self.child:on("mouseEnter", function()
+		self.states.dispatch({type = "hover"})
+	end)
+	self.child:on("mouseExit", function()
+		self.states.dispatch({type = "unhover"})
+		self.states.dispatch({type = "deactivate"})
+	end)
+	self.child:on("mouseLeftUp", function()
+		self.states.dispatch({type = "deactivate"})
+	end)
+	self.child:on("mouseLeftDown", function()
+		self.states.dispatch({type = "activate"})
+	end)
 
 	self.render = function(state)
 		self.child.text = state.text
@@ -90,29 +96,20 @@ return function(props)
 		end
 
 		if state.active then
-			core.tween:begin(self.child, 0.1, {
-				size = guiCoord(1, -10, 1, -10),
-				position = guiCoord(0, 5, 0, 5),
-				strokeAlpha = 1,
-			}, "outCirc")
+			core.tween:begin(self.child, 0.1,
+                 			{size = guiCoord(1, -10, 1, -10), position = guiCoord(0, 5, 0, 5), strokeAlpha = 1}, "outCirc")
 		else
 			if state.hovering then
-				core.tween:begin(self.child, 0.1, {
-					size = guiCoord(1, -8, 1, -8),
-					position = guiCoord(0, 4, 0, 4),
-					strokeAlpha = 0.5,
-				}, "outCirc")
+				core.tween:begin(self.child, 0.1,
+                 				{size = guiCoord(1, -8, 1, -8), position = guiCoord(0, 4, 0, 4), strokeAlpha = 0.5}, "outCirc")
 			else
-				core.tween:begin(self.child, 0.1, {
-					size = guiCoord(1, 0, 1, 0),
-					position = guiCoord(0, 0, 0, 0),
-					strokeAlpha = 0,
-				}, "outCirc")
+				core.tween:begin(self.child, 0.1, {size = guiCoord(1, 0, 1, 0), position = guiCoord(0, 0, 0, 0), strokeAlpha = 0},
+                 				"outCirc")
 			end
 		end
 	end
 
 	self.states.subscribe(self.render)
-	self.states.dispatch({ type = "enabled" })
-    return self
+	self.states.dispatch({type = "enabled"})
+	return self
 end

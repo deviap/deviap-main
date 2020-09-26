@@ -1,8 +1,6 @@
 -- Copyright 2020 - Deviap (deviap.com)
 -- Author(s): Sanjay-B(Sanjay)
-
 -- Creates a inlineNotification instance
-
 local newBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
 local newState = require("devgit:source/libraries/state/main.lua")
 
@@ -16,8 +14,8 @@ local function reducer(state, action)
 		@returns
 			any, state
 	]]
-	state = state or { enabled = false }
-	local newState = { enabled = state.enabled }
+	state = state or {enabled = false}
+	local newState = {enabled = state.enabled}
 
 	if action.type == "enable" then
 		newState.enabled = true
@@ -29,7 +27,7 @@ local function reducer(state, action)
 end
 
 return function(props)
-    --[[
+	--[[
 		@description
 			Creates a base component
 		@parameter
@@ -41,10 +39,10 @@ return function(props)
 	props.type = props.type or ""
 	props.iconEnabled = props.iconEnabled or false
 
-    local self = newBaseComponent(props)
+	local self = newBaseComponent(props)
 	self.container.size = guiCoord(0, 300, 0, 30)
 	self.container.backgroundColour = colour.hex("#212121")
-	
+
 	local colourBorder = core.construct("guiFrame", {
 		parent = self.container,
 		position = guiCoord(0, 0, 0, 0),
@@ -69,7 +67,7 @@ return function(props)
 		text = "Info notification",
 		textAlign = "middleLeft",
 		textFont = "deviap:fonts/openSansBold.ttf",
-        textSize = 12,
+		textSize = 12,
 		textColour = colour.hex("#ffffff")
 	})
 
@@ -80,7 +78,7 @@ return function(props)
 		size = guiCoord(0, 160, 1, 0),
 		text = props.text,
 		textAlign = "middleLeft",
-        textSize = 12,
+		textSize = 12,
 		textColour = colour.hex("#ffffff"),
 		visible = true
 	})
@@ -95,11 +93,13 @@ return function(props)
 	})
 
 	self.state = newState(reducer)
-	
-	removeIcon:on("mouseLeftDown", function() self.container:destroy() end)
 
-    self.render = function()
-        --[[
+	removeIcon:on("mouseLeftDown", function()
+		self.container:destroy()
+	end)
+
+	self.render = function()
+		--[[
 			@description
 				Renders the component
 			@parameter
@@ -109,53 +109,52 @@ return function(props)
 		]]
 
 		headerText.size = guiCoord(0, headerText.textDimensions.x, 1, 0)
-		bodyText.position = guiCoord(0, headerText.textDimensions.x+12, 0, 0)
-		
+		bodyText.position = guiCoord(0, headerText.textDimensions.x + 12, 0, 0)
+
 		if props.type == "success" then
 			colourBorder.backgroundColour = colour.hex("#3DBA61")
 			headerText.text = "Success notification"
 			headerText.size = guiCoord(0, headerText.textDimensions.x, 1, 0)
-			bodyText.position = guiCoord(0, headerText.textDimensions.x+12, 0, 0)
-			
-			if props.iconEnabled then 
+			bodyText.position = guiCoord(0, headerText.textDimensions.x + 12, 0, 0)
+
+			if props.iconEnabled then
 				headerIcon.iconId = "check_circle"
 				headerIcon.iconColour = colour.hex("#3DBA61")
 				headerIcon.visible = true
 				headerText.position = guiCoord(0, 35, 0, 0)
-				bodyText.position = guiCoord(0, headerText.textDimensions.x+37, 0, 0)
+				bodyText.position = guiCoord(0, headerText.textDimensions.x + 37, 0, 0)
 			end
 		elseif props.type == "warning" then
 			colourBorder.backgroundColour = colour.hex("#FDD03A")
 			headerText.text = "Warning notification"
 			headerText.size = guiCoord(0, headerText.textDimensions.x, 1, 0)
-			bodyText.position = guiCoord(0, headerText.textDimensions.x+12, 0, 0)
-			
-			if props.iconEnabled then 
+			bodyText.position = guiCoord(0, headerText.textDimensions.x + 12, 0, 0)
+
+			if props.iconEnabled then
 				headerIcon.iconId = "warning"
 				headerIcon.iconColour = colour.hex("#FDD03A")
 				headerIcon.visible = true
 				headerText.position = guiCoord(0, 35, 0, 0)
-				bodyText.position = guiCoord(0, headerText.textDimensions.x+37, 0, 0)
+				bodyText.position = guiCoord(0, headerText.textDimensions.x + 37, 0, 0)
 			end
 		elseif props.type == "error" then
 			colourBorder.backgroundColour = colour.hex("#F44336")
 			headerText.text = "Error notification"
 			headerText.size = guiCoord(0, headerText.textDimensions.x, 1, 0)
-			bodyText.position = guiCoord(0, headerText.textDimensions.x+12, 0, 0)
-			
-			if props.iconEnabled then 
+			bodyText.position = guiCoord(0, headerText.textDimensions.x + 12, 0, 0)
+
+			if props.iconEnabled then
 				headerIcon.iconId = "error"
 				headerIcon.iconColour = colour.hex("#F44336")
 				headerIcon.visible = true
 				headerText.position = guiCoord(0, 35, 0, 0)
-				bodyText.position = guiCoord(0, headerText.textDimensions.x+37, 0, 0)
+				bodyText.position = guiCoord(0, headerText.textDimensions.x + 37, 0, 0)
 			end
 		end
-        
-        
-    end
 
-    self.render()
+	end
 
-    return self
+	self.render()
+
+	return self
 end

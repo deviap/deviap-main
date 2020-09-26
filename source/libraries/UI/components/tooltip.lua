@@ -1,8 +1,6 @@
 -- Copyright 2020 - Deviap (deviap.com)
 -- Author(s): Sanjay-B(Sanjay)
-
 -- Creates a tooltip instance
-
 local newBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
 local newState = require("devgit:source/libraries/state/main.lua")
 
@@ -16,8 +14,8 @@ local function reducer(state, action)
 		@returns
 			any, state
 	]]
-	state = state or { enabled = false }
-	local newState = { enabled = state.enabled}
+	state = state or {enabled = false}
+	local newState = {enabled = state.enabled}
 
 	if action.type == "enable" then
 		newState.enabled = true
@@ -29,7 +27,7 @@ local function reducer(state, action)
 end
 
 return function(props)
-    --[[
+	--[[
 		@description
 			Creates a base component
 		@parameter
@@ -37,22 +35,18 @@ return function(props)
 		@returns
 			table, component
 	]]
-    props.text = props.text or ""
+	props.text = props.text or ""
 
-    local self = newBaseComponent(props)
-    self.container.size = guiCoord(0, 58, 0, 29)
-    self.container.backgroundAlpha = 0
+	local self = newBaseComponent(props)
+	self.container.size = guiCoord(0, 58, 0, 29)
+	self.container.backgroundAlpha = 0
 
-    local textBox = core.construct("guiTextBox", {
-        name = "textBox",
-        parent = self.container,
-        active = false
-    })
+	local textBox = core.construct("guiTextBox", {name = "textBox", parent = self.container, active = false})
 
-    self.state = newState(reducer)
+	self.state = newState(reducer)
 
-    self.render = function()
-        --[[
+	self.render = function()
+		--[[
 			@description
 				Renders the component
 			@parameter
@@ -60,29 +54,29 @@ return function(props)
 			@returns
 				nil
         ]]
-        
-        textBox.size = guiCoord(1, 0, 1, 0)
-        textBox.position = guiCoord(0, 0, 0, 0)
-        textBox.textWrap = true
-        textBox.textSize = 14
-        textBox.textColour = colour.hex("#ffffff")
-        textBox.textAlign = "middle"
-        textBox.backgroundColour = colour.hex("#212121")
-        textBox.strokeRadius = 3
-        textBox.text = props.text
-    end
 
-    self.state.subscribe(function(state)
-        if state.enabled then
-            self.container.visible = true
-        else -- disabled
-            self.container.visible = false
-        end
+		textBox.size = guiCoord(1, 0, 1, 0)
+		textBox.position = guiCoord(0, 0, 0, 0)
+		textBox.textWrap = true
+		textBox.textSize = 14
+		textBox.textColour = colour.hex("#ffffff")
+		textBox.textAlign = "middle"
+		textBox.backgroundColour = colour.hex("#212121")
+		textBox.strokeRadius = 3
+		textBox.text = props.text
+	end
 
-        self.render()
-    end)
+	self.state.subscribe(function(state)
+		if state.enabled then
+			self.container.visible = true
+		else -- disabled
+			self.container.visible = false
+		end
 
-    self.render()
+		self.render()
+	end)
 
-    return self
+	self.render()
+
+	return self
 end

@@ -1,5 +1,4 @@
 -- Copyright 2020 - Deviap (deviap.com)
-
 local newTabResolver = require("devgit:source/libraries/UI/constraints/tabResolver.lua")
 
 local count = function(x)
@@ -12,12 +11,11 @@ local count = function(x)
 			integer, c
 	]]
 	local c = 0
-	for _,_ in next, x do
+	for _, _ in next, x do
 		c = c + 1
 	end
 	return c
 end
-
 
 local function createNavBar()
 	--[[
@@ -67,7 +65,7 @@ local function createNavBar()
 		]]
 
 		local children = public.container.children
-		
+
 		if destroyChildren then
 			object:destroyChildren()
 			object:destroy()
@@ -76,11 +74,11 @@ local function createNavBar()
 				object.parent = nil
 			end
 			object:destroy()
-			
+
 			return children
 		end
 	end
-	
+
 	return public
 end
 
@@ -116,7 +114,6 @@ return function()
 				nil
 		--]]
 
-		
 		if public.secondaryObject then
 			public.secondaryObject.parent = public.container
 			print(public.container.absoluteSize.y)
@@ -147,7 +144,7 @@ return function()
 		--]]
 
 		local children = public.container.children
-		
+
 		if destroyChildren then
 			object:destroyChildren()
 			object:destroy()
@@ -156,11 +153,10 @@ return function()
 				object.parent = nil
 			end
 			object:destroy()
-			
+
 			return children
 		end
 	end
-	
 
 	return public
 end

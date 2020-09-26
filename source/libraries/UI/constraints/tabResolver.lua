@@ -1,7 +1,5 @@
 -- Copyright 2020 - Deviap (deviap.com)
-
 -- Constraints using tabs. Weights are not implemented as of late.
-
 local function getMinMaxFromOffset(tab, offset, maxLength)
 	--[[
 		@description
@@ -51,7 +49,7 @@ end
 
 local new = function()
 	local public = {}
-	public.tabs = { x = {}, y = {} }
+	public.tabs = {x = {}, y = {}}
 
 	public.registerRelativeTab = function(axis, tag, relativeTo, min, max, pref, weight)
 		--[[
@@ -77,17 +75,10 @@ local new = function()
 		]]
 
 		max = max or min
-		pref = pref or max/2
+		pref = pref or max / 2
 		weight = weight or 1
 
-		public.tabs[axis][tag] =
-		{
-			min = min,
-			max = max,
-			weight = weight,
-
-			tag = tag,
-		}
+		public.tabs[axis][tag] = {min = min, max = max, weight = weight, tag = tag}
 
 		local relativeToTab = public.tabs[axis][relativeTo]
 
@@ -119,12 +110,7 @@ local new = function()
 				tab, tab
 		]]
 
-		public.tabs[axis][tag] =
-		{
-			tag = tag,
-			offset = offset,
-			relativeTabs = {},
-		}
+		public.tabs[axis][tag] = {tag = tag, offset = offset, relativeTabs = {}}
 
 		return public.tabs[axis][tag]
 	end
@@ -245,11 +231,7 @@ local new = function()
 				{ x = resolveForAxis("x"), y = resolveForAxis("y") }
 		]]
 
-		return
-		{
-			public.resolveForAxis("x", maxSize.x),
-			public.resolveForAxis("y", maxSize.y),
-		}
+		return {public.resolveForAxis("x", maxSize.x), public.resolveForAxis("y", maxSize.y)}
 	end
 
 	return public
