@@ -15,13 +15,12 @@ return function(props)
 	self.container.size = guiCoord(0, 512, 0, 38)
 	self.container.backgroundAlpha = 0
 
-	local progressBar = core.construct(
-                    					"guiFrame", {
-						name = "progressBar",
-						parent = self.container,
-						active = true,
-						backgroundColour = colour.hex('0f62fe')
-					})
+	local progressBar = core.construct("guiFrame", {
+		name = "progressBar",
+		parent = self.container,
+		active = true,
+		backgroundColour = colour.hex('0f62fe')
+	})
 
 	props.progress = props.progress or 0
 	props.steps = props.steps or {}
@@ -37,7 +36,9 @@ return function(props)
 				nil
         ]]
 
-		if props.size then self.container.size = props.size end
+		if props.size then
+			self.container.size = props.size
+		end
 
 		local s = 1 / #props.steps
 		if props.vertical then

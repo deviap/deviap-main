@@ -20,25 +20,23 @@ return function(props)
 	props.position = props.position or guiCoord(0, 0, 0, 0)
 
 	local self = {}
-	self.container = core.construct(
-                 					"guiFrame", {
-						parent = props.parent,
-						position = props.position,
-						backgroundColour = props.containerBackgroundColour,
-						backgroundAlpha = props.containerBackgroundAlpha
-					})
+	self.container = core.construct("guiFrame", {
+		parent = props.parent,
+		position = props.position,
+		backgroundColour = props.containerBackgroundColour,
+		backgroundAlpha = props.containerBackgroundAlpha
+	})
 
-	local border = core.construct(
-               					"guiFrame", {
-						parent = self.container,
-						active = false,
-						backgroundAlpha = 0,
-						size = guiCoord(1, -props.borderInset * 2, 1, -props.borderInset * 2),
-						position = guiCoord(0, props.borderInset, 0, props.borderInset),
-						strokeColour = props.secondaryColour,
-						strokeAlpha = props.borderAlpha,
-						strokeWidth = props.borderWidth
-					})
+	local border = core.construct("guiFrame", {
+		parent = self.container,
+		active = false,
+		backgroundAlpha = 0,
+		size = guiCoord(1, -props.borderInset * 2, 1, -props.borderInset * 2),
+		position = guiCoord(0, props.borderInset, 0, props.borderInset),
+		strokeColour = props.secondaryColour,
+		strokeAlpha = props.borderAlpha,
+		strokeWidth = props.borderWidth
+	})
 
 	self.render = function()
 		--[[
@@ -61,7 +59,9 @@ return function(props)
 		border.strokeWidth = props.borderWidth
 	end
 
-	self.destroy = function() self.container:destroy() end
+	self.destroy = function()
+		self.container:destroy()
+	end
 
 	self.props = props
 

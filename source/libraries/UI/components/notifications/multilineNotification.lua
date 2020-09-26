@@ -43,62 +43,59 @@ return function(props)
 	self.container.size = guiCoord(0, 300, 0, 35)
 	self.container.backgroundColour = colour.hex("#212121")
 
-	local colourBorder = core.construct(
-                     					"guiFrame", {
-						parent = self.container,
-						position = guiCoord(0, 0, 0, 0),
-						size = guiCoord(0, 3, 1, 0),
-						backgroundColour = colour.hex("#0f62fe")
-					})
+	local colourBorder = core.construct("guiFrame", {
+		parent = self.container,
+		position = guiCoord(0, 0, 0, 0),
+		size = guiCoord(0, 3, 1, 0),
+		backgroundColour = colour.hex("#0f62fe")
+	})
 
-	local headerIcon = core.construct(
-                   					"guiIcon", {
-						parent = self.container,
-						backgroundAlpha = 0,
-						position = guiCoord(0, 10, 0, 6),
-						size = guiCoord(0, 18, 0, 18),
-						visible = false
-					})
+	local headerIcon = core.construct("guiIcon", {
+		parent = self.container,
+		backgroundAlpha = 0,
+		position = guiCoord(0, 10, 0, 6),
+		size = guiCoord(0, 18, 0, 18),
+		visible = false
+	})
 
-	local headerText = core.construct(
-                   					"guiTextBox", {
-						parent = self.container,
-						backgroundAlpha = 0,
-						size = guiCoord(0, 80, 0, 30),
-						position = guiCoord(0, 10, 0, 0),
-						size = guiCoord(0, 80, 0, 30),
-						text = "Info notification",
-						textAlign = "middleLeft",
-						textFont = "deviap:fonts/openSansBold.ttf",
-						textSize = 12,
-						textColour = colour.hex("#ffffff")
-					})
+	local headerText = core.construct("guiTextBox", {
+		parent = self.container,
+		backgroundAlpha = 0,
+		size = guiCoord(0, 80, 0, 30),
+		position = guiCoord(0, 10, 0, 0),
+		size = guiCoord(0, 80, 0, 30),
+		text = "Info notification",
+		textAlign = "middleLeft",
+		textFont = "deviap:fonts/openSansBold.ttf",
+		textSize = 12,
+		textColour = colour.hex("#ffffff")
+	})
 
-	local bodyText = core.construct(
-                 					"guiTextBox", {
-						parent = self.container,
-						backgroundAlpha = 0,
-						position = guiCoord(0, 10, 0, 20),
-						text = props.text,
-						textSize = 12,
-						textWrap = true,
-						textMultiline = true,
-						textColour = colour.hex("#ffffff")
-					})
+	local bodyText = core.construct("guiTextBox", {
+		parent = self.container,
+		backgroundAlpha = 0,
+		position = guiCoord(0, 10, 0, 20),
+		text = props.text,
+		textSize = 12,
+		textWrap = true,
+		textMultiline = true,
+		textColour = colour.hex("#ffffff")
+	})
 
-	local removeIcon = core.construct(
-                   					"guiIcon", {
-						parent = self.container,
-						position = guiCoord(0, 280, 0, 10),
-						size = guiCoord(0, 10, 0, 10),
-						iconId = "clear",
-						iconColour = colour.hex("#ffffff"),
-						backgroundAlpha = 0
-					})
+	local removeIcon = core.construct("guiIcon", {
+		parent = self.container,
+		position = guiCoord(0, 280, 0, 10),
+		size = guiCoord(0, 10, 0, 10),
+		iconId = "clear",
+		iconColour = colour.hex("#ffffff"),
+		backgroundAlpha = 0
+	})
 
 	self.state = newState(reducer)
 
-	removeIcon:on("mouseLeftDown", function() self.container:destroy() end)
+	removeIcon:on("mouseLeftDown", function()
+		self.container:destroy()
+	end)
 
 	self.render = function()
 		--[[

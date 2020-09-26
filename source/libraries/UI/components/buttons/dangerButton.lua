@@ -12,41 +12,45 @@ return function(props)
 
 	local self = newBaseButton(props)
 
-	self.container:on("mouseEnter", function() self.state.dispatch {type = "hover"} end)
-	self.container:on(
-					"mouseExit", function()
-						self.state.dispatch {type = "unhover"}
-						self.state.dispatch {type = "deactivate"}
-					end)
-	self.container:on("mouseLeftDown", function() self.state.dispatch {type = "activate"} end)
-	self.container:on("mouseLeftUp", function() self.state.dispatch {type = "deactivate"} end)
+	self.container:on("mouseEnter", function()
+		self.state.dispatch {type = "hover"}
+	end)
+	self.container:on("mouseExit", function()
+		self.state.dispatch {type = "unhover"}
+		self.state.dispatch {type = "deactivate"}
+	end)
+	self.container:on("mouseLeftDown", function()
+		self.state.dispatch {type = "activate"}
+	end)
+	self.container:on("mouseLeftUp", function()
+		self.state.dispatch {type = "deactivate"}
+	end)
 
-	self.state.subscribe(
-					function(state)
-						if state.enabled then
-							props.secondaryColour = colour(1, 1, 1)
+	self.state.subscribe(function(state)
+		if state.enabled then
+			props.secondaryColour = colour(1, 1, 1)
 
-							if state.active then
-								props.containerBackgroundColour = colour.hex("#bf1d1d")
-								props.borderAlpha = 1
-								props.borderInset = 5
-							elseif state.hovering then
-								props.containerBackgroundColour = colour.hex("#ed2f2f")
-								props.borderAlpha = 0.4
-								props.borderInset = 4
-							else
-								props.containerBackgroundColour = colour.hex("#f21b1b")
-								props.borderAlpha = 0
-								props.borderInset = 2
-							end
-						else -- disabled
-							props.containerBackgroundColour = colour.hex("#E0E0E0")
-							props.secondaryColour = colour.hex("EAEAEA")
-							props.borderAlpha = 0
-						end
+			if state.active then
+				props.containerBackgroundColour = colour.hex("#bf1d1d")
+				props.borderAlpha = 1
+				props.borderInset = 5
+			elseif state.hovering then
+				props.containerBackgroundColour = colour.hex("#ed2f2f")
+				props.borderAlpha = 0.4
+				props.borderInset = 4
+			else
+				props.containerBackgroundColour = colour.hex("#f21b1b")
+				props.borderAlpha = 0
+				props.borderInset = 2
+			end
+		else -- disabled
+			props.containerBackgroundColour = colour.hex("#E0E0E0")
+			props.secondaryColour = colour.hex("EAEAEA")
+			props.borderAlpha = 0
+		end
 
-						self.render()
-					end)
+		self.render()
+	end)
 
 	self.render()
 

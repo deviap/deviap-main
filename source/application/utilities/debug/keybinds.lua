@@ -4,29 +4,27 @@
 local graphicsDebug = false
 -- if core.dev.localDevGitEnabled then core.interface:child("outputWindow").visible = true end -- Set to true if devgit is overridden, otherwise hide it.
 
-core.input:on(
-				"keyDown", function(key)
+core.input:on("keyDown", function(key)
 
-					-- Output Window Enable / Disable
-					if key == "KEY_F1" then
-						core.interface:child("outputWindow").visible =
-										not core.interface:child("outputWindow").visible
+	-- Output Window Enable / Disable
+	if key == "KEY_F1" then
+		core.interface:child("outputWindow").visible = not core.interface:child("outputWindow").visible
 
-						-- Hard Reset Application
-					elseif key == "KEY_F2" and core.dev.localDevGitEnabled then
-						core.apps:loadDashboard()
+		-- Hard Reset Application
+	elseif key == "KEY_F2" and core.dev.localDevGitEnabled then
+		core.apps:loadDashboard()
 
-						-- Prompts Devgit
-					elseif key == "KEY_F3" then
-						core.dev:promptDevGit()
+		-- Prompts Devgit
+	elseif key == "KEY_F3" then
+		core.dev:promptDevGit()
 
-						-- Hard Reload Shaders
-					elseif key == "KEY_F4" and core.dev.localDevGitEnabled then
-						core.dev:reloadAllShaders()
+		-- Hard Reload Shaders
+	elseif key == "KEY_F4" and core.dev.localDevGitEnabled then
+		core.dev:reloadAllShaders()
 
-						-- Graphics Debug Enable / Disable
-					elseif key == "KEY_F5" and core.dev.localDevGitEnabled then
-						graphicsDebug = not graphicsDebug
-						core.graphics:setDebug(graphicsDebug)
-					end
-				end)
+		-- Graphics Debug Enable / Disable
+	elseif key == "KEY_F5" and core.dev.localDevGitEnabled then
+		graphicsDebug = not graphicsDebug
+		core.graphics:setDebug(graphicsDebug)
+	end
+end)

@@ -11,7 +11,9 @@ local count = function(x)
 			integer, c
 	]]
 	local c = 0
-	for _, _ in next, x do c = c + 1 end
+	for _, _ in next, x do
+		c = c + 1
+	end
 	return c
 end
 
@@ -68,7 +70,9 @@ local function createNavBar()
 			object:destroyChildren()
 			object:destroy()
 		else
-			for _, object in next, children do object.parent = nil end
+			for _, object in next, children do
+				object.parent = nil
+			end
 			object:destroy()
 
 			return children
@@ -145,7 +149,9 @@ return function()
 			object:destroyChildren()
 			object:destroy()
 		else
-			for _, object in next, children do object.parent = nil end
+			for _, object in next, children do
+				object.parent = nil
+			end
 			object:destroy()
 
 			return children

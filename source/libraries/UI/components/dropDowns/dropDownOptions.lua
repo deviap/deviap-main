@@ -4,7 +4,9 @@ local newState = require("devgit:source/libraries/state/main.lua")
 
 local count = function(x)
 	local c = 0
-	for _, _ in next, x do c = c + 1 end
+	for _, _ in next, x do
+		c = c + 1
+	end
 	return c
 end
 
@@ -35,7 +37,9 @@ return function(props)
 		self._buttons[tag] = nil
 	end
 
-	self.getButton = function(tag) return self._buttons[tag] end
+	self.getButton = function(tag)
+		return self._buttons[tag]
+	end
 
 	local oldRender = self.render
 	self.render = function()
@@ -52,13 +56,12 @@ return function(props)
 	end
 
 	local oldReducer = self.state.getReducer()
-	self.state.replaceReducer(
-					function(state, action)
-						local r1 = oldReducer(state, action)
-						r1.selectedButton = reducer(state, action)
+	self.state.replaceReducer(function(state, action)
+		local r1 = oldReducer(state, action)
+		r1.selectedButton = reducer(state, action)
 
-						return r1
-					end)
+		return r1
+	end)
 
 	self.render()
 	return self

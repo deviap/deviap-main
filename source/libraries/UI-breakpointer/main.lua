@@ -13,7 +13,11 @@ for i, v in pairs(breakpoints) do
 end
 
 local function getBreakpointFromSize(size)
-	for _, v in pairs(breakpoints) do if v[2] == size then return v end end
+	for _, v in pairs(breakpoints) do
+		if v[2] == size then
+			return v
+		end
+	end
 end
 
 -- Logic for selecting a breakpoint based on screen size
@@ -24,7 +28,9 @@ local selectBreakpoint = function()
 	currentBreakpoint = breakpoints[#breakpoints]
 	for i = 1, #breakpoints do
 		local bp = breakpoints[i]
-		if bp[2] < screenSize.x then currentBreakpoint = bp end
+		if bp[2] < screenSize.x then
+			currentBreakpoint = bp
+		end
 	end
 
 	print("BP is now", currentBreakpoint[1])
@@ -37,7 +43,9 @@ selectBreakpoint()
 local updateUI = function(object)
 	-- select appropriate breakpoint
 	if boundGuis[object] and boundGuis[object][currentBreakpoint[1]] then
-		for k, v in pairs(boundGuis[object][currentBreakpoint[1]]) do object[k] = v end
+		for k, v in pairs(boundGuis[object][currentBreakpoint[1]]) do
+			object[k] = v
+		end
 	end
 end
 
@@ -45,15 +53,21 @@ end
 
 function breakpointer:bind(object, breakpoint, properties)
 	local bp = breakpointer.breakpoints[breakpoint]
-	if not type(breakpoint) == "string" or not bp then return error("Breakpoint invalid", 2) end
+	if not type(breakpoint) == "string" or not bp then
+		return error("Breakpoint invalid", 2)
+	end
 
 	bp = getBreakpointFromSize(bp)
 
 	if not boundGuis[object] then
 		boundGuis[object] = {}
-		for _, v in pairs(breakpoints) do boundGuis[object][v[1]] = {} end
+		for _, v in pairs(breakpoints) do
+			boundGuis[object][v[1]] = {}
+		end
 
-		object:on("destroying", function() boundGuis[object] = nil end)
+		object:on("destroying", function()
+			boundGuis[object] = nil
+		end)
 	end
 
 	for k, v in pairs(properties) do
@@ -72,7 +86,9 @@ end
 
 local function onResized()
 	selectBreakpoint()
-	for gui, _ in pairs(boundGuis) do updateUI(gui) end
+	for gui, _ in pairs(boundGuis) do
+		updateUI(gui)
+	end
 end
 
 core.input:on("screenResized", onResized)

@@ -20,16 +20,15 @@ return function(props)
 	local self = newBaseComponent(props)
 	self.container.size = guiCoord(0, 50, 0, 50)
 
-	local shadow = core.construct(
-               					"guiImage", {
-						parent = self.container,
-						size = guiCoord(1, -12, 1, -12),
-						position = guiCoord(0, 6, 0, 6),
-						image = "deviap:img/spinner.png",
-						backgroundAlpha = 0,
-						imageColour = colour(0, 0, 0),
-						imageAlpha = 0.25
-					})
+	local shadow = core.construct("guiImage", {
+		parent = self.container,
+		size = guiCoord(1, -12, 1, -12),
+		position = guiCoord(0, 6, 0, 6),
+		image = "deviap:img/spinner.png",
+		backgroundAlpha = 0,
+		imageColour = colour(0, 0, 0),
+		imageAlpha = 0.25
+	})
 
 	local icon = shadow:clone{
 		parent = shadow,
@@ -58,16 +57,17 @@ return function(props)
 	self.spin = function()
 		if not spinThread then
 			spinThread = true
-			spawn(
-							function()
-								while spinThread and sleep() do
-									shadow.rotation = shadow.rotation + math.rad(props.speed)
-								end
-							end)
+			spawn(function()
+				while spinThread and sleep() do
+					shadow.rotation = shadow.rotation + math.rad(props.speed)
+				end
+			end)
 		end
 	end
 
-	self.stop = function() spinThread = false end
+	self.stop = function()
+		spinThread = false
+	end
 
 	self.render()
 

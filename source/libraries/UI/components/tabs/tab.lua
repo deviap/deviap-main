@@ -52,45 +52,46 @@ return function(props)
 	self.container.size = guiCoord(0, 120, 0, 38)
 	self.container.backgroundAlpha = 0
 
-	local label = core.construct(
-              					"guiTextBox", {
-						name = "label",
-						parent = self.container,
-						active = false,
-						size = guiCoord(1, -20, 1, -10),
-						position = guiCoord(0, 10, 0, 5),
-						backgroundAlpha = 0,
-						textSize = 18,
-						textAlign = "middleLeft"
-					})
+	local label = core.construct("guiTextBox", {
+		name = "label",
+		parent = self.container,
+		active = false,
+		size = guiCoord(1, -20, 1, -10),
+		position = guiCoord(0, 10, 0, 5),
+		backgroundAlpha = 0,
+		textSize = 18,
+		textAlign = "middleLeft"
+	})
 
 	props.containerBackgroundColour = colour.hex("ffffff")
 	props.containerBackgroundAlpha = 0.5
 
-	local borderBottom = core.construct(
-                     					"guiLine", {
-						active = false,
-						parent = self.container,
-						lineWidth = 2,
-						pointA = guiCoord(0, 1, 1, -1),
-						pointB = guiCoord(1, -1, 1, -1)
-					})
+	local borderBottom = core.construct("guiLine", {
+		active = false,
+		parent = self.container,
+		lineWidth = 2,
+		pointA = guiCoord(0, 1, 1, -1),
+		pointB = guiCoord(1, -1, 1, -1)
+	})
 
-	self.borderRight = core.construct(
-                   					"guiLine", {
-						active = false,
-						parent = self.container,
-						lineWidth = 1,
-						pointA = guiCoord(1, 0, 0, 0),
-						pointB = guiCoord(1, 0, 1, 0),
-						lineColour = colour.hex("8d8d8d"),
-						visible = false
-					})
+	self.borderRight = core.construct("guiLine", {
+		active = false,
+		parent = self.container,
+		lineWidth = 1,
+		pointA = guiCoord(1, 0, 0, 0),
+		pointB = guiCoord(1, 0, 1, 0),
+		lineColour = colour.hex("8d8d8d"),
+		visible = false
+	})
 
 	self.state = newState(reducer)
 
-	self.container:on("mouseEnter", function() self.state.dispatch {type = "hover"} end)
-	self.container:on("mouseExit", function() self.state.dispatch {type = "unhover"} end)
+	self.container:on("mouseEnter", function()
+		self.state.dispatch {type = "hover"}
+	end)
+	self.container:on("mouseExit", function()
+		self.state.dispatch {type = "unhover"}
+	end)
 
 	local oldRender = self.render
 	self.render = function()
@@ -126,35 +127,36 @@ return function(props)
 		label.text = props.label
 	end
 
-	self.state.subscribe(
-					function(state)
-						if state.selected then
-							props.labelAlpha = 1
-							props.labelFont = "deviap:fonts/openSansBold.ttf"
-							props.bottomColour = colour.hex("0f62fe")
-						else
-							props.labelAlpha = 0.9
-							props.labelFont = "deviap:fonts/openSansRegular.ttf"
-							props.bottomColour = colour.hex("e0e0e0")
-						end
+	self.state.subscribe(function(state)
+		if state.selected then
+			props.labelAlpha = 1
+			props.labelFont = "deviap:fonts/openSansBold.ttf"
+			props.bottomColour = colour.hex("0f62fe")
+		else
+			props.labelAlpha = 0.9
+			props.labelFont = "deviap:fonts/openSansRegular.ttf"
+			props.bottomColour = colour.hex("e0e0e0")
+		end
 
-						if state.hover then
-							props.bottomColour = colour.hex("8d8d8d")
-							props.containerBackgroundAlpha = 1.0
-						else
-							props.containerBackgroundAlpha = 0.6
-						end
+		if state.hover then
+			props.bottomColour = colour.hex("8d8d8d")
+			props.containerBackgroundAlpha = 1.0
+		else
+			props.containerBackgroundAlpha = 0.6
+		end
 
-						if state.selected then props.containerBackgroundAlpha = 0.3 end
+		if state.selected then
+			props.containerBackgroundAlpha = 0.3
+		end
 
-						if not state.enabled then
-							props.labelFont = "deviap:fonts/openSansRegular.ttf"
-							props.bottomColour = colour.hex("f4f4f4")
-							props.labelColour = colour.hex("c6c6c6")
-						end
+		if not state.enabled then
+			props.labelFont = "deviap:fonts/openSansRegular.ttf"
+			props.bottomColour = colour.hex("f4f4f4")
+			props.labelColour = colour.hex("c6c6c6")
+		end
 
-						self.render()
-					end)
+		self.render()
+	end)
 
 	self.render()
 

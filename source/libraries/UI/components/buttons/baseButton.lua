@@ -75,13 +75,16 @@ return function(props)
 		if props.tooltip then
 			self.tooltip = tooltip {
 				parent = self.container,
-				position = guiCoord(
-								0.5, (self.container.size.offset.x / 2) - 53, 0.5, (self.container.size.offset.y / 2) + 5),
+				position = guiCoord(0.5, (self.container.size.offset.x / 2) - 53, 0.5, (self.container.size.offset.y / 2) + 5),
 				text = props.tooltip
 			}
 			self.tooltip.state.dispatch {type = "disable"}
-			self.container:on("mouseEnter", function() self.tooltip.state.dispatch {type = "enable"} end)
-			self.container:on("mouseExit", function() self.tooltip.state.dispatch {type = "disable"} end)
+			self.container:on("mouseEnter", function()
+				self.tooltip.state.dispatch {type = "enable"}
+			end)
+			self.container:on("mouseExit", function()
+				self.tooltip.state.dispatch {type = "disable"}
+			end)
 		end
 	end
 

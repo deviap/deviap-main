@@ -34,13 +34,17 @@ return function(props)
 	self.addTab = function(tab, page)
 		table.insert(tabs, tab)
 		pages[tab] = page
-		tab.container:on("mouseLeftUp", function() selectTab(tab) end)
+		tab.container:on("mouseLeftUp", function()
+			selectTab(tab)
+		end)
 
 		tab.props.isContainer = props.isContainer
 		tab.state.dispatch {type = "deselect"}
 		self.render()
 
-		for i = 1, #tabs do tabs[i].borderRight.lineAlpha = 1 end
+		for i = 1, #tabs do
+			tabs[i].borderRight.lineAlpha = 1
+		end
 		tab.borderRight.lineAlpha = 0
 
 		selectTab(tabs[1])
@@ -56,7 +60,9 @@ return function(props)
 				nil
         ]]
 
-		if props.size then self.container.size = props.size end
+		if props.size then
+			self.container.size = props.size
+		end
 
 		local s = 1 / #tabs
 

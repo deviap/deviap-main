@@ -57,24 +57,24 @@ return function(props)
 
 	self.container = core.construct("guiFrame", self.props)
 
-	self.child = core.construct(
-             					"guiIcon", {
-						parent = self.container,
-						size = guiCoord(1, 0, 1, 0),
-						iconMax = 24,
-						clip = false
-					})
+	self.child = core.construct("guiIcon",
+                            	{parent = self.container, size = guiCoord(1, 0, 1, 0), iconMax = 24, clip = false})
 
 	self.states = newState(reducer, {enabled = true})
 
-	self.child:on("mouseEnter", function() self.states.dispatch({type = "hover"}) end)
-	self.child:on(
-					"mouseExit", function()
-						self.states.dispatch({type = "unhover"})
-						self.states.dispatch({type = "deactivate"})
-					end)
-	self.child:on("mouseLeftUp", function() self.states.dispatch({type = "deactivate"}) end)
-	self.child:on("mouseLeftDown", function() self.states.dispatch({type = "activate"}) end)
+	self.child:on("mouseEnter", function()
+		self.states.dispatch({type = "hover"})
+	end)
+	self.child:on("mouseExit", function()
+		self.states.dispatch({type = "unhover"})
+		self.states.dispatch({type = "deactivate"})
+	end)
+	self.child:on("mouseLeftUp", function()
+		self.states.dispatch({type = "deactivate"})
+	end)
+	self.child:on("mouseLeftDown", function()
+		self.states.dispatch({type = "activate"})
+	end)
 
 	self.render = function(state)
 		self.child.iconId = state.iconId
@@ -92,20 +92,15 @@ return function(props)
 		end
 
 		if state.active then
-			core.tween:begin(
-							self.child, 0.1,
-							{size = guiCoord(1, -10, 1, -10), position = guiCoord(0, 5, 0, 5), strokeAlpha = 1},
-							"outCirc")
+			core.tween:begin(self.child, 0.1,
+                 			{size = guiCoord(1, -10, 1, -10), position = guiCoord(0, 5, 0, 5), strokeAlpha = 1}, "outCirc")
 		else
 			if state.hovering then
-				core.tween:begin(
-								self.child, 0.1,
-								{size = guiCoord(1, -8, 1, -8), position = guiCoord(0, 4, 0, 4), strokeAlpha = 0.5},
-								"outCirc")
+				core.tween:begin(self.child, 0.1,
+                 				{size = guiCoord(1, -8, 1, -8), position = guiCoord(0, 4, 0, 4), strokeAlpha = 0.5}, "outCirc")
 			else
-				core.tween:begin(
-								self.child, 0.1,
-								{size = guiCoord(1, 0, 1, 0), position = guiCoord(0, 0, 0, 0), strokeAlpha = 0}, "outCirc")
+				core.tween:begin(self.child, 0.1, {size = guiCoord(1, 0, 1, 0), position = guiCoord(0, 0, 0, 0), strokeAlpha = 0},
+                 				"outCirc")
 			end
 		end
 	end

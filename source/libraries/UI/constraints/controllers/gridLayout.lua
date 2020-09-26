@@ -32,9 +32,13 @@ return function()
 
 		local children = public.container.children
 
-		if public.fitX then public.cellSize.x = public.container.absoluteSize.x / public.columns end
+		if public.fitX then
+			public.cellSize.x = public.container.absoluteSize.x / public.columns
+		end
 
-		if public.fitY then public.cellSize.y = public.container.absoluteSize.y / public.rows end
+		if public.fitY then
+			public.cellSize.y = public.container.absoluteSize.y / public.rows
+		end
 
 		local x = 0
 		local y = 0
@@ -49,8 +53,7 @@ return function()
 
 			offset.offset = offset.offset + vector3(public.cellSpacing.x, 0)
 			if x >= public.columns or
-							(public.wrap and (public.cellSize.x * (x + 1)) + offset.offset.x >
-											public.container.absoluteSize.x) then
+							(public.wrap and (public.cellSize.x * (x + 1)) + offset.offset.x > public.container.absoluteSize.x) then
 				x = 0
 				y = y + 1
 				offset.offset = vector2(0, offset.offset.y + public.cellSpacing.y)

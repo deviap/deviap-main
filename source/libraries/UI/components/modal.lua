@@ -23,31 +23,29 @@ return function(props)
 	self.container.visible = false
 	self.container.zIndex = 1000
 
-	self.backdrop = core.construct(
-                					"guiFrame", {
-						parent = core.interface,
-						position = guiCoord(0, -50, 0, -50),
-						size = guiCoord(1, 100, 1, 100),
-						backgroundColour = colour.black(),
-						backgroundAlpha = 0.5,
-						visible = false,
-						zIndex = 999
-					})
+	self.backdrop = core.construct("guiFrame", {
+		parent = core.interface,
+		position = guiCoord(0, -50, 0, -50),
+		size = guiCoord(1, 100, 1, 100),
+		backgroundColour = colour.black(),
+		backgroundAlpha = 0.5,
+		visible = false,
+		zIndex = 999
+	})
 
-	local icon = core.construct(
-             					"guiIcon", {
-						parent = self.container,
-						name = "close",
-						iconId = "close",
-						position = guiCoord(1, -30, 0, 0),
-						size = guiCoord(0, 30, 0, 30),
-						iconMax = 20,
-						iconColour = colour.black(),
-						iconAlpha = 0.5,
-						backgroundAlpha = 1.0,
-						backgroundColour = props.containerBackgroundColour,
-						zIndex = 100
-					})
+	local icon = core.construct("guiIcon", {
+		parent = self.container,
+		name = "close",
+		iconId = "close",
+		position = guiCoord(1, -30, 0, 0),
+		size = guiCoord(0, 30, 0, 30),
+		iconMax = 20,
+		iconColour = colour.black(),
+		iconAlpha = 0.5,
+		backgroundAlpha = 1.0,
+		backgroundColour = props.containerBackgroundColour,
+		zIndex = 100
+	})
 
 	local oldRender = self.render
 	self.render = function()
@@ -62,9 +60,8 @@ return function(props)
 
 		oldRender()
 		self.container.size = props.size
-		self.container.position = guiCoord(
-                          						0.5 - (props.size.scale.x / 2), -props.size.offset.x / 2,
-                          						0.5 - (props.size.scale.y / 2), -props.size.offset.y / 2)
+		self.container.position = guiCoord(0.5 - (props.size.scale.x / 2), -props.size.offset.x / 2,
+                                   		0.5 - (props.size.scale.y / 2), -props.size.offset.y / 2)
 
 		icon.backgroundColour = props.containerBackgroundColour
 		self.container.backgroundAlpha = 1.0

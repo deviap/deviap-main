@@ -42,20 +42,17 @@ return function(props)
 	self.container.size = guiCoord(0, 120, 0, 38)
 	self.container.backgroundAlpha = 0
 
-	local box = core.construct(
-            					"guiIcon", {
-						name = "box",
-						parent = self.container,
-						active = true,
-						iconId = "radio_button_unchecked",
-						iconColour = colour.black()
-					})
+	local box = core.construct("guiIcon", {
+		name = "box",
+		parent = self.container,
+		active = true,
+		iconId = "radio_button_unchecked",
+		iconColour = colour.black()
+	})
 
-	local textBox = core.construct(
-                					"guiTextBox", {name = "textBox", parent = self.container, active = false})
+	local textBox = core.construct("guiTextBox", {name = "textBox", parent = self.container, active = false})
 
-	local label = core.construct(
-              					"guiTextBox", {name = "label", parent = self.container, active = false})
+	local label = core.construct("guiTextBox", {name = "label", parent = self.container, active = false})
 
 	self.state = newState(reducer)
 	self.render = function()
@@ -86,32 +83,31 @@ return function(props)
 		label.textAlpha = 0.7
 	end
 
-	self.state.subscribe(
-					function(state)
-						box.iconColour = colour(0, 0, 0)
-						if state.mode == "complete" then
-							textBox.textColour = colour.hex('0f62fe')
-							box.iconColour = colour.hex('0f62fe')
-							box.iconId = "check_circle_outline"
-						elseif state.mode == "current" then
-							textBox.textColour = colour.hex('0f62fe')
-							box.iconColour = colour.hex('0f62fe')
-							box.iconId = "lens"
-						elseif state.mode == "invalid" then
-							box.iconId = "error_outline"
-							box.iconColour = colour.hex("#bf1d1d")
-						else
-							box.iconId = "radio_button_unchecked"
-						end
+	self.state.subscribe(function(state)
+		box.iconColour = colour(0, 0, 0)
+		if state.mode == "complete" then
+			textBox.textColour = colour.hex('0f62fe')
+			box.iconColour = colour.hex('0f62fe')
+			box.iconId = "check_circle_outline"
+		elseif state.mode == "current" then
+			textBox.textColour = colour.hex('0f62fe')
+			box.iconColour = colour.hex('0f62fe')
+			box.iconId = "lens"
+		elseif state.mode == "invalid" then
+			box.iconId = "error_outline"
+			box.iconColour = colour.hex("#bf1d1d")
+		else
+			box.iconId = "radio_button_unchecked"
+		end
 
-						if not state.enabled then
-							textBox.textColour = colour.hex("#c6c6c6")
-							label.textColour = colour.hex("#c6c6c6")
-							box.iconColour = colour.hex("#c6c6c6")
-						end
+		if not state.enabled then
+			textBox.textColour = colour.hex("#c6c6c6")
+			label.textColour = colour.hex("#c6c6c6")
+			box.iconColour = colour.hex("#c6c6c6")
+		end
 
-						self.render()
-					end)
+		self.render()
+	end)
 
 	self.render()
 

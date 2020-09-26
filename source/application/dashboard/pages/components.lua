@@ -4,8 +4,7 @@ local checkbox = require("devgit:source/libraries/UI/components/checkbox.lua")
 local textInput = require("devgit:source/libraries/UI/components/textInput.lua")
 local numberInput = require("devgit:source/libraries/UI/components/numberInput.lua")
 local progressStep = require("devgit:source/libraries/UI/components/progress/progressStep.lua")
-local progressIndicator = require(
-                          				"devgit:source/libraries/UI/components/progress/progressIndicator.lua")
+local progressIndicator = require("devgit:source/libraries/UI/components/progress/progressIndicator.lua")
 local tab = require("devgit:source/libraries/UI/components/tabs/tab.lua")
 local tabs = require("devgit:source/libraries/UI/components/tabs/tabs.lua")
 local loading = require("devgit:source/libraries/UI/components/loading.lua")
@@ -22,24 +21,19 @@ return {
 
 		local tab1 = tab {label = "tab 1"}
 
-		local txt = core.construct(
-            						"guiTextBox", {parent = parent, position = guiCoord(0, 10, 0, 450), text = "text"})
+		local txt = core.construct("guiTextBox", {parent = parent, position = guiCoord(0, 10, 0, 450), text = "text"})
 
 		tabs.addTab(tab1, txt)
 
 		local tab2 = tab {label = "tab 2"}
 
-		local txt2 = core.construct(
-             						"guiTextBox",
-             						{parent = parent, position = guiCoord(0, 10, 0, 450), text = "text2"})
+		local txt2 = core.construct("guiTextBox", {parent = parent, position = guiCoord(0, 10, 0, 450), text = "text2"})
 
 		tabs.addTab(tab2, txt2)
 
 		local tab3 = tab {label = "tab 3"}
 
-		local txt3 = core.construct(
-             						"guiTextBox",
-             						{parent = parent, position = guiCoord(0, 10, 0, 450), text = "text3"})
+		local txt3 = core.construct("guiTextBox", {parent = parent, position = guiCoord(0, 10, 0, 450), text = "text3"})
 
 		tabs.addTab(tab3, txt3)
 
@@ -64,21 +58,13 @@ return {
 			helper = "Usually your email address"
 		}
 
-		email.input:on(
-						"keyUp",
-						function() email.state.dispatch {type = "invalidate", error = "Bad email address..."} end)
+		email.input:on("keyUp", function()
+			email.state.dispatch {type = "invalidate", error = "Bad email address..."}
+		end)
 
-		local num = numberInput {
-			parent = parent,
-			position = guiCoord(0, 510, 0, 160),
-			size = guiCoord(0, 300, 0, 30)
-		}
+		local num = numberInput {parent = parent, position = guiCoord(0, 510, 0, 160), size = guiCoord(0, 300, 0, 30)}
 
-		local _checkbox = checkbox {
-			parent = parent,
-			position = guiCoord(0, 310, 0, 160),
-			text = "Checkbox item"
-		}
+		local _checkbox = checkbox {parent = parent, position = guiCoord(0, 310, 0, 160), text = "Checkbox item"}
 
 		local _progressStep1 = progressStep {text = "Progress Step 1", label = "optional label"}
 

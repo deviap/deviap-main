@@ -18,27 +18,25 @@ return function(props)
 	icon.position = guiCoord(1, -50, 0, 0)
 	icon.size = guiCoord(0, 20, 1, 0)
 
-	local increaseContainer = core.construct(
-                          					"guiFrame", {
-						name = "increase",
-						parent = inputContainer,
-						position = guiCoord(1, -30, 0, 0),
-						size = guiCoord(0, 30, 0.5, 0),
-						backgroundAlpha = 0,
-						clip = true
-					})
+	local increaseContainer = core.construct("guiFrame", {
+		name = "increase",
+		parent = inputContainer,
+		position = guiCoord(1, -30, 0, 0),
+		size = guiCoord(0, 30, 0.5, 0),
+		backgroundAlpha = 0,
+		clip = true
+	})
 
-	local increaseBtn = core.construct(
-                    					"guiIcon", {
-						name = "btn",
-						active = false,
-						parent = increaseContainer,
-						iconId = "arrow_drop_up",
-						position = guiCoord(0, 0, 1, -14),
-						size = guiCoord(0.9, 0, 0, 16),
-						iconMax = 16,
-						iconColour = colour.hex("161616")
-					})
+	local increaseBtn = core.construct("guiIcon", {
+		name = "btn",
+		active = false,
+		parent = increaseContainer,
+		iconId = "arrow_drop_up",
+		position = guiCoord(0, 0, 1, -14),
+		size = guiCoord(0.9, 0, 0, 16),
+		iconMax = 16,
+		iconColour = colour.hex("161616")
+	})
 
 	local decreaseContainer = increaseContainer:clone{
 		name = "decrease",
@@ -50,21 +48,21 @@ return function(props)
 	decreaseBtn.iconId = "arrow_drop_down"
 	decreaseBtn.position = guiCoord(0, 0, 0, -2)
 
-	decreaseContainer:on(
-					"mouseLeftUp", function()
-						props.value = math.max(props.min, props.value - props.step)
-						self.input.text = tostring(props.value)
-						self.validate()
-					end)
+	decreaseContainer:on("mouseLeftUp", function()
+		props.value = math.max(props.min, props.value - props.step)
+		self.input.text = tostring(props.value)
+		self.validate()
+	end)
 
-	increaseContainer:on(
-					"mouseLeftUp", function()
-						props.value = math.min(props.max, props.value + props.step)
-						self.input.text = tostring(props.value)
-						self.validate()
-					end)
+	increaseContainer:on("mouseLeftUp", function()
+		props.value = math.min(props.max, props.value + props.step)
+		self.input.text = tostring(props.value)
+		self.validate()
+	end)
 
-	self.input:on("keyUp", function() self.validate() end)
+	self.input:on("keyUp", function()
+		self.validate()
+	end)
 
 	self.validate = function()
 		if tonumber(self.input.text) == nil then
@@ -83,7 +81,9 @@ return function(props)
 	end
 
 	local oldRender = self.render
-	self.render = function() oldRender() end
+	self.render = function()
+		oldRender()
+	end
 
 	return self
 end

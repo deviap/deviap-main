@@ -9,6 +9,9 @@ return function(parent)
 	}
 
 	-- When the button is pressed, say hello!
-	infoButton.states.subscribe(
-					function(newState) if newState.active then print("Hello world!") end end)
+	infoButton.states.subscribe(function(newState)
+		if newState.active then
+			print("Hello world!")
+		end
+	end)
 end

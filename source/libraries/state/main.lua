@@ -65,7 +65,9 @@ return function(reducer, startingState)
 
 		local newState = reducer(state, action)
 
-		for _, callback in next, subscribers do coroutine.wrap(callback)(newState, state, action) end
+		for _, callback in next, subscribers do
+			coroutine.wrap(callback)(newState, state, action)
+		end
 
 		state = newState
 	end
@@ -95,7 +97,9 @@ return function(reducer, startingState)
 
 		local location = insertInGap(subscribers, callback)
 
-		return function() subscribers[location] = nil end
+		return function()
+			subscribers[location] = nil
+		end
 	end
 
 	interface.getReducer = function()
