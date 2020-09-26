@@ -1,4 +1,5 @@
-local iconButton = require("devgit:source/libraries/UI/components/iconButton.lua")
+local iconButton = require(
+                       "devgit:source/libraries/UI/components/iconButton.lua")
 
 return function(parent)
     -- Example Button Constructor
@@ -10,8 +11,6 @@ return function(parent)
 
     -- When the button is pressed, say hello!
     infoButton.states.subscribe(function(newState)
-        if newState.active then
-            print("Hello world!")
-        end
+        if newState.active then print("Hello world!") end
     end)
 end

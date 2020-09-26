@@ -1,10 +1,10 @@
 -- Copyright 2020 - Deviap (deviap.com)
-
-local newBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
+local newBaseComponent = require(
+                             "devgit:source/libraries/UI/components/baseComponent.lua")
 local newState = require("devgit:source/libraries/state/main.lua")
 
 local function reducer(state, action)
-	--[[
+    --[[
 		@description
 			Reducers action to a new state
 		@parameter
@@ -13,18 +13,18 @@ local function reducer(state, action)
 		@returns
 			any, state
 	]]
-	state = state or { enabled = true, mode = "complete" }
-	local newState = { enabled = state.enabled, mode = state.mode }
+    state = state or {enabled = true, mode = "complete"}
+    local newState = {enabled = state.enabled, mode = state.mode}
 
-	if action.type == "enable" then
-		newState.enabled = true
-	elseif action.type == "disable" then
-		newState.enabled = false
-	elseif action.type == "setMode" then
-		newState.mode = action.mode
-	end
+    if action.type == "enable" then
+        newState.enabled = true
+    elseif action.type == "disable" then
+        newState.enabled = false
+    elseif action.type == "setMode" then
+        newState.mode = action.mode
+    end
 
-	return newState
+    return newState
 end
 
 return function(props)
@@ -56,7 +56,7 @@ return function(props)
         parent = self.container,
         active = false
     })
-    
+
     local label = core.construct("guiTextBox", {
         name = "label",
         parent = self.container,
@@ -73,7 +73,7 @@ return function(props)
 			@returns
 				nil
         ]]
-        
+
         box.name = "box"
         box.size = guiCoord(0, 14, 0, 14)
         box.position = guiCoord(0, 2, 0, 2)
@@ -93,7 +93,7 @@ return function(props)
     end
 
     self.state.subscribe(function(state)
-        box.iconColour = colour(0,0,0)
+        box.iconColour = colour(0, 0, 0)
         if state.mode == "complete" then
             textBox.textColour = colour.hex('0f62fe')
             box.iconColour = colour.hex('0f62fe')

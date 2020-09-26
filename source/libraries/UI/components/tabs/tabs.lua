@@ -1,6 +1,6 @@
 -- Copyright 2020 - Deviap (deviap.com)
-
-local newBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
+local newBaseComponent = require(
+                             "devgit:source/libraries/UI/components/baseComponent.lua")
 
 return function(props)
     --[[
@@ -21,31 +21,27 @@ return function(props)
     local tabs = {}
     local pages = {}
 
-    local function selectTab(tab) 
-        for t,v in pairs(pages) do
+    local function selectTab(tab)
+        for t, v in pairs(pages) do
             v.visible = false
             t.props.isContainer = props.isContainer
-            t.state.dispatch { type = "deselect" }
+            t.state.dispatch {type = "deselect"}
         end
 
         pages[tab].visible = true
-        tab.state.dispatch { type = "select" }
+        tab.state.dispatch {type = "select"}
     end
 
     self.addTab = function(tab, page)
         table.insert(tabs, tab)
         pages[tab] = page
-        tab.container:on("mouseLeftUp", function()
-            selectTab(tab)
-        end)
+        tab.container:on("mouseLeftUp", function() selectTab(tab) end)
 
         tab.props.isContainer = props.isContainer
-        tab.state.dispatch { type = "deselect" }
+        tab.state.dispatch {type = "deselect"}
         self.render()
 
-        for i = 1, #tabs do
-            tabs[i].borderRight.lineAlpha = 1
-        end
+        for i = 1, #tabs do tabs[i].borderRight.lineAlpha = 1 end
         tab.borderRight.lineAlpha = 0
 
         selectTab(tabs[1])
@@ -61,15 +57,13 @@ return function(props)
 				nil
         ]]
 
-        if props.size then
-            self.container.size = props.size
-        end
+        if props.size then self.container.size = props.size end
 
-        local s = 1/#tabs
+        local s = 1 / #tabs
 
-        for i,v in pairs (tabs) do
+        for i, v in pairs(tabs) do
             v.container.parent = self.container
-            v.container.position = guiCoord(s*(i-1), 0, 0, 6)
+            v.container.position = guiCoord(s * (i - 1), 0, 0, 6)
             v.container.size = guiCoord(s, 0, 1, -6)
         end
     end

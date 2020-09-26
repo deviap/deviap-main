@@ -1,13 +1,12 @@
 -- Copyright 2020 - Deviap (deviap.com)
 -- Author(s): Sanjay-B(Sanjay)
-
 -- Creates a checkbox instance
-
-local newBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
+local newBaseComponent = require(
+                             "devgit:source/libraries/UI/components/baseComponent.lua")
 local newState = require("devgit:source/libraries/state/main.lua")
 
 local function reducer(state, action)
-	--[[
+    --[[
 		@description
 			Reducers action to a new state
 		@parameter
@@ -16,18 +15,18 @@ local function reducer(state, action)
 		@returns
 			any, state
 	]]
-	state = state or { enabled = true, mode = "idle" }
-	local newState = { enabled = state.enabled, mode = state.mode }
+    state = state or {enabled = true, mode = "idle"}
+    local newState = {enabled = state.enabled, mode = state.mode}
 
-	if action.type == "enable" then
-		newState.enabled = true
-	elseif action.type == "disable" then
-		newState.enabled = false
-	elseif action.type == "setMode" then
-		newState.mode = action.mode
-	end
+    if action.type == "enable" then
+        newState.enabled = true
+    elseif action.type == "disable" then
+        newState.enabled = false
+    elseif action.type == "setMode" then
+        newState.mode = action.mode
+    end
 
-	return newState
+    return newState
 end
 
 return function(props)
@@ -48,7 +47,7 @@ return function(props)
     local box = core.construct("guiFrame", {
         name = "box",
         parent = self.container,
-        active = true,
+        active = true
     })
 
     local boxIcon = core.construct("guiIcon", {
@@ -63,12 +62,23 @@ return function(props)
         active = false
     })
 
-    box:on("mouseEnter", function() self.state.dispatch { type = "setMode", mode = "hover"} end)
-	box:on("mouseExit", function() self.state.dispatch { type = "setMode", mode = "idle" } end)
-    box:on("mouseLeftDown", function() self.state.dispatch { type = "setMode", mode = "active"} end)
-    boxIcon:on("mouseLeftDown", function() self.state.dispatch { type = "setMode", mode = "active"} end)
-    boxIcon:on("mouseEnter", function() self.state.dispatch { type = "setMode", mode = "hover"} end)
-    boxIcon:on("mouseExit", function() self.state.dispatch { type = "setMode", mode = "idle"} end)
+    box:on("mouseEnter", function()
+        self.state.dispatch {type = "setMode", mode = "hover"}
+    end)
+    box:on("mouseExit",
+           function() self.state.dispatch {type = "setMode", mode = "idle"} end)
+    box:on("mouseLeftDown", function()
+        self.state.dispatch {type = "setMode", mode = "active"}
+    end)
+    boxIcon:on("mouseLeftDown", function()
+        self.state.dispatch {type = "setMode", mode = "active"}
+    end)
+    boxIcon:on("mouseEnter", function()
+        self.state.dispatch {type = "setMode", mode = "hover"}
+    end)
+    boxIcon:on("mouseExit", function()
+        self.state.dispatch {type = "setMode", mode = "idle"}
+    end)
 
     self.state = newState(reducer)
     self.selected = false
@@ -82,7 +92,7 @@ return function(props)
 			@returns
 				nil
         ]]
-        
+
         box.name = "box"
         box.size = guiCoord(0, 16, 0, 16)
         box.position = guiCoord(0, 2, 0, 1)

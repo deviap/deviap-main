@@ -3,10 +3,7 @@
 -- LEGACY FILE - REQUIRES REWRITE --
 ------------------------------------
 ------------------------------------
-
-
 -- This script is ran when the user is running a local app/sandbox
-
 local share = core.construct("guiTextBox", {
     parent = core.engine.coreInterface,
     size = guiCoord(0, 60, 0, 16),
@@ -37,9 +34,7 @@ local test = core.construct("guiTextBox", {
     textSize = 12
 })
 
-reload:on("mouseLeftUp", function()
-    core.apps:reload()
-end)
+reload:on("mouseLeftUp", function() core.apps:reload() end)
 
 share:on("mouseLeftUp", function()
     share.visible = false
@@ -66,7 +61,7 @@ share:on("mouseLeftUp", function()
     })
 
     spawn(function()
-        while sleep() and spinner.alive do 
+        while sleep() and spinner.alive do
             spinner.rotation = spinner.rotation + math.rad(1)
         end
     end)
@@ -80,7 +75,7 @@ share:on("mouseLeftUp", function()
         size = guiCoord(0, 460, 0, 120),
         position = guiCoord(0.5, -230, 0.5, -60),
         backgroundColour = colour(1, 1, 1),
-        dropShadowAlpha = 0.3,
+        dropShadowAlpha = 0.3
     })
 
     local label = core.construct("guiTextBox", {
@@ -90,8 +85,8 @@ share:on("mouseLeftUp", function()
         backgroundAlpha = 0.0,
         textSize = 16,
         textWrap = true,
-        textAlign = "topLeft",
-        --textFont = "tevurl:fonts/firaCodeRegular.otf"
+        textAlign = "topLeft"
+        -- textFont = "tevurl:fonts/firaCodeRegular.otf"
     })
 
     local title = core.construct("guiTextBox", {
@@ -109,7 +104,10 @@ share:on("mouseLeftUp", function()
         title.backgroundColour = colour.rgb(70, 179, 88)
         title.textColour = colour.white()
         title.text = "Uploaded"
-        label.text = "Your build has been submitted\n\nApp Id: " .. result.appId .. "\nBuild ID: " .. result.id .. "\nBuild Version: " .. result.version
+        label.text =
+            "Your build has been submitted\n\nApp Id: " .. result.appId ..
+                "\nBuild ID: " .. result.id .. "\nBuild Version: " ..
+                result.version
     else
         title.backgroundColour = colour.rgb(179, 70, 70)
         title.textColour = colour.white()
@@ -120,7 +118,6 @@ share:on("mouseLeftUp", function()
     core.input:waitFor("mouseLeftUp")
     core.apps:reload()
 end)
-
 
 test:on("mouseLeftUp", function()
     test.visible = false
@@ -147,7 +144,7 @@ test:on("mouseLeftUp", function()
     })
 
     spawn(function()
-        while sleep() and spinner.alive do 
+        while sleep() and spinner.alive do
             spinner.rotation = spinner.rotation + math.rad(1)
         end
     end)
@@ -161,7 +158,7 @@ test:on("mouseLeftUp", function()
         size = guiCoord(0, 460, 0, 120),
         position = guiCoord(0.5, -230, 0.5, -60),
         backgroundColour = colour(1, 1, 1),
-        dropShadowAlpha = 0.3,
+        dropShadowAlpha = 0.3
     })
 
     local label = core.construct("guiTextBox", {
@@ -171,8 +168,8 @@ test:on("mouseLeftUp", function()
         backgroundAlpha = 0.0,
         textSize = 16,
         textWrap = true,
-        textAlign = "topLeft",
-        --textFont = "tevurl:fonts/firaCodeRegular.otf"
+        textAlign = "topLeft"
+        -- textFont = "tevurl:fonts/firaCodeRegular.otf"
     })
 
     local title = core.construct("guiTextBox", {

@@ -14,12 +14,12 @@ controller.sidebar = core.construct("guiFrame", {
 
 breakpointer:bind(controller.sidebar, "xs", {
     size = guiCoord(1, 0, 0, 150),
-    position = guiCoord(0, 0, 1, -50),
+    position = guiCoord(0, 0, 1, -50)
 })
 
 breakpointer:bind(controller.sidebar, "sm", {
     size = guiCoord(0, 50, 1, 0),
-    position = guiCoord(0, 0, 0, 0),
+    position = guiCoord(0, 0, 0, 0)
 })
 
 controller.activeBall = core.construct("guiFrame", {
@@ -30,13 +30,9 @@ controller.activeBall = core.construct("guiFrame", {
     strokeRadius = 4
 })
 
-breakpointer:bind(controller.activeBall, "xs", {
-    visible = false
-})
+breakpointer:bind(controller.activeBall, "xs", {visible = false})
 
-breakpointer:bind(controller.activeBall, "sm", {
-    visible = true
-})
+breakpointer:bind(controller.activeBall, "sm", {visible = true})
 
 controller.container = core.construct("guiFrame", {
     parent = core.interface,
@@ -46,12 +42,12 @@ controller.container = core.construct("guiFrame", {
 
 breakpointer:bind(controller.container, "xs", {
     size = guiCoord(1, 0, 1, 0),
-    position = guiCoord(0, 0, 0, 0),
+    position = guiCoord(0, 0, 0, 0)
 })
 
 breakpointer:bind(controller.container, "sm", {
     size = guiCoord(1, -50, 1, 0),
-    position = guiCoord(0, 50, 0, 0),
+    position = guiCoord(0, 50, 0, 0)
 })
 
 local currentY = 10
@@ -70,17 +66,13 @@ controller.register = function(module)
         clip = false
     })
 
-    breakpointer:bind(btn, "xs", {
-        position = guiCoord(0, currentY, 0, 5)
-    })
+    breakpointer:bind(btn, "xs", {position = guiCoord(0, currentY, 0, 5)})
 
-    breakpointer:bind(btn, "sm", {
-        position = guiCoord(0, 5, 0, currentY)
-    })
+    breakpointer:bind(btn, "sm", {position = guiCoord(0, 5, 0, currentY)})
 
     table.insert(btns, btn)
 
-    currentY = currentY +50
+    currentY = currentY + 50
     local label = core.construct("guiTextBox", {
         parent = btn,
         active = false,
@@ -95,23 +87,15 @@ controller.register = function(module)
     })
 
     btn:on("mouseEnter", function()
-        core.tween:begin(btn, 0.3, {
-            iconMax = 16
-        }, "inOutQuad")
+        core.tween:begin(btn, 0.3, {iconMax = 16}, "inOutQuad")
 
-        core.tween:begin(label, 0.2, {
-            textAlpha = 0.8,
-        }, "inOutQuad")
+        core.tween:begin(label, 0.2, {textAlpha = 0.8}, "inOutQuad")
     end)
 
     btn:on("mouseExit", function()
-        core.tween:begin(btn, 0.3, {
-            iconMax = 24,
-        }, "inOutQuad")
+        core.tween:begin(btn, 0.3, {iconMax = 24}, "inOutQuad")
 
-        core.tween:begin(label, 0.2, {
-            textAlpha = 0
-        }, "inOutQuad")
+        core.tween:begin(label, 0.2, {textAlpha = 0}, "inOutQuad")
     end)
 
     local page = core.construct("guiFrame", {
@@ -122,16 +106,12 @@ controller.register = function(module)
         visible = false
     })
 
-    if #btns == 1 then
-        page.visible = true
-    end
+    if #btns == 1 then page.visible = true end
 
     table.insert(pages, page)
 
     btn:on("mouseLeftDown", function()
-        for _,v in pairs(pages) do
-            v.visible = false
-        end
+        for _, v in pairs(pages) do v.visible = false end
         core.tween:begin(controller.activeBall, 0.3, {
             position = guiCoord(1, -4, 0, btn.position.offset.y + 20 - 4)
         }, "inOutQuad")

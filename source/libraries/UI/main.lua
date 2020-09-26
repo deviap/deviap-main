@@ -1,7 +1,5 @@
 -- Copyright 2020 - Deviap (deviap.com)
-
 -- Entry point for UI library.
-
 -- Quick Imports
 return {
     -- class = require("../path")

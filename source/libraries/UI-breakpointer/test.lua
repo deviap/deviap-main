@@ -6,14 +6,8 @@ local btn = core.construct("guiTextBox", {
     position = guiCoord(0.5, -16, 0.5, -16)
 })
 
-breakpointer:bind(btn, "xs", {
-    backgroundColour = colour(1, 0, 0)
-})
+breakpointer:bind(btn, "xs", {backgroundColour = colour(1, 0, 0)})
 
-breakpointer:bind(btn, "sm", {
-    backgroundColour = colour(0, 1, 0)
-})
+breakpointer:bind(btn, "sm", {backgroundColour = colour(0, 1, 0)})
 
-breakpointer:bind(btn, "md", {
-    backgroundColour = colour(0, 0, 1)
-})
+breakpointer:bind(btn, "md", {backgroundColour = colour(0, 0, 1)})

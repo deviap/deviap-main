@@ -1,8 +1,6 @@
 return function(properties, textColour)
 
-    if not properties.backgroundAlpha then
-        properties.backgroundAlpha = 1.0
-    end
+    if not properties.backgroundAlpha then properties.backgroundAlpha = 1.0 end
 
     if not properties.backgroundColour then
         properties.backgroundColour = colour.rgb(255, 255, 255)
@@ -24,7 +22,7 @@ return function(properties, textColour)
 
     local logoText = core.construct("guiTextBox", {
         parent = mainBackdrop,
-        size = guiCoord(1, 0, 0.9, 0), 
+        size = guiCoord(1, 0, 0.9, 0),
         backgroundAlpha = 0,
         text = "deviap",
         textColour = textColour or colour.black(),

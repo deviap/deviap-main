@@ -1,10 +1,10 @@
 -- Copyright 2020 - Deviap (deviap.com)
-
-local newBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
+local newBaseComponent = require(
+                             "devgit:source/libraries/UI/components/baseComponent.lua")
 local newState = require("devgit:source/libraries/state/main.lua")
 
 local function reducer(state, action)
-	--[[
+    --[[
 		@description
 			Reducers action to a new state
 		@parameter
@@ -13,12 +13,16 @@ local function reducer(state, action)
 		@returns
 			any, state
 	]]
-	state = state or { enabled = true, selected = false, hover = false }
-	local newState = { enabled = state.enabled, selected = state.selected, hover = state.hover }
+    state = state or {enabled = true, selected = false, hover = false}
+    local newState = {
+        enabled = state.enabled,
+        selected = state.selected,
+        hover = state.hover
+    }
 
-	if action.type == "select" then
-		newState.selected = true
-	elseif action.type == "deselect" then
+    if action.type == "select" then
+        newState.selected = true
+    elseif action.type == "deselect" then
         newState.selected = false
     elseif action.type == "enable" then
         newState.enabled = true
@@ -28,9 +32,9 @@ local function reducer(state, action)
         newState.hover = true
     elseif action.type == "unhover" then
         newState.hover = false
-	end
+    end
 
-	return newState
+    return newState
 end
 
 return function(props)
@@ -61,34 +65,36 @@ return function(props)
         position = guiCoord(0, 10, 0, 5),
         backgroundAlpha = 0,
         textSize = 18,
-        textAlign = "middleLeft",
+        textAlign = "middleLeft"
     })
 
     props.containerBackgroundColour = colour.hex("ffffff")
     props.containerBackgroundAlpha = 0.5
 
     local borderBottom = core.construct("guiLine", {
-		active              = false,
-        parent              = self.container,
-        lineWidth           = 2,
-        pointA              = guiCoord(0, 1, 1, -1),
-        pointB              = guiCoord(1, -1, 1, -1)
+        active = false,
+        parent = self.container,
+        lineWidth = 2,
+        pointA = guiCoord(0, 1, 1, -1),
+        pointB = guiCoord(1, -1, 1, -1)
     })
-    
+
     self.borderRight = core.construct("guiLine", {
-		active              = false,
-        parent              = self.container,
-        lineWidth           = 1,
-        pointA              = guiCoord(1, 0, 0, 0),
-        pointB              = guiCoord(1, 0, 1, 0),
-        lineColour          = colour.hex("8d8d8d"),
-        visible             = false
+        active = false,
+        parent = self.container,
+        lineWidth = 1,
+        pointA = guiCoord(1, 0, 0, 0),
+        pointB = guiCoord(1, 0, 1, 0),
+        lineColour = colour.hex("8d8d8d"),
+        visible = false
     })
 
     self.state = newState(reducer)
 
-    self.container:on("mouseEnter", function() self.state.dispatch { type = "hover" } end)
-	self.container:on("mouseExit", function() self.state.dispatch { type = "unhover" } end)
+    self.container:on("mouseEnter",
+                      function() self.state.dispatch {type = "hover"} end)
+    self.container:on("mouseExit",
+                      function() self.state.dispatch {type = "unhover"} end)
 
     local oldRender = self.render
     self.render = function()
@@ -142,9 +148,7 @@ return function(props)
             props.containerBackgroundAlpha = 0.6
         end
 
-        if state.selected then
-            props.containerBackgroundAlpha = 0.3
-        end
+        if state.selected then props.containerBackgroundAlpha = 0.3 end
 
         if not state.enabled then
             props.labelFont = "deviap:fonts/openSansRegular.ttf"

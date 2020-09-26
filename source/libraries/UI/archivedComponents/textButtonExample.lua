@@ -1,4 +1,5 @@
-local textButton = require("devgit:source/libraries/UI/components/textButton.lua")
+local textButton = require(
+                       "devgit:source/libraries/UI/components/textButton.lua")
 
 return function(parent)
     -- Example Button Constructor
@@ -10,8 +11,6 @@ return function(parent)
 
     -- When the button is pressed, say hello!
     infoButton.states.subscribe(function(newState)
-        if newState.active then
-            print("Hello world!")
-        end
+        if newState.active then print("Hello world!") end
     end)
 end

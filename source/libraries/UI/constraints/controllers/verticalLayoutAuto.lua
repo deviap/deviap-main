@@ -1,17 +1,14 @@
 -- Copyright 2020 - Deviap (deviap.com)
-
 local count = function(x)
-	--[[
+    --[[
 	]]
-	local c = 0
-	for _,_ in next, x do
-		c = c + 1
-	end
-	return c
+    local c = 0
+    for _, _ in next, x do c = c + 1 end
+    return c
 end
 
 return function()
-	--[[
+    --[[
 		@description
 			Creates a new verticalLayoutAuto that automatically fits itself.
 			So, that means there is no minimum or maximum really.
@@ -23,13 +20,13 @@ return function()
 			table, interface
 	]]
 
-	local public = {}
-	local objects = {}
+    local public = {}
+    local objects = {}
 
-	public.container = core.construct("guiFrame")
+    public.container = core.construct("guiFrame")
 
-	public.refresh = function()
-		--[[
+    public.refresh = function()
+        --[[
 			@description
 				Refreshes the container.
 			
@@ -40,18 +37,18 @@ return function()
 				nil
 		]]
 
-		local i = 0
-		local width = public.container.absoluteSize.x / count(objects)
-		for _, object in next, objects do
-			object.parent = public.container
-			object.size = guiCoord(width, 0, 0, 1)
-			object.position = guiCoord(width * i, 0, 0, 0)
-			i = i + 1
-		end
-	end
+        local i = 0
+        local width = public.container.absoluteSize.x / count(objects)
+        for _, object in next, objects do
+            object.parent = public.container
+            object.size = guiCoord(width, 0, 0, 1)
+            object.position = guiCoord(width * i, 0, 0, 0)
+            i = i + 1
+        end
+    end
 
-	public.destroy = function(destroyChildren)
-		--[[
+    public.destroy = function(destroyChildren)
+        --[[
 			@description
 				Destroys the layout and what it stands for.
 
@@ -64,23 +61,21 @@ return function()
 				table, [children]
 		]]
 
-		local children = public.container.children
-		
-		if destroyChildren then
-			object:destroyChildren()
-			object:destroy()
-		else
-			for _, object in next, children do
-				object.parent = nil
-			end
-			object:destroy()
-			
-			return children
-		end
-	end
-	
-	public.addObject = function(tag, object)
-		--[[
+        local children = public.container.children
+
+        if destroyChildren then
+            object:destroyChildren()
+            object:destroy()
+        else
+            for _, object in next, children do object.parent = nil end
+            object:destroy()
+
+            return children
+        end
+    end
+
+    public.addObject = function(tag, object)
+        --[[
 			@description
 				Add object
 
@@ -94,11 +89,11 @@ return function()
 				nil
 		]]
 
-		objects[tag] = object
-	end
+        objects[tag] = object
+    end
 
-	public.selectObject = function(tag)
-		--[[
+    public.selectObject = function(tag)
+        --[[
 			@description
 				select object
 
@@ -109,11 +104,11 @@ return function()
 				guiObject, object
 		]]
 
-		return objects[tag]
-	end
-	
-	public.removeObject = function(tag)
-		--[[
+        return objects[tag]
+    end
+
+    public.removeObject = function(tag)
+        --[[
 			@description
 				remove object
 
@@ -123,11 +118,11 @@ return function()
 			@return
 				guiObject, object
 		]]
-		
-		local object = objects[tag]
-		objects[tag] = nil
-		return object
-	end
 
-	return public
+        local object = objects[tag]
+        objects[tag] = nil
+        return object
+    end
+
+    return public
 end

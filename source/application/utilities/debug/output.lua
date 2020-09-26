@@ -1,14 +1,13 @@
 -- Copyright 2020 - Deviap (deviap.com)
 -- Author(s): Sanjay-B(Sanjay), utrain
-
 -- Output for internal debug purposes.
-
 local maxEntries = 19
 local debounce, contents = false, {}
 local Container = core.construct("guiFrame", {
     parent = core.interface,
     name = "outputWindow", -- So, we can reference this later.
-    size = guiCoord(0, math.max(core.interface.absoluteSize.x/3,150), 0, math.max(core.interface.absoluteSize.y/3,200)),
+    size = guiCoord(0, math.max(core.interface.absoluteSize.x / 3, 150), 0,
+                    math.max(core.interface.absoluteSize.y / 3, 200)),
     position = guiCoord(0, 250, 0, 50),
     backgroundColour = colour(1, 1, 1),
     backgroundAlpha = 0.9,
@@ -56,10 +55,11 @@ local down = headerText:on("mouseLeftDown", function(initialPosition)
     if debounce then return end
     debounce = true
 
-    local offset = initialPosition-Container.absolutePosition
+    local offset = initialPosition - Container.absolutePosition
 
     move = core.input:on("mouseMoved", function()
-        Container.position = guiCoord(0, core.input.mousePosition.x-offset.x, 0, core.input.mousePosition.y-offset.y)
+        Container.position = guiCoord(0, core.input.mousePosition.x - offset.x,
+                                      0, core.input.mousePosition.y - offset.y)
     end)
 
     release = core.input:on("mouseLeftUp", function()
@@ -70,20 +70,20 @@ local down = headerText:on("mouseLeftDown", function(initialPosition)
     end)
 end)
 
-
 -- Contents Population Logic
 -- RED: colour.rgb(229, 115, 115)
 -- GREY: colour.rgb(102, 102, 102)
 core.debug:on("print", function(message)
-    contents[#contents+1] = {
-        ["message"] = os.date("%H:%M:%S", os.time())..": "..message,
-        ["colour"] = (string.match(message, "ERROR:") and colour.rgb(229, 115, 115) or colour.rgb(102, 102, 102))
+    contents[#contents + 1] = {
+        ["message"] = os.date("%H:%M:%S", os.time()) .. ": " .. message,
+        ["colour"] = (string.match(message, "ERROR:") and
+            colour.rgb(229, 115, 115) or colour.rgb(102, 102, 102))
     }
 end)
 
 core.debug:on("warn", function(message)
-    contents[#contents+1] = {
-        ["message"] = os.date("%H:%M:%S", os.time())..": "..message,
+    contents[#contents + 1] = {
+        ["message"] = os.date("%H:%M:%S", os.time()) .. ": " .. message,
         ["colour"] = colour.rgb(255, 183, 77)
     }
 end)
@@ -96,7 +96,7 @@ core.debug:on("error", function(message)
         ["colour"] = colour.rgb(229, 115, 115)
     }
 end)
-]]--
+]] --
 
 -- Update Console Contents
 spawn(function()
@@ -107,17 +107,19 @@ spawn(function()
             local textLabel = core.construct("guiTextBox", {
                 parent = scrollContents,
                 size = guiCoord(1, 0, 1, 0),
-                position = guiCoord(0, 0, 0, scrollContents.canvasSize.offset.y);
+                position = guiCoord(0, 0, 0, scrollContents.canvasSize.offset.y),
                 backgroundColour = colour.rgb(255, 255, 255),
                 text = data["message"],
                 textColour = data["colour"],
-                --textFont = "deviap:fonts/firaCodeBold.otf",
+                -- textFont = "deviap:fonts/firaCodeBold.otf",
                 textSize = 14,
                 textWrap = true,
                 visible = true
             })
-            textLabel.size = guiCoord(1, 0, 0, textLabel.textDimensions.y+2)
-            scrollContents.canvasSize = scrollContents.canvasSize+guiCoord(0, 0, 0, textLabel.absoluteSize.y)
+            textLabel.size = guiCoord(1, 0, 0, textLabel.textDimensions.y + 2)
+            scrollContents.canvasSize = scrollContents.canvasSize +
+                                            guiCoord(0, 0, 0,
+                                                     textLabel.absoluteSize.y)
         end
     end
 end)

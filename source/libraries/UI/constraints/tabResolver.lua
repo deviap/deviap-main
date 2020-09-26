@@ -1,9 +1,7 @@
 -- Copyright 2020 - Deviap (deviap.com)
-
 -- Constraints using tabs. Weights are not implemented as of late.
-
 local function getMinMaxFromOffset(tab, offset, maxLength)
-	--[[
+    --[[
 		@description
 			Returns distance to give between given offset and tab
 
@@ -19,12 +17,12 @@ local function getMinMaxFromOffset(tab, offset, maxLength)
 			integer, Distance to give between given offset and tab.
 	]]
 
-	local availableSpace = maxLength - offset
-	return (availableSpace > tab.max) and tab.max or availableSpace
+    local availableSpace = maxLength - offset
+    return (availableSpace > tab.max) and tab.max or availableSpace
 end
 
 local function getRelativeTabs(tab, array)
-	--[[
+    --[[
 		@description
 			Returns all relative tabs from tab given with recursion
 
@@ -38,23 +36,24 @@ local function getRelativeTabs(tab, array)
 			Array, Collected tabs from relative tab recursion
 	]]
 
-	local currentTabs = array or {}
-	local relativeTab = tab.relativeTab
+    local currentTabs = array or {}
+    local relativeTab = tab.relativeTab
 
-	if relativeTab then
-		table.insert(currentTabs, relativeTab)
-		return getRelativeTabs(relativeTab, currentTabs)
-	end
+    if relativeTab then
+        table.insert(currentTabs, relativeTab)
+        return getRelativeTabs(relativeTab, currentTabs)
+    end
 
-	return currentTabs
+    return currentTabs
 end
 
 local new = function()
-	local public = {}
-	public.tabs = { x = {}, y = {} }
+    local public = {}
+    public.tabs = {x = {}, y = {}}
 
-	public.registerRelativeTab = function(axis, tag, relativeTo, min, max, pref, weight)
-		--[[
+    public.registerRelativeTab = function(axis, tag, relativeTo, min, max, pref,
+                                          weight)
+        --[[
 			@description
 				Registers a new relative tab.
 
@@ -76,34 +75,33 @@ local new = function()
 				tab, tab
 		]]
 
-		max = max or min
-		pref = pref or max/2
-		weight = weight or 1
+        max = max or min
+        pref = pref or max / 2
+        weight = weight or 1
 
-		public.tabs[axis][tag] =
-		{
-			min = min,
-			max = max,
-			weight = weight,
+        public.tabs[axis][tag] = {
+            min = min,
+            max = max,
+            weight = weight,
 
-			tag = tag,
-		}
+            tag = tag
+        }
 
-		local relativeToTab = public.tabs[axis][relativeTo]
+        local relativeToTab = public.tabs[axis][relativeTo]
 
-		if relativeTo then
-			if relativeToTab.relativeTabs then
-				table.insert(relativeToTab.relativeTabs, public.tabs[axis][tag])
-			else
-				relativeToTab.relativeTab = public.tabs[axis][tag]
-			end
-		end
+        if relativeTo then
+            if relativeToTab.relativeTabs then
+                table.insert(relativeToTab.relativeTabs, public.tabs[axis][tag])
+            else
+                relativeToTab.relativeTab = public.tabs[axis][tag]
+            end
+        end
 
-		return public.tabs[axis][tag]
-	end
+        return public.tabs[axis][tag]
+    end
 
-	public.registerAnchorTab = function(axis, tag, offset)
-		--[[
+    public.registerAnchorTab = function(axis, tag, offset)
+        --[[
 			@description
 				Register an anchor tabs
 
@@ -119,18 +117,13 @@ local new = function()
 				tab, tab
 		]]
 
-		public.tabs[axis][tag] =
-		{
-			tag = tag,
-			offset = offset,
-			relativeTabs = {},
-		}
+        public.tabs[axis][tag] = {tag = tag, offset = offset, relativeTabs = {}}
 
-		return public.tabs[axis][tag]
-	end
+        return public.tabs[axis][tag]
+    end
 
-	public.pokeTab = function(axis, tag)
-		--[[
+    public.pokeTab = function(axis, tag)
+        --[[
 			@description
 				Returns tab with tag supplied
 
@@ -144,11 +137,11 @@ local new = function()
 				tab, tab which was poked
 		]]
 
-		return public.tabs[axis][tag]
-	end
+        return public.tabs[axis][tag]
+    end
 
-	public.removeTab = function(axis, tag)
-		--[[
+    public.removeTab = function(axis, tag)
+        --[[
 			@description
 				UNSAFE: removes tab and returns the tab(s) that was relative to it.
 
@@ -162,11 +155,11 @@ local new = function()
 				tab, tab that was relative to the tab removed.
 		]]
 
-		public.tab[axis][tag] = nil
-	end
+        public.tab[axis][tag] = nil
+    end
 
-	public.isSafeToRemove = function(axis, tag)
-		--[[
+    public.isSafeToRemove = function(axis, tag)
+        --[[
 			@description
 				Is safe to remove?
 
@@ -180,17 +173,17 @@ local new = function()
 				boolean, is safe to remove?
 		]]
 
-		local tab = public.tab[axis][tag]
+        local tab = public.tab[axis][tag]
 
-		if tab.relativeTabs then
-			return #tab.relativeTabs == 0
-		else
-			return tab.relativeTab == nil
-		end
-	end
+        if tab.relativeTabs then
+            return #tab.relativeTabs == 0
+        else
+            return tab.relativeTab == nil
+        end
+    end
 
-	public.resolveForAxis = function(axis, maxLength)
-		--[[
+    public.resolveForAxis = function(axis, maxLength)
+        --[[
 			@description
 				Resolves for the given axis.
 
@@ -202,39 +195,42 @@ local new = function()
 				with string being tag of tab and integer being the position.
 		]]
 
-		local axis = public.tabs[axis]
-		local tabDict = {}
+        local axis = public.tabs[axis]
+        local tabDict = {}
 
-		for _, tab in pairs(axis) do
-			local relativeTabs = tab.relativeTabs
+        for _, tab in pairs(axis) do
+            local relativeTabs = tab.relativeTabs
 
-			if relativeTabs then
-				for _, relativeTab in pairs(relativeTabs) do
-					local offset = tab.offset
-					tabDict[tab.tag] = offset
+            if relativeTabs then
+                for _, relativeTab in pairs(relativeTabs) do
+                    local offset = tab.offset
+                    tabDict[tab.tag] = offset
 
-					local distance = getMinMaxFromOffset(relativeTab, offset, maxLength)
-					local lastOffset = offset + distance
+                    local distance = getMinMaxFromOffset(relativeTab, offset,
+                                                         maxLength)
+                    local lastOffset = offset + distance
 
-					tabDict[relativeTab.tag] = lastOffset
+                    tabDict[relativeTab.tag] = lastOffset
 
-					local relativeChildren = getRelativeTabs(relativeTab)
+                    local relativeChildren = getRelativeTabs(relativeTab)
 
-					for _, relativeChild in pairs(relativeChildren) do
-						local distance = getMinMaxFromOffset(relativeChild, lastOffset, maxLength)
-						lastOffset = lastOffset + distance
+                    for _, relativeChild in pairs(relativeChildren) do
+                        local distance =
+                            getMinMaxFromOffset(relativeChild, lastOffset,
+                                                maxLength)
+                        lastOffset = lastOffset + distance
 
-						tabDict[relativeChild.tag] = lastOffset
-					end
-				end
-			end
-		end
+                        tabDict[relativeChild.tag] = lastOffset
+                    end
+                end
+            end
+        end
 
-		return tabDict
-	end
+        return tabDict
+    end
 
-	public.resolve = function(maxSize)
-		--[[
+    public.resolve = function(maxSize)
+        --[[
 			@parameter
 			vector2, maxSize
 
@@ -245,14 +241,13 @@ local new = function()
 				{ x = resolveForAxis("x"), y = resolveForAxis("y") }
 		]]
 
-		return
-		{
-			public.resolveForAxis("x", maxSize.x),
-			public.resolveForAxis("y", maxSize.y),
-		}
-	end
+        return {
+            public.resolveForAxis("x", maxSize.x),
+            public.resolveForAxis("y", maxSize.y)
+        }
+    end
 
-	return public
+    return public
 end
 
 return new

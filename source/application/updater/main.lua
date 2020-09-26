@@ -1,6 +1,6 @@
 -- Copyright 2020 - Deviap (deviap.com)
-
-local colourMap = require("devgit:source/application/utilities/colourScheme.lua")
+local colourMap =
+    require("devgit:source/application/utilities/colourScheme.lua")
 
 local container = core.construct("guiFrame", {
     parent = core.interface,
@@ -19,36 +19,35 @@ local pattern = core.construct("guiImage", {
 })
 
 local tween;
-tween = core.tween:begin(pattern, 5, {
-    imageTopLeft = vector2(-120, 120)
-}, "linear", function()
+tween = core.tween:begin(pattern, 5, {imageTopLeft = vector2(-120, 120)},
+                         "linear", function()
     tween:reset()
     tween:resume()
 end)
 
-local logoBg, logoShadow, logoText = require("devgit:source/application/utilities/logo.lua")({
-    parent = container,
-    size = guiCoord(0, 400, 0, 160),
-    position = guiCoord(0.5, -200, 0.5, -80),
-    backgroundColour = colour.rgb(255, 255, 255),
-    backgroundAlpha = 0.98
-})
+local logoBg, logoShadow, logoText = require(
+                                         "devgit:source/application/utilities/logo.lua")(
+                                         {
+        parent = container,
+        size = guiCoord(0, 400, 0, 160),
+        position = guiCoord(0.5, -200, 0.5, -80),
+        backgroundColour = colour.rgb(255, 255, 255),
+        backgroundAlpha = 0.98
+    })
 
 -- Move to effects module (or something similar)
 local colours = {
-    colourMap.purple,
-    colourMap.lightBlue, 
-    colourMap.blue, 
-    colourMap.green,
-    colourMap.terraCotta,
+    colourMap.purple, colourMap.lightBlue, colourMap.blue, colourMap.green,
+    colourMap.terraCotta
 }
 
 local currentColourIndex = 1
 
-spawn(function() 
+spawn(function()
     while true do
-        core.tween:begin(container, 4, { backgroundColour = colours[currentColourIndex] })
-        core.tween:begin(logoText, 4, { textColour = colours[currentColourIndex] })
+        core.tween:begin(container, 4,
+                         {backgroundColour = colours[currentColourIndex]})
+        core.tween:begin(logoText, 4, {textColour = colours[currentColourIndex]})
         currentColourIndex = currentColourIndex + 1
         if currentColourIndex > #colours then currentColourIndex = 1 end
         sleep(4)
@@ -57,10 +56,9 @@ end)
 
 --
 sleep(3)
-core.tween:begin(logoShadow, 1, { position = guiCoord(0.5, -200, 0.4, -90) })
-core.tween:begin(logoBg, 1, { position = guiCoord(0.5, -190, 0.4, -100) })
+core.tween:begin(logoShadow, 1, {position = guiCoord(0.5, -200, 0.4, -90)})
+core.tween:begin(logoBg, 1, {position = guiCoord(0.5, -190, 0.4, -100)})
 sleep(1)
-
 
 -- If devgit is overridden
 if core.dev.localDevGitEnabled then
@@ -94,12 +92,12 @@ if core.dev.localDevGitEnabled then
     })
 
     pathUi.size = guiCoord(0, pathUi.textDimensions.x + 30, 0, 30)
-    pathUi.position = guiCoord(0.5, -pathUi.size.offset.x/2, 0.64, 10)
+    pathUi.position = guiCoord(0.5, -pathUi.size.offset.x / 2, 0.64, 10)
 end
 
 -- If barebones application
 if not core.dev.localDevGitEnabled then
-    
+
     local infoLabel = core.construct("guiTextBox", {
         parent = container,
         size = guiCoord(0, 370, 0, 100),
@@ -126,16 +124,16 @@ if not core.dev.localDevGitEnabled then
     core.input:on("keyDown", function(key)
         if key == "KEY_RETURN" then
             -- Remove Updater / Splash Screen
-			container:destroy()
-		end
-	end)
-
-    core.engine:on("updateMessage", function(message)
-        infoLabel.text = message
+            container:destroy()
+        end
     end)
 
+    core.engine:on("updateMessage",
+                   function(message) infoLabel.text = message end)
+
     core.engine:on("updateProgress", function(str)
-        core.tween:begin(progressBarFrame, 0.2, { size = guiCoord(i/100, 0, 1, 0) })
+        core.tween:begin(progressBarFrame, 0.2,
+                         {size = guiCoord(i / 100, 0, 1, 0)})
     end)
 end
 
@@ -152,7 +150,6 @@ core.construct("guiTextBox", {
     textWrap = true
 })
 
-
 core.input:on("keyDown", function(key)
     if key == "KEY_RETURN" then
         -- Remove Updater / Splash Screen
@@ -165,5 +162,5 @@ core.input:on("keyDown", function(key)
 
         -- If user is not authenticated
         -- Push to Login 
-	end
+    end
 end)
