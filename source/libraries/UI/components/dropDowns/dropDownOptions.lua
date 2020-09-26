@@ -26,6 +26,12 @@ return function(props)
 			text = tag,
 		})
 
+		button.state.subscribe(function(state)
+			if state.active then
+				self.state.dispatch({ type = "selectButton", newButton = tag })
+			end
+		end)
+
 		self._buttons[tag] = button
 
 		return button

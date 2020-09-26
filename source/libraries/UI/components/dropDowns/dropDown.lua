@@ -51,18 +51,5 @@ return function(props)
 		self.render()
 	end)
 
-
 	return self
 end
-
---[[
-	container
-		border
-		
-		buttonText
-		buttonIcon
-
-		menuContainer
-			elementA
-			elementB
-]]

@@ -6,9 +6,20 @@
 local dropDown = require("devgit:source/libraries/UI/components/dropDowns/dropDownOptions.lua")
 
 return function(parent)
-	dropDown({
+	local drop = dropDown({
 		parent = parent,
 		position = guiCoord(0,200,0,200),
 		text = "owo"
-	}).render()
+	})
+
+	drop.state.subscribe(function(state, _, action)
+		print(action.type)
+		if action.type == "selectButton" then
+			print(action.newButton)
+		end
+	end)
+
+	drop.addButton("ok")
+	drop.addButton("yes")
+	drop.addButton("two")
 end
