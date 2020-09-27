@@ -13,11 +13,27 @@ local function reducer(state, action)
 		return action.newButton
 	end
 	
-	return nil
+	return state
 end
 
 return function(props)
+	props.text = props.text or "Choose an option..."
+	props.secondaryColour = colour(0.3, 0.3, 0.3)
+	props.containerBackgroundColour =  colour(1, 1, 1)
+	props.borderAlpha = 1
+	props.borderInset = 1
+	props.borderWidth = 1
+	props.helperText = props.helperText or ""
+
 	local self = newDropdown(props)
+
+	local helper = core.construct("guiTextBox", {
+		parent = self.container,
+		size = guiCoord(1, 0, 0, 24),
+		backgroundAlpha = 1,
+		textColour = props.secondaryColour,
+		text = props.helperText,
+	})
 
 	self._buttons = {}
 	self.addButton = function(tag)
@@ -48,6 +64,23 @@ return function(props)
 
 	local oldRender = self.render
 	self.render = function()
+		helper.textColour = props.secondaryColour
+		helper.text = props.helperText
+		
+		if props.helperText ~= "" then
+			helper.visible = true
+			helper.size = guiCoord(1, 0, 0, 24)
+			helper.position = guiCoord(0, 0, 0, -24)
+			self.container.size = guiCoord(0, 288, 0, 40)
+			self.container.position = props.position + guiCoord(0, 0, 0, 24)
+		else
+			helper.visible = false
+			helper.size = guiCoord(1, 0, 0, 24)
+			helper.position = guiCoord(0, 0, 0, -24)
+			self.container.size = guiCoord(0, 288, 0, 40)
+			self.container.position = props.position + guiCoord(0, 0, 0, 24)
+		end
+	
 		local heightOfButton = self.menu.absoluteSize.y / count(self._buttons)
 
 		local i = 0
@@ -63,9 +96,40 @@ return function(props)
 	local oldReducer = self.state.getReducer()
 	self.state.replaceReducer(function(state, action)
 		local r1 = oldReducer(state, action)
-		r1.selectedButton = reducer(state, action)
+		r1.selectedButton = reducer(state.selectedButton, action)
 
 		return r1
+	end)
+
+	self.state.subscribe(function(state)
+		self.menu.visible = false
+		props.text = state.selectedButton or "Choose an option..."
+		props.iconId = "expand_more"
+		props.borderAlpha = 1
+		props.borderInset = 1
+		props.borderWidth = 1
+
+		if state.enabled then
+			props.secondaryColour = colour(0.3, 0.3, 0.3)
+
+			if state.active then
+				self.menu.visible = true
+				props.containerBackgroundColour = colour(0.9, 0.9, .9)
+				props.iconId = "expand_less"
+			elseif state.hovering then
+				self.menu.visible = false
+				props.containerBackgroundColour =  colour(0.95, .95, .95)
+			else
+				props.containerBackgroundColour =  colour(1, 1, 1)
+				self.menu.visible = false
+			end
+		else -- disabled
+			self.menu.visible = false
+			props.containerBackgroundColour = colour.hex("#E0E0E0")
+			props.secondaryColour = colour.hex("EAEAEA")
+		end
+
+		self.render()
 	end)
 
 	self.render()

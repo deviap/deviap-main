@@ -9,11 +9,9 @@ return function(parent)
 	local drop = dropDown({
 		parent = parent,
 		position = guiCoord(0,200,0,200),
-		text = "owo"
 	})
 
 	drop.state.subscribe(function(state, _, action)
-		print(action.type)
 		if action.type == "selectButton" then
 			print(action.newButton)
 		end
