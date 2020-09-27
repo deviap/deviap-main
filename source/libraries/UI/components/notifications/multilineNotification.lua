@@ -60,10 +60,9 @@ return function(props)
 
 	local headerText = core.construct("guiTextBox", {
 		parent = self.container,
-		backgroundAlpha = 0,
-		size = guiCoord(0, 80, 0, 30),
-		position = guiCoord(0, 10, 0, 0),
-		size = guiCoord(0, 80, 0, 30),
+        backgroundAlpha = 0,
+        size = guiCoord(0, 80, 0, 30),
+        position = guiCoord(0, 10, 0, 0),
 		text = "Info notification",
 		textAlign = "middleLeft",
 		textFont = "deviap:fonts/openSansBold.ttf",
