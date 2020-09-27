@@ -1,13 +1,4 @@
 -- Copyright 2020 - Deviap (deviap.com)
--- Author(s): Sanjay-B(Sanjay)
-
--- One of three main entry points
--- Updater & Splash Screen file: Updates Deviap Application w/ style
--- Note: Ignores updating process when devgit is active / enabled
-
--- Essential Debug Utilities
-require("devgit:source/application/utilities/debug/output.lua")
-require("devgit:source/application/utilities/debug/keybinds.lua")
 
 local colourMap = require("devgit:source/application/utilities/colourScheme.lua")
 
@@ -112,9 +103,9 @@ if not core.dev.localDevGitEnabled then
     local infoLabel = core.construct("guiTextBox", {
         parent = container,
         size = guiCoord(0, 370, 0, 100),
-        position = guiCoord(0.5, -185, 0.7, -30),
+        position = guiCoord(0.5, -185, 0.58, -40),
         backgroundAlpha = 0,
-        text = "Please press 'return' or 'enter' to continue.",
+        text = "Please give us a moment while we update your CLIENT: ",
         textColour = colour.rgb(1, 1, 1),
         textAlign = "middle",
         textSize = 18,
@@ -123,6 +114,14 @@ if not core.dev.localDevGitEnabled then
         textWrap = true
     })
 
+    local progressBarContainer = core.construct("guiFrame", {
+        parent = Container,
+        size = guiCoord(0, 300, 0, 30),
+        position = guiCoord(0.5, -150, 0.64, 10),
+        backgroundColour = colour.rgb(246, 248, 250),
+        backgroundAlpha = 1,
+        strokeRadius = 3
+    })
 
     core.input:on("keyDown", function(key)
         if key == "KEY_RETURN" then

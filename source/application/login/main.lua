@@ -1,9 +1,6 @@
 -- Copyright 2020 - Deviap (deviap.com)
 
--- Essential Debug Utilities
-require("devgit:source/application/utilities/debug/output.lua")
-require("devgit:source/application/utilities/debug/keybinds.lua")
-
+local breakpointer = require("devgit:source/libraries/UI-breakpointer/main.lua")
 local colourMap = require("devgit:source/application/utilities/colourScheme.lua")
 
 local container = core.construct("guiFrame", {
@@ -33,9 +30,17 @@ end)
 
 local sideContainer = core.construct("guiFrame", {
     parent = core.interface,
+    backgroundAlpha = 0
+})
+
+breakpointer:bind(sideContainer, "xs", {
+    size = guiCoord(1, -50, 1, -50),
+    position = guiCoord(0, 25, 0, 25)
+})
+
+breakpointer:bind(sideContainer, "md", {
     size = guiCoord(0.5, 0, 1, -200),
     position = guiCoord(0.5, 0, 0, 100),
-    backgroundAlpha = 0
 })
 
 local logoBg, logoShadow, logoText = require("devgit:source/application/utilities/logo.lua")({
