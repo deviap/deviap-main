@@ -14,7 +14,7 @@ local toggle = require("devgit:source/libraries/UI/components/toggle.lua")
 
 return {
 	name 		= "Component Library",
-	iconId 		= "visibility",
+	iconId 		= "expand_down",
 	iconType	= "material",
 	construct 	= function(parent)
         -- Tabs --
