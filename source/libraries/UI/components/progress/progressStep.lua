@@ -50,9 +50,17 @@ return function(props)
 		iconColour = colour.black()
 	})
 
-	local textBox = core.construct("guiTextBox", {name = "textBox", parent = self.container, active = false})
+	local textBox = core.construct("guiTextBox", {
+		name = "textBox",
+		parent = self.container,
+		active = false
+	})
 
-	local label = core.construct("guiTextBox", {name = "label", parent = self.container, active = false})
+	local label = core.construct("guiTextBox", {
+		name = "label",
+		parent = self.container,
+		active = false
+	})
 
 	self.state = newState(reducer)
 	self.render = function()

@@ -71,9 +71,15 @@ return function(props)
 			props.value = tonumber(self.input.text)
 
 			if props.value < props.min then
-				self.state.dispatch {type = "invalidate", error = "Must not be less than " .. props.min}
+				self.state.dispatch {
+					type = "invalidate",
+					error = "Must not be less than " .. props.min
+				}
 			elseif props.value > props.max then
-				self.state.dispatch {type = "invalidate", error = "Must not be greater than " .. props.max}
+				self.state.dispatch {
+					type = "invalidate",
+					error = "Must not be greater than " .. props.max
+				}
 			else
 				self.state.dispatch {type = "validate"}
 			end

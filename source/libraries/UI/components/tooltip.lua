@@ -41,7 +41,11 @@ return function(props)
 	self.container.size = guiCoord(0, 58, 0, 29)
 	self.container.backgroundAlpha = 0
 
-	local textBox = core.construct("guiTextBox", {name = "textBox", parent = self.container, active = false})
+	local textBox = core.construct("guiTextBox", {
+		name = "textBox",
+		parent = self.container,
+		active = false
+	})
 
 	self.state = newState(reducer)
 

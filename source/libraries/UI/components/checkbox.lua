@@ -43,11 +43,23 @@ return function(props)
 	self.container.size = guiCoord(0, 120, 0, 18)
 	self.container.backgroundAlpha = 0
 
-	local box = core.construct("guiFrame", {name = "box", parent = self.container, active = true})
+	local box = core.construct("guiFrame", {
+		name = "box",
+		parent = self.container,
+		active = true
+	})
 
-	local boxIcon = core.construct("guiIcon", {name = "boxIcon", parent = box, visible = false})
+	local boxIcon = core.construct("guiIcon", {
+		name = "boxIcon",
+		parent = box,
+		visible = false
+	})
 
-	local textBox = core.construct("guiTextBox", {name = "textBox", parent = self.container, active = false})
+	local textBox = core.construct("guiTextBox", {
+		name = "textBox",
+		parent = self.container,
+		active = false
+	})
 
 	box:on("mouseEnter", function()
 		self.state.dispatch {type = "setMode", mode = "hover"}

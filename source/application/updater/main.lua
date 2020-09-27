@@ -33,13 +33,21 @@ local logoBg, logoShadow, logoText = require("devgit:source/application/utilitie
 				})
 
 -- Move to effects module (or something similar)
-local colours = {colourMap.purple, colourMap.lightBlue, colourMap.blue, colourMap.green, colourMap.terraCotta}
+local colours = {
+	colourMap.purple,
+	colourMap.lightBlue,
+	colourMap.blue,
+	colourMap.green,
+	colourMap.terraCotta
+}
 
 local currentColourIndex = 1
 
 spawn(function()
 	while true do
-		core.tween:begin(container, 4, {backgroundColour = colours[currentColourIndex]})
+		core.tween:begin(container, 4, {
+			backgroundColour = colours[currentColourIndex]
+		})
 		core.tween:begin(logoText, 4, {textColour = colours[currentColourIndex]})
 		currentColourIndex = currentColourIndex + 1
 		if currentColourIndex > #colours then

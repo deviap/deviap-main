@@ -124,13 +124,19 @@ return function(props)
 
 		if state.active then
 			self.container:child("box"):child("boxIcon").visible = true
-			core.tween:begin(self.container:child("box"), 0.1, {strokeColour = colour.hex("#212121")}, "outCirc")
+			core.tween:begin(self.container:child("box"), 0.1, {
+				strokeColour = colour.hex("#212121")
+			}, "outCirc")
 			self.selected = not self.selected
 		else
 			if state.hovering then
-				core.tween:begin(self.container:child("box"), 0.1, {strokeColour = colour.hex("#03A9F4")}, "outCirc")
+				core.tween:begin(self.container:child("box"), 0.1, {
+					strokeColour = colour.hex("#03A9F4")
+				}, "outCirc")
 			else
-				core.tween:begin(self.container:child("box"), 0.1, {strokeColour = colour.hex("#212121")}, "outCirc")
+				core.tween:begin(self.container:child("box"), 0.1, {
+					strokeColour = colour.hex("#212121")
+				}, "outCirc")
 			end
 		end
 	end

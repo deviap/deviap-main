@@ -13,7 +13,11 @@ local function reducer(state, action)
 			any, state
 	]]
 	state = state or {enabled = true, selected = false, hover = false}
-	local newState = {enabled = state.enabled, selected = state.selected, hover = state.hover}
+	local newState = {
+		enabled = state.enabled,
+		selected = state.selected,
+		hover = state.hover
+	}
 
 	if action.type == "select" then
 		newState.selected = true

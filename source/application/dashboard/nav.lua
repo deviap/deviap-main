@@ -12,9 +12,15 @@ controller.sidebar = core.construct("guiFrame", {
 	zIndex = 10
 })
 
-breakpointer:bind(controller.sidebar, "xs", {size = guiCoord(1, 0, 0, 150), position = guiCoord(0, 0, 1, -50)})
+breakpointer:bind(controller.sidebar, "xs", {
+	size = guiCoord(1, 0, 0, 150),
+	position = guiCoord(0, 0, 1, -50)
+})
 
-breakpointer:bind(controller.sidebar, "sm", {size = guiCoord(0, 50, 1, 0), position = guiCoord(0, 0, 0, 0)})
+breakpointer:bind(controller.sidebar, "sm", {
+	size = guiCoord(0, 50, 1, 0),
+	position = guiCoord(0, 0, 0, 0)
+})
 
 controller.activeBall = core.construct("guiFrame", {
 	parent = controller.sidebar,
@@ -28,11 +34,21 @@ breakpointer:bind(controller.activeBall, "xs", {visible = false})
 
 breakpointer:bind(controller.activeBall, "sm", {visible = true})
 
-controller.container = core.construct("guiFrame", {parent = core.interface, backgroundAlpha = 0, clip = true})
+controller.container = core.construct("guiFrame", {
+	parent = core.interface,
+	backgroundAlpha = 0,
+	clip = true
+})
 
-breakpointer:bind(controller.container, "xs", {size = guiCoord(1, 0, 1, 0), position = guiCoord(0, 0, 0, 0)})
+breakpointer:bind(controller.container, "xs", {
+	size = guiCoord(1, 0, 1, 0),
+	position = guiCoord(0, 0, 0, 0)
+})
 
-breakpointer:bind(controller.container, "sm", {size = guiCoord(1, -50, 1, 0), position = guiCoord(0, 50, 0, 0)})
+breakpointer:bind(controller.container, "sm", {
+	size = guiCoord(1, -50, 1, 0),
+	position = guiCoord(0, 50, 0, 0)
+})
 
 local currentY = 10
 local btns = {}
@@ -100,8 +116,9 @@ controller.register = function(module)
 		for _, v in pairs(pages) do
 			v.visible = false
 		end
-		core.tween:begin(controller.activeBall, 0.3, {position = guiCoord(1, -4, 0, btn.position.offset.y + 20 - 4)},
-                 		"inOutQuad")
+		core.tween:begin(controller.activeBall, 0.3, {
+			position = guiCoord(1, -4, 0, btn.position.offset.y + 20 - 4)
+		}, "inOutQuad")
 		page.visible = true
 	end)
 

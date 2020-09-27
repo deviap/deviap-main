@@ -231,7 +231,10 @@ local new = function()
 				{ x = resolveForAxis("x"), y = resolveForAxis("y") }
 		]]
 
-		return {public.resolveForAxis("x", maxSize.x), public.resolveForAxis("y", maxSize.y)}
+		return {
+			public.resolveForAxis("x", maxSize.x),
+			public.resolveForAxis("y", maxSize.y)
+		}
 	end
 
 	return public

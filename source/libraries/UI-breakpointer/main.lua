@@ -3,7 +3,14 @@ local breakpointer = {}
 local boundGuis = {}
 
 -- Store a list of breakpoints
-local breakpoints = {{"xs", 0}, {"sm", 576}, {"md", 768}, {"lg", 992}, {"xl", 1200}, {"xxl", 1600}}
+local breakpoints = {
+	{"xs", 0},
+	{"sm", 576},
+	{"md", 768},
+	{"lg", 992},
+	{"xl", 1200},
+	{"xxl", 1600}
+}
 
 -- Remap these breakpoints into a dictionary for the end-user
 breakpointer.breakpoints = {}

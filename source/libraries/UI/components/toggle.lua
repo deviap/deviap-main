@@ -109,7 +109,9 @@ return function(props)
 	self.state.subscribe(function(state)
 		self.on = state.on
 
-		core.tween:begin(dot, 0.1, {position = self.on and guiCoord(1, -21, 0, 3) or guiCoord(0, 3, 0, 3)}, "inOutQuad")
+		core.tween:begin(dot, 0.1, {
+			position = self.on and guiCoord(1, -21, 0, 3) or guiCoord(0, 3, 0, 3)
+		}, "inOutQuad")
 
 		self.render()
 	end)

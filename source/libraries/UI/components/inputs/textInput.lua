@@ -22,7 +22,12 @@ local function reducer(state, action)
 	]]
 	state = state or {enabled = true, active = false, valid = true, error = ""}
 
-	local newState = {enabled = state.enabled, active = state.active, valid = state.valid, error = state.error}
+	local newState = {
+		enabled = state.enabled,
+		active = state.active,
+		valid = state.valid,
+		error = state.error
+	}
 
 	if action.type == "enable" then
 		newState.enabled = true

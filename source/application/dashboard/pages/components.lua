@@ -17,29 +17,49 @@ return {
 	construct = function(parent)
 		-- Tabs --
 
-		local tabs = tabs {parent = parent, position = guiCoord(0, 10, 0, 400), isContainer = true}
+		local tabs = tabs {
+			parent = parent,
+			position = guiCoord(0, 10, 0, 400),
+			isContainer = true
+		}
 
 		local tab1 = tab {label = "tab 1"}
 
-		local txt = core.construct("guiTextBox", {parent = parent, position = guiCoord(0, 10, 0, 450), text = "text"})
+		local txt = core.construct("guiTextBox", {
+			parent = parent,
+			position = guiCoord(0, 10, 0, 450),
+			text = "text"
+		})
 
 		tabs.addTab(tab1, txt)
 
 		local tab2 = tab {label = "tab 2"}
 
-		local txt2 = core.construct("guiTextBox", {parent = parent, position = guiCoord(0, 10, 0, 450), text = "text2"})
+		local txt2 = core.construct("guiTextBox", {
+			parent = parent,
+			position = guiCoord(0, 10, 0, 450),
+			text = "text2"
+		})
 
 		tabs.addTab(tab2, txt2)
 
 		local tab3 = tab {label = "tab 3"}
 
-		local txt3 = core.construct("guiTextBox", {parent = parent, position = guiCoord(0, 10, 0, 450), text = "text3"})
+		local txt3 = core.construct("guiTextBox", {
+			parent = parent,
+			position = guiCoord(0, 10, 0, 450),
+			text = "text3"
+		})
 
 		tabs.addTab(tab3, txt3)
 
 		-- other crap --
 
-		local _button = button {parent = parent, position = guiCoord(0, 310, 0, 60), text = "Button item"}
+		local _button = button {
+			parent = parent,
+			position = guiCoord(0, 310, 0, 60),
+			text = "Button item"
+		}
 
 		textInput {
 			parent = parent,
@@ -62,11 +82,22 @@ return {
 			email.state.dispatch {type = "invalidate", error = "Bad email address..."}
 		end)
 
-		local num = numberInput {parent = parent, position = guiCoord(0, 510, 0, 160), size = guiCoord(0, 300, 0, 30)}
+		local num = numberInput {
+			parent = parent,
+			position = guiCoord(0, 510, 0, 160),
+			size = guiCoord(0, 300, 0, 30)
+		}
 
-		local _checkbox = checkbox {parent = parent, position = guiCoord(0, 310, 0, 160), text = "Checkbox item"}
+		local _checkbox = checkbox {
+			parent = parent,
+			position = guiCoord(0, 310, 0, 160),
+			text = "Checkbox item"
+		}
 
-		local _progressStep1 = progressStep {text = "Progress Step 1", label = "optional label"}
+		local _progressStep1 = progressStep {
+			text = "Progress Step 1",
+			label = "optional label"
+		}
 
 		local _progressStep2 = progressStep {text = "Progress Step 2"}
 
@@ -86,6 +117,11 @@ return {
 		local load = loading {parent = parent, position = guiCoord(0, 310, 0, 250)}
 		load.spin()
 
-		toggle {parent = parent, position = guiCoord(0, 310, 0, 300), label = "Spaghetti?", on = true}
+		toggle {
+			parent = parent,
+			position = guiCoord(0, 310, 0, 300),
+			label = "Spaghetti?",
+			on = true
+		}
 	end
 }

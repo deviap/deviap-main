@@ -34,7 +34,11 @@ return {
               		{["Authorization"] = "Bearer " .. core.engine:getUserToken()}, function(status, body)
 			local apps = core.json:decode(body)
 			for _, app in pairs(apps) do
-				appCard {parent = layout.container, name = app.name, image = "https://cdn.deviap.com/" .. (app.icon or "")}
+				appCard {
+					parent = layout.container,
+					name = app.name,
+					image = "https://cdn.deviap.com/" .. (app.icon or "")
+				}
 			end
 		end)
 	end

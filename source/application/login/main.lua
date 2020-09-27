@@ -25,11 +25,20 @@ tween = core.tween:begin(pattern, 10, {imageTopLeft = vector2(-120, 120)}, "line
 	tween:resume()
 end)
 
-local sideContainer = core.construct("guiFrame", {parent = core.interface, backgroundAlpha = 0})
+local sideContainer = core.construct("guiFrame", {
+	parent = core.interface,
+	backgroundAlpha = 0
+})
 
-breakpointer:bind(sideContainer, "xs", {size = guiCoord(1, -50, 1, -50), position = guiCoord(0, 25, 0, 25)})
+breakpointer:bind(sideContainer, "xs", {
+	size = guiCoord(1, -50, 1, -50),
+	position = guiCoord(0, 25, 0, 25)
+})
 
-breakpointer:bind(sideContainer, "md", {size = guiCoord(0.5, 0, 1, -200), position = guiCoord(0.5, 0, 0, 100)})
+breakpointer:bind(sideContainer, "md", {
+	size = guiCoord(0.5, 0, 1, -200),
+	position = guiCoord(0.5, 0, 0, 100)
+})
 
 local logoBg, logoShadow, logoText = require("devgit:source/application/utilities/logo.lua")(
                                      				{

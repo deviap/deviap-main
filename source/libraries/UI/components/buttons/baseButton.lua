@@ -23,7 +23,11 @@ local function reducer(state, action)
 	]]
 	state = state or {enabled = true, active = false, hover = false}
 
-	local newState = {enabled = state.enabled, active = state.active, hovering = state.hovering}
+	local newState = {
+		enabled = state.enabled,
+		active = state.active,
+		hovering = state.hovering
+	}
 
 	if action.type == "enable" then
 		newState.enabled = true
@@ -88,9 +92,15 @@ return function(props)
 		end
 	end
 
-	local label = core.construct("guiTextBox", {active = false, parent = self.container})
+	local label = core.construct("guiTextBox", {
+		active = false,
+		parent = self.container
+	})
 
-	local icon = core.construct("guiIcon", {active = false, parent = self.container})
+	local icon = core.construct("guiIcon", {
+		active = false,
+		parent = self.container
+	})
 
 	self.state = newState(reducer)
 
