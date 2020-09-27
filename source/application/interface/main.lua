@@ -28,7 +28,6 @@ if core.dev.localDevGitEnabled then
 		textAlpha = 0.8,
 		backgroundColour = colour(0.06, 0.06, 0.06),
 		textColour = colour(1, 1, 0),
-		textAlign = "middle",
 		strokeRadius = 4
 	})
 end
