@@ -6,7 +6,8 @@
     "permissions": {
         "client": {
             "interface": true,
-            "construct": true
+			"construct": true,
+			"workshop": true
         }
     }
 }

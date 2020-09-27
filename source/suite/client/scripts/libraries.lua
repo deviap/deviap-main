@@ -1,8 +1,10 @@
-local dir = "devgit:source/suite/client/scripts/libraries"
+local dir = "scripts/libraries"
 
 local libs =
 {
-	test = "./test.lua"
+	test = "./test.lua",
+	window = "./window.lua",
+	windowManager = "./windowManager.lua"
 }
 
 return function(name)

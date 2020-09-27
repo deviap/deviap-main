@@ -15,7 +15,7 @@ core.construct("guiFrame", {
 	-- backgroundAlpha     = 0.75
 })
 
-if core.dev.localDevGitEnabled then
+if false then
 	core.construct("guiTextBox", {
 		parent = core.engine.coreInterface,
 		size = guiCoord(0, 20, 0, 12),
