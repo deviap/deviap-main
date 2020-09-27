@@ -8,14 +8,7 @@ return function(parent)
 	-- Icon isn't defined in the constructor therefore, it'll be a text button w/o an icon.
 	local _button = button{
 		parent = parent,
-<<<<<<< HEAD
 		position = guiCoord(0.5, -0, 0.5, -0),
 		text = "Primary button"
-	}.render()
-end
-=======
-        position = guiCoord(0.5, -0, 0.5, -0),
-        text = "Primary button"
 	}
 end
->>>>>>> ui-library

@@ -9,12 +9,6 @@ return function(parent)
 	local _button = button{
 		parent = parent,
 		position = guiCoord(0.5, -0, 0.5, -0),
-<<<<<<< HEAD
 		iconId = "plus"
-	}.render()
-end
-=======
-		iconId = "plus",
 	}
 end
->>>>>>> ui-library
