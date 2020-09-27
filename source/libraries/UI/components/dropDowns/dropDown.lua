@@ -1,6 +1,15 @@
 local newButton = require("devgit:source/libraries/UI/components/buttons/baseButton.lua")
 
 return function(props)
+	--[[
+		@description
+			Makes a new dropdown menu with options to select.
+		@parameters
+			table, props
+		@returns
+			table, interface
+	]]
+
 	props.menuHeight = props.menuHeight or 100
 	local self = newButton(props)
 

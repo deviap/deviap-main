@@ -1,12 +1,32 @@
+-- Copyright 2020 - Deviap (deviap.com)
+
 local newDropdown = require("devgit:source/libraries/UI/components/dropDowns/dropDown.lua")
 local newButton = require("devgit:source/libraries/UI/components/buttons/secondaryButton.lua")
 local newState = require("devgit:source/libraries/state/main.lua")
 
 local count = function(x)
+	--[[
+		@description
+			Counts total entries in a table
+		@parameter
+			table, x
+		@returns
+			integer, c
+	]]
 	local c = 0 for _,_ in next, x do c = c + 1 end return c
 end
 
 local function reducer(state, action)
+	--[[
+		@description
+			Given a state and action, reduce to new state.
+		@parameter
+			any, state
+			table, action
+		@returns
+			any, newState
+	]]
+
 	if action.type == "clear" then
 		return nil
 	elseif action.type == "selectButton" then
@@ -17,6 +37,15 @@ local function reducer(state, action)
 end
 
 return function(props)
+	--[[
+		@description
+			Makes a new dropdown menu with options to select.
+		@parameters
+			table, props
+		@returns
+			table, interface
+	]]
+
 	props.text = props.text or "Choose an option..."
 	props.secondaryColour = colour(0.3, 0.3, 0.3)
 	props.containerBackgroundColour =  colour(1, 1, 1)
@@ -37,6 +66,14 @@ return function(props)
 
 	self._buttons = {}
 	self.addButton = function(tag)
+		--[[
+			@description
+				Add a new button.
+			@parameters
+				string, tag
+			@returns
+				table, buttonInterface
+		]]
 		local button = newButton({
 			parent = self.menu,
 			text = tag,
@@ -54,11 +91,27 @@ return function(props)
 	end
 
 	self.removeButton = function(tag)
+		--[[
+			@description
+				Remove a button.
+			@parameters
+				string, tag
+			@returns
+				nil
+		]]
 		self._buttons[tag].destroy()
 		self._buttons[tag] = nil
 	end
 
 	self.getButton = function(tag)
+		--[[
+			@description
+				Get a button
+			@parameters
+				string, tag
+			@returns
+				table, buttonInterface
+		]]
 		return self._buttons[tag]
 	end
 
@@ -66,7 +119,7 @@ return function(props)
 	self.render = function()
 		helper.textColour = props.secondaryColour
 		helper.text = props.helperText
-		
+
 		if props.helperText ~= "" then
 			helper.visible = true
 			helper.size = guiCoord(1, 0, 0, 24)
