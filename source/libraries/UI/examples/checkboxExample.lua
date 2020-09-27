@@ -12,5 +12,5 @@ return function(parent)
 		parent = parent,
 		position = guiCoord(0.5, -0, 0.5, -0),
 		text = "Checkbox item"
-	}.render()
+	}
 end

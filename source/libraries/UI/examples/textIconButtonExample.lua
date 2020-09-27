@@ -13,5 +13,5 @@ return function(parent)
         position = guiCoord(0.5, -0, 0.5, -0),
         text = "Primary button",
 		iconId = "plus",
-	}.render()
+	}
 end
