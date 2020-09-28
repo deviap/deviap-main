@@ -4,7 +4,8 @@ local libs =
 {
 	test = "./test.lua",
 	window = "./window.lua",
-	windowManager = "./windowManager.lua"
+	windowManager = "./windowManager.lua",
+	state = "devgit:source/libraries/state/main.lua"
 }
 
 return function(name)
