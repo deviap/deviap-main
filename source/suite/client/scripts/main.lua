@@ -8,5 +8,6 @@ core.construct("guiTextBox", {
 	textAlign = "middle"
 })
 
-print"hello world"
-
+for k,v in next, core.workshop:getAppFiles() do
+	print(k,v)
+end

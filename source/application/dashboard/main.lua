@@ -1,6 +1,5 @@
 print("Dashboard Entry")
-
-core.apps.promptAppDirectory()
+core.workshop:promptOpen()
 
 --[[
 local main = core.construct("guiFrame", {
