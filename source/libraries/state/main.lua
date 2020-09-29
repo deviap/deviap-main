@@ -66,7 +66,7 @@ return function(reducer, startingState)
 		local newState = reducer(state, action)
 
 		for _, callback in next, subscribers do
-			coroutine.wrap(callback)(newState, state, action)
+			callback(newState, state, action)
 		end
 
 		state = newState
