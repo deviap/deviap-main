@@ -64,6 +64,7 @@ return function(props)
 		textAlign = "middleLeft",
 		textSize = props.topBarHeight - 2,
 		backgroundAlpha = 0,
+		active = false,
 	})
 
 	self.render = function()
@@ -84,6 +85,11 @@ return function(props)
 
 		self.topBar.size = guiCoord(1, 0, 0, props.topBarHeight)
 		self.topBar.backgroundColour = props.primaryColour
+
+		self.container.parent = props.parent
+		self.container.size = props.size
+		self.container.position = props.position
+		self.container.backgroundColour = props.primaryColour
 
 		props.subContainer.parent = self.container
 		props.subContainer.size = guiCoord(1, -4, 1, -(props.topBarHeight + 2))

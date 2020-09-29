@@ -7,7 +7,9 @@
         "client": {
             "interface": true,
 			"construct": true,
-			"workshop": true
+			"workshop": true,
+			"disconnect": true,
+			"input": true
         }
     }
 }
