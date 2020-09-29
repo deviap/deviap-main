@@ -1,0 +1,13 @@
+{
+    "schema": 1,
+    "id": "testApp",
+    "networked": false,
+    "version": "0.0.0",
+    "permissions": {
+        "client": {
+			"tweens": true,
+			"construct": true,
+			"interface": true
+		}
+    }
+}
