@@ -1,4 +1,16 @@
+-- Copyright 2020 - Deviap (deviap.com)
+-- Makes a stateless window component.
+
 return function(props)
+	--[[
+		@description
+			Creates a new window component.
+		@parameters
+			table, props
+		@returns
+			table, interface
+	]]
+
 	props = props or {}
 	props.parent = core.interface
 	props.size = props.size or guiCoord(0, 200, 0, 200)
@@ -67,7 +79,31 @@ return function(props)
 		active = false,
 	})
 
+	self.pushProps = function(newProps)
+		--[[
+			@description
+				Updates the props with the given new props. Will only change what's given.
+			@parameter
+				table, newProps
+			@returns
+				nil
+		]]
+
+		for propName, propValue in next, newProps do
+			self.props[propName] = propValue
+		end
+	end
+
 	self.render = function()
+		--[[
+			@description
+				Render the component.
+			@parameter
+				nil
+			@returns
+				nil
+		]]
+
 		self.title.size = guiCoord(1, -(props.iconSpacing * 3 + props.iconSpacing * 2 + 2), 1, 0)
 		self.title.text = props.title
 		self.title.textColour = props.titleColour

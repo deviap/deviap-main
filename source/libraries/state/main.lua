@@ -1,6 +1,6 @@
 -- Copyright 2020 - Deviap (deviap.com)
--- Author(s): utrain
 -- Creates a stateful instance
+
 local function insertInGap(array, value)
 	--[[
 		@description

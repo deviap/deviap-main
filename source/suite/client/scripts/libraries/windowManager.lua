@@ -1,8 +1,13 @@
+-- Copyright 2020 - Deviap (deviap.com)
+-- This is a test file really, it will have minimal documentation because it will change.
+
 local libs = require("scripts/libraries.lua")
 local newWindow = libs("window")
 local newState = libs("state")
 
 local function reducer(state, action)
+	-- Takes a state and action and reduces a new state.
+
 	state = state or {dragging = false, collapsed = false}
 	local newState = {dragging = state.dragging, collapsed = state.collapsed}
 
@@ -26,7 +31,7 @@ self.addWindow = function(props)
 
 	self.state = newState(reducer)
 
-	do
+	do -- Drag to move window.
 		self.topBar:on("mouseLeftDown", function() self.state.dispatch({ type = "startDrag" }) end)
 		core.input:on("mouseLeftUp", function() self.state.dispatch({ type = "endDrag" }) end)
 
@@ -36,7 +41,7 @@ self.addWindow = function(props)
 				local offset = core.input.mousePosition - self.topBar.absolutePosition
 				move = core.input:on("mouseMoved", function()
 					local newPosition = core.input.mousePosition
-					self.props.position = guiCoord(0, newPosition.x - offset.x, 0, newPosition.y - offset.y) -- Don't do this.
+					self.props.position = guiCoord(0, newPosition.x - offset.x, 0, newPosition.y - offset.y)
 					self.render()
 				end)
 			else
@@ -47,7 +52,7 @@ self.addWindow = function(props)
 		end)
 	end
 
-	do
+	do -- Minimize
 		local savedSize = self.props.size
 
 		self.minimize:on("mouseLeftUp", function()
@@ -63,16 +68,16 @@ self.addWindow = function(props)
 				self.props.subContainer.visible = false
 				savedSize = self.props.size
 				self.props.size = guiCoord(self.props.size.scale.x, self.props.size.offset.x, 0, self.props.topBarHeight) -- VERY DONT DO THIS
-				self.render()
 			elseif not state.collapsed and oldState.collapsed then
 				self.props.subContainer.visible = true
 				self.props.size = savedSize
-				self.render()
 			end
+
+			self.render()
 		end)
 	end
 
-	do
+	do -- Drag to resize window.
 		local draggableSpace = 8
 
 		local getDirectionForAxis = function(pos, left, right)
@@ -120,6 +125,7 @@ self.addWindow = function(props)
 					self.props.position = guiCoord(0, self.props.position.offset.x, 0, mousePosition.y)
 					self.props.size = guiCoord(0, self.props.size.offset.x, 0, math.max(right.y - mousePosition.y, self.props.topBarHeight + 2))
 				end
+
 				self.render()
 			end)
 		end)
