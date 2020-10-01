@@ -1,13 +1,13 @@
 {
     "schema": 1,
-    "id": "testApp",
+    "id": "test-by-utrain",
     "networked": false,
-    "version": "0.0.0",
+    "version": "0.0.1",
     "permissions": {
         "client": {
-			"tweens": true,
-			"construct": true,
-			"interface": true
+			"interface": true,
+			"tween": true,
+			"construct": true
 		}
     }
 }

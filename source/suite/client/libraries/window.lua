@@ -1,5 +1,5 @@
 -- Copyright 2020 - Deviap (deviap.com)
--- Makes a stateless window component.
+-- Stateless window component.
 
 return function(props)
 	--[[

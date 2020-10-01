@@ -1,7 +1,7 @@
 -- Copyright 2020 - Deviap (deviap.com)
 -- Library loader.
 
-local dir = "scripts/libraries"
+local dir = "libraries"
 
 local libs =
 {

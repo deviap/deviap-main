@@ -1,1 +1,1 @@
-print(core.apps:recentDirectories())
+core.apps:loadRemote()

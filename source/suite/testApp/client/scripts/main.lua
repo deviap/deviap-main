@@ -1,5 +1,6 @@
-local container = core.construct("guiFrame", {
+local container = core.construct("guiTextBox", {
 	parent = core.interface,
+
 	size = guiCoord(1, 0, 1, 0),
 })
 
@@ -30,8 +31,17 @@ local randomColours =
 	colour.random()
 }
 
-while true do
+local function recursiveTween()
 	local waitTime = math.random(3, 5)
-	core.tween:begin(container, waitTime, {backgroundColour = randomColours[math.random(1, 8)] })
-	sleep(waitTime)
+	local goal = { backgroundColour = randomColours[math.random(1, 8)] }
+	
+	core.tween:begin(
+		container, 
+		waitTime, 
+		goal,
+		"linear",
+		recursiveTween
+	)
 end
+
+recursiveTween()
