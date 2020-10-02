@@ -11,15 +11,12 @@ return function(props)
 			table, interface
 	]]
 
-	props = props or {}
-	props.parent = core.interface
+	props = props or {}	
 	props.size = props.size or guiCoord(0, 200, 0, 200)
 	props.position = props.position or guiCoord(0, 0, 0, 0)
 
 	props.primaryColour = props.primaryColour or colour(0.25, 0.25, 0.25)
 	props.titleColour = props.titleColour or colour.white()
-	props.minimizeColour = props.minimizeColour or colour.rgb(250, 194, 65)
-	props.closeColour = props.closeColour or colour(0.7, 0.25, 0.25)
 
 	props.topBarHeight = props.topBarHeight or 18
 	props.iconWidth = props.iconWidth or props.topBarHeight - 6
@@ -36,48 +33,51 @@ return function(props)
 		backgroundColour = props.primaryColour,
 	})
 
-	props.subContainer = props.subContainer or core.construct("guiFrame")
-	props.subContainer.parent = self.container
-	props.subContainer.size = guiCoord(1, -4, 1, -(props.topBarHeight + 2))
-	props.subContainer.position = guiCoord(0, 2, 0, props.topBarHeight + 2)
-
 	self.topBar = core.construct("guiFrame", {
 		parent = self.container,
 		size = guiCoord(1, 0, 0, props.topBarHeight),
 		backgroundColour = props.primaryColour
 	})
 
-	self.close = core.construct("guiIcon", {
-		parent = self.topBar,
-		size = guiCoord(0, props.iconWidth, 0, props.iconWidth),
-		position = guiCoord(1, -(props.iconSpacing + props.iconWidth), 0, (props.topBarHeight - props.iconWidth) / 2),
-		strokeRadius = props.iconWidth / 2,
-		backgroundAlpha = 1,
-		iconId = "close",
-		backgroundColour = props.closeColour
-	})
-
-	self.minimize = core.construct("guiIcon", {
-		parent = self.topBar,
-		size = guiCoord(0, props.iconWidth, 0, props.iconWidth),
-		position = guiCoord(1, -(props.iconWidth * 2 + props.iconSpacing * 2), 0, (props.topBarHeight - props.iconWidth) / 2),
-		strokeRadius = props.iconWidth / 2,
-		backgroundAlpha = 1,
-		iconId = "remove",
-		backgroundColour = props.minimizeColour
-	})
-
 	self.title = core.construct("guiTextBox", {
 		parent = self.topBar,
-		size = guiCoord(1, -(props.iconSpacing * 3 + props.iconSpacing * 2 + 2), 1, 0),
+		size = guiCoord(1, -(props.iconSpacing * 4 + props.iconSpacing * 3 + 2), 1, 0),
 		position = guiCoord(0, 2, 0, 0),
 		text = "hello world",
 		textColour =  props.titleColour,
-		textAlign = "middleLeft",
+		textAlign = "middle",
 		textSize = props.topBarHeight - 2,
 		backgroundAlpha = 0,
 		active = false,
 	})
+
+	props.icons = props.icons or
+	{
+		core.construct("guiIcon", {
+			parent = self.topBar,
+			iconColour = colour.white(),
+			strokeRadius = props.iconWidth / 2,
+			backgroundAlpha = 1,
+			iconId = "close",
+			backgroundColour = colour(0.5, 0.5, 0.5)
+		}),
+		core.construct("guiIcon", {
+			parent = self.topBar,
+			iconColour = colour.white(),
+			strokeRadius = props.iconWidth / 2,
+			backgroundAlpha = 1,
+			iconId = "remove",
+			backgroundColour = colour(0.5, 0.5, 0.5),
+		}),
+		core.construct("guiIcon", {
+			parent = self.topBar,
+			iconColour = colour.white(),
+			strokeRadius = props.iconWidth / 2,
+			backgroundAlpha = 1,
+			iconId = "fullscreen",
+			backgroundColour = colour(0.5, 0.5, 0.5)
+		})
+	}
 
 	self.pushProps = function(newProps)
 		--[[
@@ -104,20 +104,22 @@ return function(props)
 				nil
 		]]
 
-		self.title.size = guiCoord(1, -(props.iconSpacing * 3 + props.iconSpacing * 2 + 2), 1, 0)
+		self.title.size = guiCoord(1, -(props.iconSpacing * #props.icons + props.iconWidth * #props.icons + 2), 1, 0)
 		self.title.text = props.title
 		self.title.textColour = props.titleColour
 		self.title.textSize = props.topBarHeight - 2
 
-		self.minimize.size = guiCoord(0, props.iconWidth, 0, props.iconWidth)
-		self.minimize.position = guiCoord(1, -(props.iconWidth * 2 + props.iconSpacing * 2), 0, (props.topBarHeight - props.iconWidth) / 2)
-		self.minimize.strokeRadius = props.iconWidth / 2
-		self.minimize.backgroundColour = props.minimizeColour
-
-		self.close.size = guiCoord(0, props.iconWidth, 0, props.iconWidth)
-		self.close.position = guiCoord(1, -(props.iconSpacing + props.iconWidth), 0, (props.topBarHeight - props.iconWidth) / 2)
-		self.close.strokeRadius = props.iconWidth / 2
-		self.close.backgroundColour = props.closeColour
+		for placement, icon in next, props.icons do
+			icon.parent = self.topBar
+			icon.size = guiCoord(0, props.iconWidth, 0, props.iconWidth)
+			icon.strokeRadius = props.iconWidth / 2
+			icon.position = guiCoord(
+				1, 
+				-(props.iconSpacing * placement + props.iconWidth * placement), 
+				0,
+				(props.topBarHeight - props.iconWidth) / 2
+			)
+		end
 
 		self.topBar.size = guiCoord(1, 0, 0, props.topBarHeight)
 		self.topBar.backgroundColour = props.primaryColour
@@ -127,9 +129,11 @@ return function(props)
 		self.container.position = props.position
 		self.container.backgroundColour = props.primaryColour
 
-		props.subContainer.parent = self.container
-		props.subContainer.size = guiCoord(1, -4, 1, -(props.topBarHeight + 2))
-		props.subContainer.position = guiCoord(0, 2, 0, props.topBarHeight + 2)
+		if props.subContainer then
+			props.subContainer.parent = self.container
+			props.subContainer.size = guiCoord(1, -4, 1, -(props.topBarHeight + 2))
+			props.subContainer.position = guiCoord(0, 2, 0, props.topBarHeight)
+		end
 	end
 
 	self.props = props
