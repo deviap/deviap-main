@@ -1,22 +1,29 @@
 local libs = require("scripts/libraries.lua")
 local windowManager = libs("windowManager")
-local tabs = libs("components").tabs
-local state = libs("state")
-local theme = libs("theme")
+local newComponent = libs("uiLibrary").newComponent
 
-local reducer = function(state, action)
-	--[[
-		selectedTab
+local container = core.construct("guiFrame", {parent = core.interface}) -- This is why we need the nil-zone, Jay
 
-	]]
-end
+local homeBarWindow = windowManager.newWindow({
+	parent = core.interface,
+	subContainer = container,
+	size = guiCoord(0, core.input.screenSize.x - 20, 0, 100),
+	position = guiCoord(0, 10, 0, 10),
+	title = "Ribbon",
+	icons = 
+	{
+		core.construct("guiIcon", {
+			parent = core.interface, -- This is why we need the nil-zone, Jay
+			iconColour = colour.white(),
+			backgroundAlpha = 1,
+			iconId = "remove",
+			backgroundColour = colour(0.5, 0.5, 0.5),
+		})
+	}
+})
 
-local self = {}
+homeBarWindow.props.icons[1]:on("mouseLeftUp", windowManager.applyMinimization(homeBarWindow))
+windowManager.applyDraggable(homeBarWindow, homeBarWindow.topBar)
+windowManager.applyResizable(homeBarWindow)
 
-self.state = state(reducer)
-
-self.addSecton = function(container)
-
-end
-
-return self
+return 0
