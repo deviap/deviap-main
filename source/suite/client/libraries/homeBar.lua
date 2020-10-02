@@ -4,6 +4,10 @@ local newComponent = libs("uiLibrary").newComponent
 
 local container = core.construct("guiFrame", {parent = core.interface}) -- This is why we need the nil-zone, Jay
 
+local tabs = newComponent("tabs", {
+	parent = container
+})
+
 local homeBarWindow = windowManager.newWindow({
 	parent = core.interface,
 	subContainer = container,
