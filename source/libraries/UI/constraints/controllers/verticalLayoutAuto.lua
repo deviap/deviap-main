@@ -1,10 +1,9 @@
 -- Copyright 2020 - Deviap (deviap.com)
-
 local count = function(x)
 	--[[
 	]]
 	local c = 0
-	for _,_ in next, x do
+	for _, _ in next, x do
 		c = c + 1
 	end
 	return c
@@ -65,7 +64,7 @@ return function()
 		]]
 
 		local children = public.container.children
-		
+
 		if destroyChildren then
 			object:destroyChildren()
 			object:destroy()
@@ -74,11 +73,11 @@ return function()
 				object.parent = nil
 			end
 			object:destroy()
-			
+
 			return children
 		end
 	end
-	
+
 	public.addObject = function(tag, object)
 		--[[
 			@description
@@ -111,7 +110,7 @@ return function()
 
 		return objects[tag]
 	end
-	
+
 	public.removeObject = function(tag)
 		--[[
 			@description
@@ -123,7 +122,7 @@ return function()
 			@return
 				guiObject, object
 		]]
-		
+
 		local object = objects[tag]
 		objects[tag] = nil
 		return object

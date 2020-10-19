@@ -1,5 +1,4 @@
 -- Copyright 2020 - Deviap (deviap.com)
-
 local button = require("devgit:source/libraries/UI/components/buttons/dangerButton.lua")
 local checkbox = require("devgit:source/libraries/UI/components/checkbox.lua")
 local textInput = require("devgit:source/libraries/UI/components/textInput.lua")
@@ -10,7 +9,6 @@ local tab = require("devgit:source/libraries/UI/components/tabs/tab.lua")
 local tabs = require("devgit:source/libraries/UI/components/tabs/tabs.lua")
 local loading = require("devgit:source/libraries/UI/components/loading.lua")
 local toggle = require("devgit:source/libraries/UI/components/toggle.lua")
-
 
 return {
 	name 		= "Component Library",
