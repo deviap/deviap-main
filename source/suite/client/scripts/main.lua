@@ -1,8 +1,12 @@
-core.construct("guiImage", {
-	image = "devgit:assets/images/Bliss.jpg",
-	size = guiCoord(1, 0, 1, 0),
+local libs = require("scripts/libraries.lua")
+
+local ui = libs("uiLibrary")
+
+local topBar = ui.newComponent("tabs", {
 	parent = core.interface,
-	zIndex = -1
+	size = guiCoord(1, 0, 1, 0)
 })
 
-local a = require("libraries/homeBar.lua")
+topBar.addTab(ui.newComponent("tab", {}), core.construct("guiTextBox", { text = "hello world"}))
+
+topBar.render()

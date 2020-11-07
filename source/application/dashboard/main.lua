@@ -1,11 +1,7 @@
--- Copyright 2020 - Deviap (deviap.com)
--- Author(s): Sanjay-B(Sanjay)
--- Dashboard Entry file. 
-local navbar = require("devgit:source/libraries/UI/components/navigation/navbar.lua")
---local profileNavItem = require("devgit:source/libraries/UI/components/misc/profileNavItem.lua")
+print("Dashboard Entry")
 
--- Background
-core.construct("guiFrame", {
+
+local main = core.construct("guiFrame", {
 	parent = core.interface,
 	size = guiCoord(1, 0, 1, 0),
 	backgroundColour = colour.hex("#E0E0E0")

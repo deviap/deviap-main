@@ -8,7 +8,6 @@ local components = {
 	dangerButton = require("devgit:source/libraries/UI/components/buttons/dangerButton.lua"),
 	secondaryButton = require("devgit:source/libraries/UI/components/buttons/secondaryButton.lua"),
 	tertiaryButton = require("devgit:source/libraries/UI/components/buttons/tertiaryButton.lua"),
-	baseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua"),
 
 	appCard = require("devgit:source/libraries/UI/components/cards/app.lua"),
 
