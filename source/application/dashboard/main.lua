@@ -3,6 +3,7 @@
 -- Dashboard Entry file. 
 local navbar = require("devgit:source/libraries/UI/components/navigation/navbar.lua")
 local profileNavItem = require("devgit:source/libraries/UI/components/misc/profileNavItem.lua")
+--local notification = require("devgit:source/libraries/UI/components/notifications/inlineNotification.lua")
 
 -- Background
 core.construct("guiFrame", {
