@@ -1,6 +1,6 @@
 -- Copyright 2020 - Deviap (deviap.com)
 -- Author(s): Sanjay-B(Sanjay)
--- Creates an app component.
+-- Creates an comment component.
 local newBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
 local newState = require("devgit:source/libraries/state/main.lua")
 
@@ -40,9 +40,9 @@ return function(props)
 
 	props.containerBackgroundColour = colour.hex("#E5E5E5")
 	props.secondaryColour = colour.hex("#000000")
-	props.title = props.title or "Untitled Game"
-	props.name = props.name or "JohnDoe"
-	props.thumbnail = props.thumbnail or ""
+	props.author = props.title or "JohnDoe"
+	props.content = props.content or ""
+	props.avatar = props.avatar or ""
 
 	local self = newBaseComponent(props)
 	self.state = newState(reducer)
