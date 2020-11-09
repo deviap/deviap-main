@@ -2,8 +2,7 @@
 -- Author(s): Sanjay-B(Sanjay)
 -- Dashboard Entry file. 
 local navbar = require("devgit:source/libraries/UI/components/navigation/navbar.lua")
-local profileNavItem = require("devgit:source/libraries/UI/components/misc/profileNavItem.lua")
---local notification = require("devgit:source/libraries/UI/components/notifications/inlineNotification.lua")
+--local profileNavItem = require("devgit:source/libraries/UI/components/misc/profileNavItem.lua")
 
 -- Background
 core.construct("guiFrame", {
@@ -11,6 +10,15 @@ core.construct("guiFrame", {
 	size = guiCoord(1, 0, 1, 0),
 	backgroundColour = colour.hex("#E0E0E0")
 })
+
+-- Tagging Fetch
+local navItemSpacing = 0
+local status, body = core.http:get("https://deviap.com/api/v1/users/me", {["Authorization"] = "Bearer " .. core.engine:getUserToken()})
+local tagsRoles = core.json:decode(body)["roles"]
+
+for _, role in pairs(tagsRoles) do
+	navItemSpacing = navItemSpacing + 80 -- Spacing by 80 looks.
+end
 
 -- Vertical Sidebar Instance
 local verticalNav = navbar {
@@ -92,6 +100,7 @@ local horizontalNav = navbar {
 	position = guiCoord(0, 68, 1, -62),
 	containerBackgroundColour = colour.hex("#FFFFFF"),
 	iconColour = colour.hex("#212121"),
+	bottomOffset = navItemSpacing,
 	zIndex = 3
 }
 
@@ -134,6 +143,14 @@ horizontalNav.addNavItem({
 	tooltip = "Add Friend",
 	redirect = nil
 })
+
+-- Tagging Render
+for _, roleName in pairs(tagsRoles) do
+	horizontalNav.addTagItem({
+		relativeLocation = "bottom",
+		text = roleName
+	})
+end
 
 -- Report Navbar Button
 horizontalNav.addNavItem({
