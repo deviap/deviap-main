@@ -11,7 +11,7 @@ return function()
 	]]
 
 	local public = {}
-	public.container = core.construct("guiFrame")
+	public.container = core.construct("guiScrollView")
 	public.rows = 3
 	public.columns = 3
 	public.cellSize = vector2(100, 100)
@@ -59,6 +59,8 @@ return function()
 				offset.offset = vector2(0, offset.offset.y + public.cellSpacing.y)
 			end
 
+			child.backgroundColour = public.cellColour or child.backgroundColour
+			child.backgroundAlpha = public.cellBackgroundAlpha or child.backgroundAlpha
 		end
 	end
 
