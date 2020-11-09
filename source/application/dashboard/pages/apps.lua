@@ -32,7 +32,11 @@ return {
 		layout.container.parent = parent
 		layout.container.position = guiCoord(0, 10, 0, 50)
 		layout.container.size = guiCoord(1, -20, 1, -50)
+		layout.container.canvasSize = guiCoord(1, 0, 1, 0)
 		layout.container.backgroundAlpha = 0
+		layout.container.scrollbarAlpha = 1
+		layout.container.scrollbarWidth = 5
+		layout.container.scrollbarRadius = 1
 		layout.rows = 8
 		layout.columns = 8
 		layout.cellSize = vector2(100, 100)
