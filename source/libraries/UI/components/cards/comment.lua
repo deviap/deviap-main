@@ -2,31 +2,6 @@
 -- Author(s): Sanjay-B(Sanjay)
 -- Creates an comment component.
 local newBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
-local newState = require("devgit:source/libraries/state/main.lua")
-
-local function reducer(state, action)
-	--[[
-		@description
-			Reducers action to a new state
-		@parameter
-			any, state
-			table, action
-		@returns
-			any, state
-	]]
-	state = state or {enabled = true, mode = "idle"}
-	local newState = {enabled = state.enabled, mode = state.mode}
-
-	if action.type == "enable" then
-		newState.enabled = true
-	elseif action.type == "disable" then
-		newState.enabled = false
-	elseif action.type == "setMode" then
-		newState.mode = action.mode
-	end
-
-	return newState
-end
 
 return function(props)
 	--[[
@@ -40,105 +15,55 @@ return function(props)
 
 	props.containerBackgroundColour = colour.hex("#E5E5E5")
 	props.secondaryColour = colour.hex("#000000")
-	props.author = props.title or "JohnDoe"
+	props.author = props.author or ""
 	props.content = props.content or ""
 	props.avatar = props.avatar or ""
+	props.postedAt = props.postedAt or ""
 
 	local self = newBaseComponent(props)
-	self.state = newState(reducer)
 
-	local titleLabel = core.construct("guiTextBox", {
-		parent = self.container,
-		active = false,
-		backgroundAlpha = 0,
-		textColour = colour.hex("#212121"),
-		size = guiCoord(1, -12, 0, 18),
-		position = guiCoord(0, 6, 1, -29),
-		textFont = "deviap:fonts/openSansBold.ttf",
-		textSize = 14
-	})
-
-	local developerLabel = core.construct("guiTextBox", {
-		parent = self.container,
-		active = false,
-		backgroundAlpha = 0,
-		textColour = colour.hex("#212121"),
-		size = guiCoord(1, -12, 0, 18),
-		position = guiCoord(0, 6, 1, -16),
-		textFont = "deviap:fonts/openSansRegular.ttf",
-		textSize = 11
-	})
-
-	local thumbnail = core.construct("guiImage", {
+	local avatarThumbnail = core.construct("guiImage", {
 		parent = self.container,
 		active = false,
 		backgroundAlpha = 0.5,
 		backgroundColour = colour(1, 0, 0),
-		size = guiCoord(1, 0, 1, -30),
-		position = guiCoord(0, 0, 0, 0)
+		size = guiCoord(0, 48, 0, 48),
+		position = guiCoord(0, 6, 1, -73)
 	})
 
-	local rateContainer = core.construct("guiFrame", {
+	local authorLabel = core.construct("guiTextBox", {
 		parent = self.container,
 		active = false,
-		backgroundColour = colour.hex("#FFFFFF"),
-		size = guiCoord(1, -41, 0, 7),
-		position = guiCoord(0, 4, 1, -11),
-		visible = false
+		backgroundAlpha = 0,
+		textColour = colour.hex("#212121"),
+		size = guiCoord(1, -12, 0, 20),
+		position = guiCoord(0, 70, 1, -77),
+		textFont = "deviap:fonts/openSansBold.ttf",
+		textSize = 20,
 	})
 
-	local positiveBar = core.construct("guiFrame", {
-		parent = rateContainer,
+	local contentLabel = core.construct("guiTextBox", {
+		parent = self.container,
 		active = false,
-		backgroundColour = colour.hex("#4CAF50"),
-		size = guiCoord(1, -10, 1, 0),
-		position = guiCoord(0, 0, 0, 0),
-		zIndex = 2
+		backgroundAlpha = 0,
+		textColour = colour.hex("#212121"),
+		size = guiCoord(1, -12, 0, 20),
+		position = guiCoord(0, 70, 1, -50),
+		textFont = "deviap:fonts/openSansRegular.ttf",
+		textSize = 18,
 	})
 
-	local negativeBar = core.construct("guiFrame", {
-		parent = rateContainer,
+	local postedAtLabel = core.construct("guiTextBox", {
+		parent = self.container,
 		active = false,
-		backgroundColour = colour.hex("#F44336"),
-		size = guiCoord(1, 0, 1, 0),
-		position = guiCoord(0, 0, 0, 0),
-		zIndex = 1
+		backgroundAlpha = 0,
+		textColour = colour.hex("#212121"),
+		size = guiCoord(1, -12, 0, 20),
+		position = guiCoord(0, 212, 1, -73),
+		textFont = "deviap:fonts/openSansLight.ttf",
+		textSize = 10,
+		textAlpha = 0.5
 	})
-
-	local upButton = core.construct("guiIcon", {
-        parent = self.container,
-        position = guiCoord(1, -34, 1, -13),
-        size = guiCoord(0, 11, 0, 11),
-		iconColour = colour.hex("#4CAF50"),
-		iconId = "thumb_up",
-		visible = false
-	})
-	
-	local downButton = core.construct("guiIcon", {
-        parent = self.container,
-        position = guiCoord(1, -22, 1, -13),
-        size = guiCoord(0, 11, 0, 11),
-		iconColour = colour.hex("#F44336"),
-		iconId = "thumb_down",
-		visible = false
-	})
-	
-	local favoriteButton = core.construct("guiIcon", {
-        parent = self.container,
-        position = guiCoord(1, -11, 1, -13),
-        size = guiCoord(0, 11, 0, 11),
-		iconColour = colour.hex("#FFC107"),
-		iconId = "bookmark",
-		iconAlpha = 0.6,
-		visible = false
-	})
-	
-	self.container:on("mouseEnter", function()
-		self.state.dispatch {type = "setMode", mode = "hover"}
-	end)
-	self.container:on("mouseExit", function()
-		self.state.dispatch {type = "setMode", mode = "idle"}
-	end)
 
 	self.render = function()
 		--[[
@@ -148,37 +73,13 @@ return function(props)
 				nil
 			@returns
 				nil
-        ]]
-
-		titleLabel.text = props.title
-		developerLabel.text = "By: "..props.name
-		thumbnail.image = props.thumbnail
+		]]
+		
+		authorLabel.text = props.author
+		contentLabel.text = props.content
+		postedAtLabel.text = props.postedAt
+		avatarThumbnail.image = props.avatar
 	end
-	
-	self.state.subscribe(function(state)
-		if state.enabled then
-			if state.mode == "hover" then
-				titleLabel.visible = false
-				developerLabel.visible = false
-				thumbnail.size = guiCoord(1, 0, 1, -15)
-				rateContainer.visible = true
-				upButton.visible = true
-				downButton.visible = true
-				favoriteButton.visible = true
-			elseif state.mode == "idle" then
-				titleLabel.visible = true
-				developerLabel.visible = true
-				thumbnail.size = guiCoord(1, 0, 1, -30)
-				rateContainer.visible = false
-				upButton.visible = false
-				downButton.visible = false
-				favoriteButton.visible = false
-			end
-		else -- disabled
-		end
-
-		self.render()
-	end)
 
 	self.render()
 
