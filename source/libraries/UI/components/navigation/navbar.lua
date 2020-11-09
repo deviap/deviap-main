@@ -3,6 +3,7 @@
 -- Creates a navbar instance
 local newBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
 local navItem = require("devgit:source/libraries/UI/components/navigation/navItem.lua")
+local tagItem = require("devgit:source/libraries/UI/components/misc/tagItem.lua")
 
 return function(props)
 	--[[
@@ -22,9 +23,26 @@ return function(props)
     self.container.position = props.position
     self.container.zIndex = props.zIndex
 
+    local bottomOffset = props.bottomOffset or 0
+
     self.topItems = {}
     self.bottomItems = {}
+    self.bottomTagItems = {}
     self.currentPage = nil
+
+    self.addTagItem = function(_props)
+        if _props.relativeLocation == "bottom" then
+            local num = #self.bottomTagItems+1
+            local _tagItem = tagItem {
+                position = guiCoord(0, 0, 0, 0),
+                size = _props.size,
+                text = _props.text
+            }
+            table.insert(self.bottomTagItems, #self.bottomTagItems+1, _tagItem)
+        end
+        
+        self.render()
+    end
 
     self.addNavItem = function(_props)
         local page = core.construct("guiFrame", {
@@ -124,8 +142,14 @@ return function(props)
 
             for index, navItem in pairs(self.bottomItems) do
                 navItem.container.parent = self.container
-                navItem.container.position = guiCoord(1, -1*((index-1)*size+index*padding)-navItem.container.absoluteSize.x, 0,  self.container.absoluteSize.y/2-navItem.container.absoluteSize.y/2)
+                navItem.container.position = guiCoord(1, -1*((index-1)*size+index*padding)-navItem.container.absoluteSize.x-bottomOffset, 0,  self.container.absoluteSize.y/2-navItem.container.absoluteSize.y/2)
             end
+        end
+
+        -- Tag items
+        for index, tagItem in pairs(self.bottomTagItems) do
+            tagItem.container.parent = self.container
+            tagItem.container.position = guiCoord(1, -1.6*((index-1)*size+index*padding)-tagItem.container.absoluteSize.x+10, 0,  self.container.absoluteSize.y/2-tagItem.container.absoluteSize.y/2)
         end
     end
     
