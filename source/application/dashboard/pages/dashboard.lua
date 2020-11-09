@@ -2,6 +2,7 @@
 -- Author(s): Sanjay-B(Sanjay)
 -- Creates the Dashboard page.
 local card = require("devgit:source/libraries/UI/components/cards/app.lua")
+local comment = require("devgit:source/libraries/UI/components/cards/comment.lua")
 local gridLayout = require("devgit:source/libraries/UI/constraints/controllers/gridLayout.lua")
 local textInput = require("devgit:source/libraries/UI/components/inputs/textInput.lua")
 local inlineNotification = require("devgit:source/libraries/UI/components/notifications/inlineNotification.lua")
@@ -44,10 +45,12 @@ return {
 
 		local layout = gridLayout()
 		layout.container.parent = scrollContainer
-		layout.container.position = guiCoord(0, 10, 0, 75) -- 10, 50
+		layout.container.position = guiCoord(0, 10, 0, 75)
 		layout.container.size = guiCoord(1, -20, 1, -204)
+		layout.container.canvasSize = guiCoord(0, 0, 0, 0)
 		layout.container.backgroundColour = colour.hex("#FF0000")
 		layout.container.backgroundAlpha = 0
+		layout.container.scrollbarAlpha = 0
 		layout.rows = 1
 		layout.columns = 8
 		layout.cellSize = vector2(100, 100)
@@ -55,8 +58,6 @@ return {
 		layout.fitX = false
 		layout.fitY = false
 		layout.wrap = true
-
-		print(core.engine:getUserToken())
 
 		core.http:get("https://deviap.com/api/v1/users/"..(core.networking.localClient.id).."/favourites", {["Authorization"] = "Bearer " .. core.engine:getUserToken()}, function(status, body)
 			local response = core.json:decode(body)
@@ -98,7 +99,6 @@ return {
 			end
 		end)
 
-
 		local subheading2 = core.construct("guiTextBox", {
 			parent = scrollContainer,
 			text = "Feed",
@@ -112,16 +112,66 @@ return {
 
 		local layout2 = gridLayout()
 		layout2.container.parent = scrollContainer
-		layout2.container.position = guiCoord(0, 10, 0, 250) -- 10, 50
-		layout2.container.size = guiCoord(1, -20, 1, -204)
+		layout2.container.position = guiCoord(0, 5, 0, 250)
+		layout2.container.size = guiCoord(1, -20, 1, -255)
+		layout2.container.canvasSize = guiCoord(1, 0, 2, 0)
 		layout2.container.backgroundColour = colour.hex("#FF0000")
-		layout2.container.backgroundAlpha = 1
-		layout2.rows = 1
-		layout2.columns = 8
-		layout2.cellSize = vector2(100, 100)
-		layout2.cellSpacing = vector2(10, 10)
+		layout2.container.backgroundAlpha = 0
+		layout2.container.scrollbarAlpha = 0
+		layout2.rows = 20
+		layout2.columns = 1
+		layout2.cellSize = vector2(300, 80)
+		layout2.cellSpacing = vector2(0, -20)
+		layout2.cellColour = colour(1, 1, 1)
+		layout2.cellBackgroundAlpha = 0
 		layout2.fitX = false
 		layout2.fitY = false
 		layout2.wrap = true
+
+		local status, body = core.http:get("https://deviap.com/api/v1/comments?page=1", {["Authorization"] = "Bearer " .. core.engine:getUserToken()})
+
+		-- Send Notification Error (we probably want to streamline this better)
+		if status ~= 200 then
+			inlineNotification {
+				parent = core.interface,
+				position = guiCoord(1, -306, 1, -58),
+				iconEnabled = false,
+				type = "warning",
+				text = "Failed to load feed. Code: "..status
+			}
+			return
+		end
+
+		local maxPages = core.json:decode(body)["maxPage"]
+
+		for page=1, maxPages, 1 do
+			core.http:get("https://deviap.com/api/v1/comments?page="..page, {["Authorization"] = "Bearer " .. core.engine:getUserToken()}, function(status, body)
+				local response = core.json:decode(body)
+				for index, entry in pairs(response["results"]) do
+					comment {
+						parent = layout2.container,
+						author = entry["postedBy"]["username"],
+						content = entry["message"],
+						postedAt =  entry["postedAt"],
+						avatar =  (entry["postedBy"]["profileImage"] and "https://cdn.deviap.com/"..entry["postedBy"]["profileImage"]) or ""
+					}
+				end
+			end)
+		end
+
+		local feedInput = textInput {
+			parent = scrollContainer,
+			position = guiCoord(0, 11, 0, 222),
+			size = guiCoord(0, 300, 0, 23),
+			placeholder = "Enter Comment",
+			textSize = 15
+		}
+		
+		feedInput.input:on("keyDown", function(key)
+			if key == "KEY_RETURN" then
+				print("TEXT: ", feedInput.input.text)
+				-- Send text to POST comment
+			end
+		end)
 	end
 }
