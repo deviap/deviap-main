@@ -1,6 +1,5 @@
 -- Copyright 2020 - Deviap (deviap.com)
--- Author(s): utrain, Sanjay-B(Sanjay)
--- Creates a primary button instance
+-- Creates a numberInput instance
 local newTextInput = require("devgit:source/libraries/UI/components/textInput.lua")
 
 return function(props)
