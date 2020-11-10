@@ -15,7 +15,7 @@ core.construct("guiFrame", {
 	-- backgroundAlpha     = 0.75
 })
 
-if core.dev.localDevGitEnabled then
+if false then
 	core.construct("guiTextBox", {
 		parent = core.engine.coreInterface,
 		size = guiCoord(0, 20, 0, 12),
@@ -28,7 +28,6 @@ if core.dev.localDevGitEnabled then
 		textAlpha = 0.8,
 		backgroundColour = colour(0.06, 0.06, 0.06),
 		textColour = colour(1, 1, 0),
-		textAlign = "middle",
 		strokeRadius = 4
 	})
 end

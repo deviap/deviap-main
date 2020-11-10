@@ -1,0 +1,1 @@
+core.apps:loadRemote()

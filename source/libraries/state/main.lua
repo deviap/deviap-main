@@ -1,6 +1,6 @@
 -- Copyright 2020 - Deviap (deviap.com)
--- Author(s): utrain
 -- Creates a stateful instance
+
 local function insertInGap(array, value)
 	--[[
 		@description
@@ -66,7 +66,7 @@ return function(reducer, startingState)
 		local newState = reducer(state, action)
 
 		for _, callback in next, subscribers do
-			coroutine.wrap(callback)(newState, state, action)
+			callback(newState, state, action)
 		end
 
 		state = newState

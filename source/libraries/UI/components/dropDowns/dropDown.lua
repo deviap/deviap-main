@@ -21,7 +21,6 @@ return function(props)
 		position = guiCoord(0, 0, 1, 0),
 	})
 
-
 	self.container:on("mouseEnter", function() self.state.dispatch { type = "hover" } end)
 	self.container:on("mouseExit", function() self.state.dispatch { type = "unhover" } end)
 	self.container:on("mouseLeftDown", function() 
