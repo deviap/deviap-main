@@ -42,6 +42,7 @@ return function(props)
 	local self = newBaseComponent(props)
 	self.container.size = guiCoord(0, 300, 0, 35)
 	self.container.backgroundColour = colour.hex("#212121")
+	self.container.zIndex = 6
 
 	local colourBorder = core.construct("guiFrame", {
 		parent = self.container,

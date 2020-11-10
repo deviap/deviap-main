@@ -1,13 +1,7 @@
 -- Copyright 2020 - Deviap (deviap.com)
 -- Author(s): Sanjay-B(Sanjay), utrain
--- Creates a button instance
---[[
-	core.tween:begin(self.child, 0.1, {
-		size = guiCoord(1, -10, 1, -10),
-		position = guiCoord(0, 5, 0, 5),
-		strokeAlpha = 1,
-	}, "outCirc")
-]] local newBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
+-- Creates a baseButton instance
+local newBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
 local newState = require("devgit:source/libraries/state/main.lua")
 local tooltip = require("devgit:source/libraries/UI/components/tooltip.lua")
 
