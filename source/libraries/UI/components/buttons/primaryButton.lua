@@ -1,6 +1,5 @@
 -- Copyright 2020 - Deviap (deviap.com)
 -- Author(s): utrain, Sanjay-B(Sanjay)
-
 -- Creates a primary button instance
 local newBaseButton = require("devgit:source/libraries/UI/components/buttons/baseButton.lua")
 
@@ -12,10 +11,19 @@ return function(props)
 
 	local self = newBaseButton(props)
 
-	self.container:on("mouseEnter", function() self.state.dispatch { type = "hover" } end)
-	self.container:on("mouseExit", function() self.state.dispatch { type = "unhover" } self.state.dispatch { type = "deactivate" } end)
-	self.container:on("mouseLeftDown", function() self.state.dispatch { type = "activate" } end)
-	self.container:on("mouseLeftUp", function() self.state.dispatch { type = "deactivate" } end)
+	self.container:on("mouseEnter", function()
+		self.state.dispatch {type = "hover"}
+	end)
+	self.container:on("mouseExit", function()
+		self.state.dispatch {type = "unhover"}
+		self.state.dispatch {type = "deactivate"}
+	end)
+	self.container:on("mouseLeftDown", function()
+		self.state.dispatch {type = "activate"}
+	end)
+	self.container:on("mouseLeftUp", function()
+		self.state.dispatch {type = "deactivate"}
+	end)
 
 	self.state.subscribe(function(state)
 		if state.enabled then
@@ -44,6 +52,6 @@ return function(props)
 	end)
 
 	self.render()
-	
+
 	return self
 end

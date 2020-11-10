@@ -25,9 +25,9 @@ return function(props)
 	self.container:on("mouseExit", function() self.state.dispatch { type = "unhover" } end)
 	self.container:on("mouseLeftDown", function() 
 		if self.state.getState().active then
-			self.state.dispatch { type = "deactivate" }
+			self.state.dispatch {type = "deactivate"}
 		else
-			self.state.dispatch { type = "activate" } 
+			self.state.dispatch {type = "activate"}
 		end
 	end)
 

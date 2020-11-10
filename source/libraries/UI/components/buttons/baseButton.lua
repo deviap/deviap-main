@@ -1,16 +1,6 @@
 -- Copyright 2020 - Deviap (deviap.com)
 -- Author(s): Sanjay-B(Sanjay), utrain
-
--- Creates a button instance
-
---[[
-	core.tween:begin(self.child, 0.1, {
-		size = guiCoord(1, -10, 1, -10),
-		position = guiCoord(0, 5, 0, 5),
-		strokeAlpha = 1,
-	}, "outCirc")
-]]
-
+-- Creates a baseButton instance
 local newBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
 local newState = require("devgit:source/libraries/state/main.lua")
 local tooltip = require("devgit:source/libraries/UI/components/tooltip.lua")
@@ -25,14 +15,13 @@ local function reducer(state, action)
 		@returns
 			any, state
 	]]
-	state = state or
-	{
-		enabled = true,
-		active = false,
-		hover = false,
-	}
+	state = state or {enabled = true, active = false, hover = false}
 
-	local newState = { enabled = state.enabled, active = state.active, hovering = state.hovering }
+	local newState = {
+		enabled = state.enabled,
+		active = state.active,
+		hovering = state.hovering
+	}
 
 	if action.type == "enable" then
 		newState.enabled = true
@@ -67,37 +56,46 @@ return function(props)
 	props.textSize = props.textSize or 16
 	props.text = props.text or ""
 	props.iconId = props.iconId or ""
-	
+
 	local self = newBaseComponent(props)
 
 	self.tooltip = nil
 
 	-- Determine fixed sizing based on props.
-	if props.text ~= "" then self.container.size = guiCoord(0, 178, 0, 48)
-	
-	-- Instance tooltip component when size fits icon button.
-	else 
+	if props.text ~= "" then
+		self.container.size = guiCoord(0, 178, 0, 48)
+
+		-- Instance tooltip component when size fits icon button.
+	else
 		self.container.size = guiCoord(0, 48, 0, 48)
 
 		-- If tooltip is specified in props, create tooltip.
-		if props.tooltip then  
-			self.tooltip = tooltip { parent = self.container, position = guiCoord(0.5, (self.container.size.offset.x/2)-53, 0.5, (self.container.size.offset.y/2)+5), text = props.tooltip } 
-			self.tooltip.state.dispatch { type = "disable" } 
-			self.container:on("mouseEnter", function() self.tooltip.state.dispatch { type = "enable" } end)
-			self.container:on("mouseExit", function() self.tooltip.state.dispatch { type = "disable" } end)
+		if props.tooltip then
+			self.tooltip = tooltip {
+				parent = self.container,
+				position = guiCoord(0.5, (self.container.size.offset.x / 2) - 53, 0.5, (self.container.size.offset.y / 2) + 5),
+				text = props.tooltip
+			}
+			self.tooltip.state.dispatch {type = "disable"}
+			self.container:on("mouseEnter", function()
+				self.tooltip.state.dispatch {type = "enable"}
+			end)
+			self.container:on("mouseExit", function()
+				self.tooltip.state.dispatch {type = "disable"}
+			end)
 		end
 	end
 
 	local label = core.construct("guiTextBox", {
 		active = false,
-		parent = self.container,
+		parent = self.container
 	})
 
 	local icon = core.construct("guiIcon", {
 		active = false,
 		parent = self.container
 	})
-	
+
 	self.state = newState(reducer)
 
 	local oldRender = self.render
@@ -129,6 +127,6 @@ return function(props)
 	end
 
 	self.render()
-	
+
 	return self
 end

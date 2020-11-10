@@ -1,18 +1,16 @@
 -- Copyright 2020 - Deviap (deviap.com)
-
 local newTabResolver = require("devgit:source/libraries/UI/constraints/tabResolver.lua")
 
 local count = function(x)
 	local c = 0
-	for _,_ in next, x do
+	for _, _ in next, x do
 		c = c + 1
 	end
 	return c
 end
 
-
 local function createNavBar()
-	--local resolver = newTabResolver()
+	-- local resolver = newTabResolver()
 	local public = {}
 
 	public.offset = 5
@@ -54,7 +52,7 @@ local function createNavBar()
 		]]
 
 		local children = public.container.children
-		
+
 		if destroyChildren then
 			object:destroyChildren()
 			object:destroy()
@@ -63,11 +61,11 @@ local function createNavBar()
 				object.parent = nil
 			end
 			object:destroy()
-			
+
 			return children
 		end
 	end
-	
+
 	return public
 end
 
@@ -91,7 +89,6 @@ return function()
 				Refreshes the layout.
 		--]]
 
-		
 		if public.secondaryObject then
 			public.secondaryObject.parent = public.container
 			local resolved = resolver.resolveForAxis("x", public.container.absoluteSize.x)
@@ -121,7 +118,7 @@ return function()
 		--]]
 
 		local children = public.container.children
-		
+
 		if destroyChildren then
 			object:destroyChildren()
 			object:destroy()
@@ -130,11 +127,10 @@ return function()
 				object.parent = nil
 			end
 			object:destroy()
-			
+
 			return children
 		end
 	end
-	
 
 	return public
 end

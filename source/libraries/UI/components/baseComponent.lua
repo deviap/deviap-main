@@ -1,8 +1,6 @@
 -- Copyright 2020 - Deviap (deviap.com)
 -- Author(s): utrain, Sanjay-B(Sanjay)
-
 -- Create a base component instance
-
 return function(props)
 	--[[
 		@description
@@ -37,7 +35,7 @@ return function(props)
 		position = guiCoord(0, props.borderInset, 0, props.borderInset),
 		strokeColour = props.secondaryColour,
 		strokeAlpha = props.borderAlpha,
-		strokeWidth = props.borderWidth,
+		strokeWidth = props.borderWidth
 	})
 
 	self.render = function()

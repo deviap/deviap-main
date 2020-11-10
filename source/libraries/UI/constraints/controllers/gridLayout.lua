@@ -1,6 +1,5 @@
 -- Copyright 2020 - Deviap (deviap.com)
 -- Attribution: https://www.youtube.com/watch?v=CGsEJToeXmA
-
 return function()
 	--[[
 		@description
@@ -12,7 +11,7 @@ return function()
 	]]
 
 	local public = {}
-	public.container = core.construct("guiFrame")
+	public.container = core.construct("guiScrollView")
 	public.rows = 3
 	public.columns = 3
 	public.cellSize = vector2(100, 100)
@@ -49,16 +48,19 @@ return function()
 		for i = 1, #children do
 			local child = children[i]
 			child.position = guiCoord(0, public.cellSize.x * x, 0, public.cellSize.y * y) + offset
-			child.size = guiCoord(0, public.cellSize.x , 0, public.cellSize.y)
+			child.size = guiCoord(0, public.cellSize.x, 0, public.cellSize.y)
 			x = x + 1
-			
+
 			offset.offset = offset.offset + vector3(public.cellSpacing.x, 0)
-			if x >= public.columns or (public.wrap and (public.cellSize.x * (x + 1)) + offset.offset.x > public.container.absoluteSize.x) then
+			if x >= public.columns or
+							(public.wrap and (public.cellSize.x * (x + 1)) + offset.offset.x > public.container.absoluteSize.x) then
 				x = 0
 				y = y + 1
 				offset.offset = vector2(0, offset.offset.y + public.cellSpacing.y)
 			end
-			
+
+			child.backgroundColour = public.cellColour or child.backgroundColour
+			child.backgroundAlpha = public.cellBackgroundAlpha or child.backgroundAlpha
 		end
 	end
 
