@@ -1,5 +1,5 @@
 -- Copyright 2020 - Deviap (deviap.com)
--- Author(s): YOUR NAME, OTHER PERSON'S NAME
-
--- REPLACE WITH ONE LINE DESCRIPTION OF WHAT THIS FILE DOES
-return {}
+return {
+	newTabResolver = require("devgit:source/libraries/UI/constraints/tabResolver.lua"),
+	newController = require("devgit:source/libraries/UI/constraints/controller.lua")
+}
