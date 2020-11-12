@@ -62,7 +62,7 @@ verticalNav.addNavItem({
 	iconMax = 32,
 	iconId = "code",
 	tooltip = "Develop",
-	redirect = nil
+	redirect = require("devgit:source/application/dashboard/pages/develop.lua")
 })
 
 -- Groups Sidebar Button
