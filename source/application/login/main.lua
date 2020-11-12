@@ -11,16 +11,17 @@ local container = core.construct("guiFrame", {
 
 local pattern = core.construct("guiImage", {
 	parent = container,
-	size = guiCoord(1, 0, 1, 0),
+	size = guiCoord(0, 3000, 0, 3000),
 	backgroundAlpha = 0,
 	image = "devgit:assets/images/tile.png",
 	patternScaleValues = false,
-	imageBottomRight = vector2(120, 120),
+	imageTopLeft = vector2(0, 0),
+	imageBottomRight = vector2(25, 25),
 	imageColour = colour.black()
 })
 
 local tween;
-tween = core.tween:begin(pattern, 10, {imageTopLeft = vector2(-120, 120)}, "linear", function()
+tween = core.tween:begin(pattern, 10, {imageTopLeft = vector2(-1, 1), imageBottomRight = vector2(24, 26)}, "linear", function()
 	tween:reset()
 	tween:resume()
 end)
