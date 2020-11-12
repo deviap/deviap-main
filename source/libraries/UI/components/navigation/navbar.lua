@@ -29,6 +29,7 @@ return function(props)
     self.bottomItems = {}
     self.bottomTagItems = {}
     self.currentPage = nil
+    self.extensionNav = props.extensionNav
 
     self.addTagItem = function(_props)
         if _props.relativeLocation == "bottom" then
@@ -71,11 +72,19 @@ return function(props)
                 iconId = _props.iconId,
                 tooltip = _props.tooltip,
                 redirect = function()
-                    if self.currentPage ~= nil then
-                        self.currentPage.visible = false
+                    if not self.extensionNav then
+                        if self.currentPage ~= nil then
+                            self.currentPage.visible = false
+                        end
+                        self.currentPage = page
+                        self.currentPage.visible = true
+                    elseif self.extensionNav then
+                        if self.extensionNav.currentPage ~= nil then
+                            self.extensionNav.currentPage.visible = false
+                        end
+                        self.extensionNav.currentPage = page
+                        self.extensionNav.currentPage.visible = true
                     end
-                    self.currentPage = page
-                    self.currentPage.visible = true
                 end
             }
             -- First page added will be the default (added) page
