@@ -2,7 +2,6 @@
 -- Author(s): Sanjay-B(Sanjay)
 -- Dashboard Entry file. 
 local navbar = require("devgit:source/libraries/UI/components/navigation/navbar.lua")
---local profileNavItem = require("devgit:source/libraries/UI/components/misc/profileNavItem.lua")
 
 -- Temporary loading screen until we find a better way to do this..?
 local loadingScreen = require("devgit:source/application/loading/main.lua")
