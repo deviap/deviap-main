@@ -5,7 +5,7 @@ local newBaseButton = require("devgit:source/libraries/UI/components/buttons/bas
 
 return function(props)
 	-- Defaults
-	props.containerBackgroundColour = colour.hex("#333333")
+	props.containerBackgroundColour = colour.hex("#212121")
 	props.secondaryColour = colour(1, 1, 1)
 	props.containerBackgroundAlpha = 1
 	props.borderWidth = 2
