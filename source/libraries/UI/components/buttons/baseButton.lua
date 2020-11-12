@@ -58,6 +58,7 @@ return function(props)
 	props.iconId = props.iconId or ""
 
 	local self = newBaseComponent(props)
+	self.container.strokeRadius = props.strokeRadius or 0
 
 	self.tooltip = nil
 
