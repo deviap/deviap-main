@@ -39,6 +39,7 @@ verticalNav.addNavItem({
 	iconMax = 32,
 	iconId = "home",
 	tooltip = "Home",
+	alertEnabled = true,
 	redirect = require("devgit:source/application/dashboard/pages/dashboard.lua")
 })
 
@@ -101,17 +102,19 @@ local horizontalNav = navbar {
 	containerBackgroundColour = colour.hex("#FFFFFF"),
 	iconColour = colour.hex("#212121"),
 	bottomOffset = navItemSpacing,
+	extensionNav = verticalNav,
 	zIndex = 3
 }
 
--- Notifications Navbar Button
+-- Alerts Navbar Button
 horizontalNav.addNavItem({
 	relativeLocation = "top",
 	size = guiCoord(0, 32, 0, 32),
 	iconMax = 32,
 	iconId = "notifications",
 	tooltip = "Alerts",
-	redirect = nil
+	alertEnabled = true,
+	redirect = require("devgit:source/application/dashboard/pages/alerts.lua")
 })
 
 -- Direct Messages Navbar Button

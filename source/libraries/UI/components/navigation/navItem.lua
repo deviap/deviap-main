@@ -44,7 +44,8 @@ return function(props)
     self.container.position = props.position
     self.container.backgroundAlpha = 0
 
-    self.tooltip = nil
+	self.tooltip = nil
+	self.alert = nil
 
     local item = core.construct("guiIcon", {
         parent = self.container,
@@ -52,14 +53,34 @@ return function(props)
         position = guiCoord(0, 0, 0, 0),
         size = guiCoord(1, 0, 1, 0),
         iconColour = props.iconColour
-    })
+	})
+	
+	if props.alertEnabled then
+		local alert = core.construct("guiFrame", {
+			parent = item,
+			name = "alert",
+			backgroundColour = colour.hex("#0f62fe"),
+			strokeWidth = 1,
+			strokeRadius = 5,
+			strokeColour = colour.hex("#0f62fe"),
+			visible = false
+		})
+		if props.navOrientation == "horizontal" then
+			alert.position = guiCoord(1, -21, 1, 10)
+			alert.size = guiCoord(0, 10, 0, 20)
+		elseif props.navOrientation == "vertical" then
+			alert.position = guiCoord(1, -62, 1, -21)
+			alert.size = guiCoord(0, 20, 0, 10)
+		end
+		self.alert = alert
+	end
 
     if props.tooltip then
         local tempPosition = guiCoord(0, 0, 0, 0)
         if props.navOrientation == "vertical" then
             tempPosition = guiCoord(0.5, (self.container.size.offset.x / 2) + 20, 0.5, (self.container.size.offset.y / 2) - 30)
         elseif props.navOrientation == "horizontal" then 
-            tempPosition = guiCoord(0.5, (self.container.size.offset.x / 2) - 43, 0.5, (self.container.size.offset.y / 2) - 82)
+			tempPosition = guiCoord(0.5, (self.container.size.offset.x / 2) - 43, 0.5, (self.container.size.offset.y / 2) - 82)
         end
 
         self.tooltip = tooltip {
@@ -110,7 +131,10 @@ return function(props)
             elseif state.mode == "idle" then
                 item.iconColour = props.iconColour
             elseif state.mode == "selected" and props.redirect then
-                props.redirect()
+				props.redirect()
+				self.alert.visible = false
+			elseif state.mode == "alert" and self.alert then
+				self.alert.visible = true
 			end
 		else -- disabled
 			item.iconColour = colour.hex("#E0E0E0")
