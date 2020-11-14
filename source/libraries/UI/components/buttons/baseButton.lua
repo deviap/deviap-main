@@ -111,9 +111,9 @@ return function(props)
 
 		label.backgroundAlpha = 0
 		label.text = props.text
-		label.position = guiCoord(0, props.textSize, 0, 0)
+		label.position = guiCoord(0, (props.iconId and props.iconId ~= "") and props.textSize or 0, 0, 0)
 		label.textSize = props.textSize
-		label.size = guiCoord(0, label.textDimensions.x, 1, 0)
+		label.size = guiCoord(1, (props.iconId and props.iconId ~= "") and -props.textSize/2 or 0, 1, 0)
 		label.textAlign = "middle"
 		label.textColour = props.secondaryColour
 
