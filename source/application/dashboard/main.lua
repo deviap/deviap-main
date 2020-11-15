@@ -92,7 +92,7 @@ verticalNav.addNavItem({
 	iconMax = 32,
 	iconId = "tune",
 	tooltip = "Settings",
-	redirect = nil
+	redirect = require("devgit:source/application/dashboard/pages/settings.lua")
 })
 
 -- Horizontal Navbar Instance
