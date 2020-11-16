@@ -38,7 +38,7 @@ verticalNav.addNavItem({
 	defaultPage = true,
 	relativeLocation = "top",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "home",
 	tooltip = "Home",
 	alertEnabled = true,
@@ -49,7 +49,7 @@ verticalNav.addNavItem({
 verticalNav.addNavItem({
 	relativeLocation = "top",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "apps",
 	tooltip = "Apps",
 	redirect = require("devgit:source/application/dashboard/pages/apps.lua")
@@ -59,7 +59,7 @@ verticalNav.addNavItem({
 verticalNav.addNavItem({
 	relativeLocation = "top",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "code",
 	tooltip = "Develop",
 	redirect = require("devgit:source/application/dashboard/pages/develop.lua")
@@ -69,7 +69,7 @@ verticalNav.addNavItem({
 verticalNav.addNavItem({
 	relativeLocation = "top",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "question_answer",
 	tooltip = "Groups",
 	redirect = nil
@@ -79,7 +79,7 @@ verticalNav.addNavItem({
 verticalNav.addNavItem({
 	relativeLocation = "top",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "shopping_cart",
 	tooltip = "Shop",
 	redirect = nil
@@ -89,7 +89,7 @@ verticalNav.addNavItem({
 verticalNav.addNavItem({
 	relativeLocation = "bottom",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "tune",
 	tooltip = "Settings",
 	redirect = require("devgit:source/application/dashboard/pages/settings.lua")
@@ -112,7 +112,7 @@ local horizontalNav = navbar {
 horizontalNav.addNavItem({
 	relativeLocation = "top",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "notifications",
 	tooltip = "Alerts",
 	alertEnabled = true,
@@ -123,7 +123,7 @@ horizontalNav.addNavItem({
 horizontalNav.addNavItem({
 	relativeLocation = "top",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "email",
 	tooltip = "Inbox",
 	redirect = nil
@@ -133,7 +133,7 @@ horizontalNav.addNavItem({
 horizontalNav.addNavItem({
 	relativeLocation = "top",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "group",
 	tooltip = "Friends",
 	redirect = nil
@@ -143,7 +143,7 @@ horizontalNav.addNavItem({
 horizontalNav.addNavItem({
 	relativeLocation = "top",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "person_add",
 	tooltip = "Add Friend",
 	redirect = nil
@@ -161,7 +161,7 @@ end
 horizontalNav.addNavItem({
 	relativeLocation = "bottom",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "announcement",
 	tooltip = "Report",
 	redirect = nil
@@ -171,7 +171,7 @@ horizontalNav.addNavItem({
 horizontalNav.addNavItem({
 	relativeLocation = "bottom",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "bug_report",
 	tooltip = "Feedback",
 	redirect = nil
