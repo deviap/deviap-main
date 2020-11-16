@@ -33,13 +33,11 @@ return function(parent)
     }
 
     local rendererOptions = dropdownOptions {
-        text = "Choose a Renderer",
+        text = "",
         position = guiCoord(1, -280, 1, -58),
         size = guiCoord(0, 80, 0, 30),
         textSize = 12
     }
-
-    print(rendererOptions.container.size)
 
     for _, renderer in pairs(availableRenderers) do
         rendererOptions.addButton(renderer)
