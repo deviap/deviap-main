@@ -109,7 +109,6 @@ return function(props)
                 iconMax = _props.iconMax,
                 iconId = _props.iconId,
                 tooltip = _props.tooltip,
-                alertEnabled = _props.alertEnabled,
                 redirect = function()
                     if self.currentPage ~= nil then
                         self.currentPage.visible = false
