@@ -112,7 +112,6 @@ return function(props)
                 item.iconColour = props.iconColour
             elseif state.mode == "selected" and props.redirect then
 				props.redirect()
-				print("RAN: ", props.redirect)
 			end
 		else -- disabled
 			item.iconColour = colour.hex("#E0E0E0")
