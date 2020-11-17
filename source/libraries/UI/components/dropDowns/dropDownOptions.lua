@@ -179,8 +179,9 @@ return function(props)
 			end
 		else -- disabled
 			self.menu.visible = false
+			props.text = "Disabled"
 			props.containerBackgroundColour = colour.hex("#E0E0E0")
-			props.secondaryColour = colour.hex("EAEAEA")
+			props.secondaryColour = colour.hex("FFFFFF")
 		end
 
 		self.render()
