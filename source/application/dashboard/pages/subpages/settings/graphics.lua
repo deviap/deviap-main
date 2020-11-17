@@ -35,7 +35,7 @@ return function(parent)
     local rendererOptions = dropdownOptions {
         text = "",
         position = guiCoord(1, -280, 1, -58),
-        size = guiCoord(0, 80, 0, 30),
+        size = guiCoord(0, 160, 0, 30),
         textSize = 12
     }
 
@@ -55,17 +55,6 @@ return function(parent)
         description = "Choose a renderer that Deviap will use.",
         child = rendererOptions
     }
-
-
-
-
-
-
-
-
-
-
-
 
     return container    
 end
