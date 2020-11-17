@@ -45,7 +45,8 @@ return {
         primaryButton {
             parent = scrollContainer,
             position = guiCoord(0, 11, 0, 80),
-            text = "OPEN UNPACKED APP",
+			text = "OPEN UNPACKED APP",
+			textAlign = "middle",
             strokeRadius = 5
         }.state.subscribe(function(state)
             if state.active then
@@ -56,7 +57,8 @@ return {
         secondaryButton {
             parent = scrollContainer,
             position = guiCoord(0, 11, 0, 135),
-            text = "OPEN SUITE",
+			text = "OPEN SUITE",
+			textAlign = "middle",
             strokeRadius = 5
         }.state.subscribe(function(state)
             if state.active then
