@@ -25,7 +25,8 @@ return function(parent)
             onStatus = "Enabled",
             offStatus = "Disabled",
             backdropStrokeRadius = 4,
-            dotStrokeRadius = 2
+            dotStrokeRadius = 2,
+            on = true
         }
     }
 
