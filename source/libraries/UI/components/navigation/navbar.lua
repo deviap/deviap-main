@@ -58,8 +58,6 @@ return function(props)
         if _props.relativeLocation == "top" then
             if _props.redirect ~= nil then
                 _props.redirect.construct(page)
-            --else
-                --return
             end
 
             local num = #self.topItems+1
@@ -87,6 +85,7 @@ return function(props)
                     end
                 end
             }
+            
             -- First page added will be the default (added) page
             if _props.defaultPage then
                 _navItem.redirect()
@@ -95,8 +94,6 @@ return function(props)
         elseif _props.relativeLocation == "bottom" then
             if _props.redirect ~= nil then
                 _props.redirect.construct(page)
-            --else
-                --return
             end
             
             local num = #self.bottomItems+1
