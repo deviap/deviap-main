@@ -88,14 +88,15 @@ return function(props)
             position = tempPosition,
             text = props.tooltip
         }
-        self.tooltip.state.dispatch {type = "disable"}
+		self.tooltip.state.dispatch {type = "disable"}
+		
         item:on("mouseEnter", function()
             self.tooltip.state.dispatch {type = "enable"}
         end)
         item:on("mouseExit", function()
             self.tooltip.state.dispatch {type = "disable"}
         end)
-    end
+	end
 
     item:on("mouseEnter", function()
 		self.state.dispatch {type = "setMode", mode = "hover"}
@@ -108,7 +109,7 @@ return function(props)
 	end)
 
     self.state = newState(reducer)
-    self.redirect = props.redirect or function() end
+	self.redirect = props.redirect or function() end
     
 	self.render = function()
 		--[[
