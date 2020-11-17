@@ -72,7 +72,7 @@ verticalNav.addNavItem({
 	iconMax = 24,
 	iconId = "question_answer",
 	tooltip = "Groups",
-	redirect = nil
+	redirect = require("devgit:source/application/dashboard/pages/groups.lua")
 })
 
 -- Shop Sidebar Button
