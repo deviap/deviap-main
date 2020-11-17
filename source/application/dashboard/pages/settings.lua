@@ -32,8 +32,7 @@ return {
 
         local tabsContainer = tabs {
             parent = scrollContainer,
-            position = guiCoord(0, 12, 0, 50),
-
+            position = guiCoord(0, 12, 0, 50)
         }
 
         tabsContainer.addTab(
