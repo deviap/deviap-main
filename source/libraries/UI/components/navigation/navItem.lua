@@ -54,26 +54,6 @@ return function(props)
         size = guiCoord(1, 0, 1, 0),
         iconColour = props.iconColour
 	})
-	
-	if props.alertEnabled then
-		local alert = core.construct("guiFrame", {
-			parent = item,
-			name = "alert",
-			backgroundColour = colour.hex("#0f62fe"),
-			strokeWidth = 1,
-			strokeRadius = 5,
-			strokeColour = colour.hex("#0f62fe"),
-			visible = false
-		})
-		if props.navOrientation == "horizontal" then
-			alert.position = guiCoord(1, -21, 1, 10)
-			alert.size = guiCoord(0, 10, 0, 20)
-		elseif props.navOrientation == "vertical" then
-			alert.position = guiCoord(1, -62, 1, -21)
-			alert.size = guiCoord(0, 20, 0, 10)
-		end
-		self.alert = alert
-	end
 
     if props.tooltip then
         local tempPosition = guiCoord(0, 0, 0, 0)
@@ -133,9 +113,6 @@ return function(props)
                 item.iconColour = props.iconColour
             elseif state.mode == "selected" and props.redirect then
 				props.redirect()
-				self.alert.visible = false
-			elseif state.mode == "alert" and self.alert then
-				self.alert.visible = true
 			end
 		else -- disabled
 			item.iconColour = colour.hex("#E0E0E0")
@@ -148,5 +125,3 @@ return function(props)
 
 	return self
 end
-
-
