@@ -62,7 +62,6 @@ return function(props)
 		active = false,
 		size = guiCoord(1, -20, 1, -10), -- -20
 		position = guiCoord(0, 1, 0, 5), -- 10
-		backgroundColour = colour.rgb(255, 0, 0),
 		backgroundAlpha = 0,
 		textSize = 18
 	})
