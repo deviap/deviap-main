@@ -39,9 +39,13 @@ return function(parent)
         textSize = 12
     }
 
-    for _, renderer in pairs(availableRenderers) do
-        rendererOptions.addButton(renderer)
-    end
+	if #availableRenderers == 0 then
+		rendererOptions.state.dispatch({ type = "disable"})
+	else
+		for _, renderer in pairs(availableRenderers) do
+			rendererOptions.addButton(renderer)
+		end
+	end
 
     -- Renderer Choose
     descriptiveSettingCard {
