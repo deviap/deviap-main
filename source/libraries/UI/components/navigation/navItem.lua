@@ -45,7 +45,6 @@ return function(props)
     self.container.backgroundAlpha = 0
 
 	self.tooltip = nil
-	self.alert = nil
 
     local item = core.construct("guiIcon", {
         parent = self.container,
