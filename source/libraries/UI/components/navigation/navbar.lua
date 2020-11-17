@@ -71,7 +71,6 @@ return function(props)
                 iconMax = _props.iconMax,
                 iconId = _props.iconId,
                 tooltip = _props.tooltip,
-                alertEnabled = _props.alertEnabled,
                 redirect = function()
                     if not self.extensionNav then
                         if self.currentPage ~= nil then
