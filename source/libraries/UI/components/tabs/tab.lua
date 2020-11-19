@@ -60,11 +60,10 @@ return function(props)
 		name = "label",
 		parent = self.container,
 		active = false,
-		size = guiCoord(1, -20, 1, -10),
-		position = guiCoord(0, 10, 0, 5),
+		size = guiCoord(1, -20, 1, -10), -- -20
+		position = guiCoord(0, 1, 0, 5), -- 10
 		backgroundAlpha = 0,
-		textSize = 18,
-		textAlign = "middleLeft"
+		textSize = 18
 	})
 
 	props.containerBackgroundColour = colour.hex("ffffff")

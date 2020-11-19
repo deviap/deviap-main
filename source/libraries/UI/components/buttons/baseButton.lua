@@ -58,6 +58,7 @@ return function(props)
 	props.iconId = props.iconId or ""
 
 	local self = newBaseComponent(props)
+	self.container.strokeRadius = props.strokeRadius or 0
 
 	self.tooltip = nil
 
@@ -113,8 +114,8 @@ return function(props)
 		label.text = props.text
 		label.position = guiCoord(0, (props.iconId and props.iconId ~= "") and props.textSize or 0, 0, 0)
 		label.textSize = props.textSize
-		label.size = guiCoord(1, (props.iconId and props.iconId ~= "") and -props.textSize/2 or 0, 1, 0)
-		label.textAlign = "middle"
+		label.size = guiCoord(1, (props.iconId and props.iconId ~= "") and -props.textSize or 0, 1, 0)
+		label.textAlign = props.textAlign or "middleLeft"
 		label.textColour = props.secondaryColour
 
 		icon.backgroundAlpha = 0
