@@ -95,7 +95,8 @@ core.engine:on("debuggerConnected", function(id, ip, name)
 	local allow = button {
 		parent = frame,
 		position = guiCoord(1.0, -150, 0.5, -15),
-		text = "ALLOW"
+		text = "ALLOW",
+		textAlign = "middle"
 	}
 	allow.container.size = guiCoord(0, 60, 0, 30)
 	allow.container:on("mouseLeftUp", function()
@@ -106,7 +107,8 @@ core.engine:on("debuggerConnected", function(id, ip, name)
 	local block = button {
 		parent = frame,
 		position = guiCoord(1.0, -80, 0.5, -15),
-		text = "BLOCK"
+		text = "BLOCK",
+		textAlign = "middle"
 	}
 	block.container.size = guiCoord(0, 60, 0, 30)
 	block.container:on("mouseLeftUp", function()
