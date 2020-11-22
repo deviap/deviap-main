@@ -18,14 +18,34 @@
     }
 ]] --
 
-local prefixPath = "devgit:source/gameKit/"
 local componentMap = {
 	["loading"] = {client = true, server = false},
 	["playerList"] = {client = true, server = false},
 	["disconnection"] = {client = true, server = false},
+	["character"] = {client = true, server = true},
 }
 
+local finished = false
+spawn(function()
+    -- After sleeping if the function below hasn't been invoked,
+    -- The developer hasn't properly set up game kit
+
+    sleep()
+    local didWarn = not finished
+    while not finished do
+        warn("GameKit has NOT been set up properly. Please make sure you invoke the returned function immediately.\n\nCorrect use is: \nrequire(\"devgit:source/gameKit/main.lua\") {}\n")
+        sleep(3.5)
+    end
+
+    if didWarn then
+        warn("GameKit is now set up properly... This is odd, did you yield before invoking the returned function?")
+    end
+end)
+
 return function(requestedComponents)
+    -- Set this internal local to true to stop us from spitting out a warning
+    finished = true
+
 	-- Validate input
 	if type(requestedComponents) ~= "table" then
 		requestedComponents = {}
@@ -41,8 +61,8 @@ return function(requestedComponents)
 		if componentMap[requestedComponent] == nil then
 			return error("Requested component (" .. tostring(requestedComponent) .. ") is not valid", 2)
 		end
-	end
-
+    end
+    
 	-- Load requested components
     for _, v in pairs(requestedComponents) do
         if _SERVER and componentMap[v].server then
