@@ -55,5 +55,5 @@ return function(serialised, realObject)
 		realObject = core.scene
 	end
 
-	deserialiseObject(infoAndObject.object, realObject)
+	return deserialiseObject(infoAndObject.object, realObject)
 end
