@@ -14,4 +14,8 @@ return {
     fromFile = function(file)
         return deserialise(core.io:read(file))
     end
+    
+    -- Note the lack of a 'toFile' method,
+    -- This is deliberate, as we do NOT want to give any app IO write access
+    -- Even to their own app files
 }
