@@ -5,7 +5,13 @@
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
 
+local serialise = require("devgit:source/serialiser/internal/serialise.lua")
+local deserialise = require("devgit:source/serialiser/internal/deserialise.lua")
+
 return {
-    toJSON = require("devgit:source/serialiser/internal/serialise.lua"),
-    fromJSON = require("devgit:source/serialiser/internal/deserialise.lua")
+    toJSON = serialise,
+    fromJSON = deserialise,
+    fromFile = function(file)
+        return deserialise(core.io:read(file))
+    end
 }
