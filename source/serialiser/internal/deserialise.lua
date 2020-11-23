@@ -29,6 +29,8 @@ local function deserialiseObject(serialised, realObject)
 		local prop = classInfo.properties[k]
 		if prop and prop.hasSetter then
 			realObject[k] = v
+		elseif prop and type(realObject[k]) == "tevObj" then
+			deserialiseObject(v, realObject[k])
 		end
 	end
 
