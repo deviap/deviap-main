@@ -36,7 +36,6 @@ local function deserialiseObject(serialised, realObject)
 		for _, v in pairs(serialised.children) do
 			local child = deserialiseObject(v)
 			if child then
-				print(child, type(child), "parent set to ", realObject)
 				child.parent = realObject
 			end
 		end
