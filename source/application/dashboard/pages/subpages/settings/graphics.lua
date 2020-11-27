@@ -34,8 +34,8 @@ return function(parent)
 
     local rendererOptions = dropdownOptions {
         text = "",
-        position = guiCoord(1, -152, 1, -67),
-        size = guiCoord(0, 150, 0, 30),
+        position = guiCoord(1, -182, 1, -67),
+        size = guiCoord(0, 180, 0, 30),
         textSize = 12
     }
 
