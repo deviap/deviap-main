@@ -87,7 +87,8 @@ return function(props)
 		end)
 
 		self._buttons[tag] = button
-
+		-- Hack: !!!!
+		self.state.dispatch { type = "unhover" }
 		return button
 	end
 

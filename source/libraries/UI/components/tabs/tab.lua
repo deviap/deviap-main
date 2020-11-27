@@ -61,7 +61,7 @@ return function(props)
 		parent = self.container,
 		active = false,
 		size = guiCoord(1, -20, 1, -10), -- -20
-		position = guiCoord(0, 1, 0, 5), -- 10
+		position = guiCoord(0, 10, 0, 5), -- 10
 		backgroundAlpha = 0,
 		textSize = 18
 	})
