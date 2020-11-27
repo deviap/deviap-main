@@ -73,7 +73,7 @@ return {
 						}
 					elseif not app.activeRelease.isNetworked then
 						-- core.interface:destroyChildren()
-						loadingOverlay { text = "Loading app" }
+						loadingOverlay { text = "Loading local app" }
 						local success, errorMsg = pcall(function()
 							core.apps:loadRemote(app.id)
 						end)
@@ -86,6 +86,7 @@ return {
 						}]]
 					elseif app.activeRelease.isNetworked then
 						core.interface:destroyChildren()
+						loadingOverlay { text = "Loading networked app" }
 						core.networking:initiate(app.id)
 
 						--[[multilineNotification {
