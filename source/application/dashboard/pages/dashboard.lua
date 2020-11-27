@@ -53,7 +53,7 @@ return {
 		layout.container.scrollbarAlpha = 0
 		layout.rows = 1
 		layout.columns = 8
-		layout.cellSize = vector2(100, 100)
+		layout.cellSize = vector2(90, 120)
 		layout.cellSpacing = vector2(10, 10)
 		layout.fitX = false
 		layout.fitY = false

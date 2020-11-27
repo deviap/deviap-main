@@ -40,7 +40,7 @@ return function(props)
 
 	props.containerBackgroundColour = colour.hex("#E5E5E5")
 	props.secondaryColour = colour.hex("#000000")
-	props.title = props.title or "Untitled Game"
+	props.title = props.title or "Untitled App"
 	props.name = props.name or "JohnDoe"
 	props.thumbnail = props.thumbnail or ""
 
