@@ -160,7 +160,6 @@ return function(props)
 			if state.mode == "hover" then
 				titleLabel.visible = false
 				developerLabel.visible = false
-				thumbnail.size = guiCoord(1, 0, 1, -15)
 				rateContainer.visible = true
 				upButton.visible = true
 				downButton.visible = true
@@ -168,7 +167,6 @@ return function(props)
 			elseif state.mode == "idle" then
 				titleLabel.visible = true
 				developerLabel.visible = true
-				thumbnail.size = guiCoord(1, 0, 1, -30)
 				rateContainer.visible = false
 				upButton.visible = false
 				downButton.visible = false

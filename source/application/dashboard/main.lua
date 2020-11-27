@@ -2,7 +2,7 @@
 -- Author(s): Sanjay-B(Sanjay)
 -- Dashboard Entry file. 
 
-local devMode = core.dev.localDevGitEnabled and false
+local devMode = core.dev.localDevGitEnabled
 
 local navbar = require("devgit:source/libraries/UI/components/navigation/navbar.lua")
 
