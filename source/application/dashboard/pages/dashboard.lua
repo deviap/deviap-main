@@ -1,5 +1,10 @@
--- Copyright 2020 - Deviap (deviap.com)
--- Author(s): Sanjay-B(Sanjay)
+---------------------------------------------------------------
+-- Copyright 2020 Deviap (https://deviap.com/)               --
+---------------------------------------------------------------
+-- Made available under the MIT License:                     --
+-- https://github.com/deviap/deviap-main/blob/master/LICENSE --
+---------------------------------------------------------------
+
 -- Creates the Dashboard page.
 local card = require("devgit:source/libraries/UI/components/cards/app.lua")
 local comment = require("devgit:source/libraries/UI/components/cards/comment.lua")
@@ -7,6 +12,7 @@ local gridLayout = require("devgit:source/libraries/UI/constraints/controllers/g
 local textInput = require("devgit:source/libraries/UI/components/inputs/textInput.lua")
 local inlineNotification = require("devgit:source/libraries/UI/components/notifications/inlineNotification.lua")
 local multilineNotification = require("devgit:source/libraries/UI/components/notifications/multilineNotification.lua")
+local loadingOverlay = require("devgit:source/libraries/UI/loadingOverlay.lua")
 
 return {
 	default = true,
@@ -53,20 +59,21 @@ return {
 		layout.container.scrollbarAlpha = 0
 		layout.rows = 1
 		layout.columns = 8
-		layout.cellSize = vector2(100, 100)
+		layout.cellSize = vector2(90, 120)
 		layout.cellSpacing = vector2(10, 10)
 		layout.fitX = false
 		layout.fitY = false
 		layout.wrap = true
 
-		core.http:get("https://deviap.com/api/v1/users/"..(core.networking.localClient.id).."/favourites", {["Authorization"] = "Bearer " .. core.engine:getUserToken()}, function(status, body)
+		core.http:get("https://deviap.com/api/v1/users/" .. (core.networking.localClient.id) .. "/favourites",
+              		{["Authorization"] = "Bearer " .. core.engine:getUserToken()}, function(status, body)
 			local response = core.json:decode(body)
 			for index, app in pairs(response) do
-				card {
+				card{
 					parent = layout.container,
-					title = (string.len(app.name) > 15 and string.sub(app.name, 1, 12).."...") or app.name,
+					title = (string.len(app.name) > 15 and string.sub(app.name, 1, 12) .. "...") or app.name,
 					name = app.owner.username,
-					thumbnail = "https://cdn.deviap.com/"..(app.icon or "")
+					thumbnail = "https://cdn.deviap.com/" .. (app.icon or "")
 				}.container:on("mouseLeftUp", function()
 					if not app.activeRelease then
 						inlineNotification {
@@ -74,25 +81,30 @@ return {
 							position = guiCoord(1, -306, 1, -48),
 							type = "error",
 							iconEnabled = false,
-							text = "Selected app ("..((string.len(app.name) > 15 and string.sub(app.name, 1, 10).."...") or app.name)..") is private."
+							text = "Selected app (" .. ((string.len(app.name) > 15 and string.sub(app.name, 1, 10) .. "...") or app.name) ..
+											") is private."
 						}
 					elseif not app.activeRelease.isNetworked then
 						core.interface:destroyChildren()
+						loadingOverlay { text = "Loading local app" }
 						core.apps:loadRemote(app.id)
 						multilineNotification {
 							parent = core.interface,
 							position = guiCoord(1, -306, 1, -58),
 							iconEnabled = false,
-							text = "Selected app ("..((string.len(app.name) > 15 and string.sub(app.name, 1, 10).."...") or app.name)..") has been launched."
+							text = "Selected app (" .. ((string.len(app.name) > 15 and string.sub(app.name, 1, 10) .. "...") or app.name) ..
+											") has been launched."
 						}
 					elseif app.activeRelease.isNetworked then
 						core.interface:destroyChildren()
+						loadingOverlay { text = "Loading networked app" }
 						core.networking:initiate(app.id)
 						multilineNotification {
 							parent = core.interface,
 							position = guiCoord(1, -306, 1, -58),
 							iconEnabled = false,
-							text = "Selected networked app ("..((string.len(app.name) > 15 and string.sub(app.name, 1, 10).."...") or app.name)..") has been launched."
+							text = "Selected networked app (" ..
+											((string.len(app.name) > 15 and string.sub(app.name, 1, 10) .. "...") or app.name) .. ") has been launched."
 						}
 					end
 				end)
@@ -128,7 +140,10 @@ return {
 		layout2.fitY = false
 		layout2.wrap = true
 
-		local status, body = core.http:get("https://deviap.com/api/v1/comments?page=1", {["Authorization"] = "Bearer " .. core.engine:getUserToken()})
+		local status, body = core.http:get("https://deviap.com/api/v1/comments?page=1",
+                                   		{
+			["Authorization"] = "Bearer " .. core.engine:getUserToken()
+		})
 
 		-- Send Notification Error (we probably want to streamline this better)
 		if status ~= 200 then
@@ -137,23 +152,25 @@ return {
 				position = guiCoord(1, -306, 1, -58),
 				iconEnabled = false,
 				type = "warning",
-				text = "Failed to load feed. Code: "..status
+				text = "Failed to load feed. Code: " .. status
 			}
 			return
 		end
 
 		local maxPages = core.json:decode(body)["maxPage"]
 
-		for page=1, maxPages, 1 do
-			core.http:get("https://deviap.com/api/v1/comments?page="..page, {["Authorization"] = "Bearer " .. core.engine:getUserToken()}, function(status, body)
+		for page = 1, maxPages, 1 do
+			core.http:get("https://deviap.com/api/v1/comments?page=" .. page,
+              			{["Authorization"] = "Bearer " .. core.engine:getUserToken()}, function(status, body)
 				local response = core.json:decode(body)
 				for index, entry in pairs(response["results"]) do
 					comment {
 						parent = layout2.container,
 						author = entry["postedBy"]["username"],
 						content = entry["message"],
-						postedAt =  entry["postedAt"],
-						avatar =  (entry["postedBy"]["profileImage"] and "https://cdn.deviap.com/"..entry["postedBy"]["profileImage"]) or ""
+						postedAt = entry["postedAt"],
+						avatar = (entry["postedBy"]["profileImage"] and "https://cdn.deviap.com/" .. entry["postedBy"]["profileImage"]) or
+										""
 					}
 				end
 			end)
@@ -166,7 +183,7 @@ return {
 			placeholder = "Enter Comment",
 			textSize = 15
 		}
-		
+
 		feedInput.input:on("keyDown", function(key)
 			if key == "KEY_RETURN" then
 				print("TEXT: ", feedInput.input.text)

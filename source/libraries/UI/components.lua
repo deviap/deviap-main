@@ -1,21 +1,21 @@
 -- Copyright 2020 - Deviap (deviap.com)
 
 local components = {
-	baseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua"),
+	baseComponent = require("./baseComponent.lua"),
 	
-	baseButton = require("devgit:source/libraries/UI/components/buttons/baseButton.lua"),
-	primaryButton = require("devgit:source/libraries/UI/components/buttons/primaryButton.lua"),
-	dangerButton = require("devgit:source/libraries/UI/components/buttons/dangerButton.lua"),
-	secondaryButton = require("devgit:source/libraries/UI/components/buttons/secondaryButton.lua"),
-	tertiaryButton = require("devgit:source/libraries/UI/components/buttons/tertiaryButton.lua"),
+	baseButton = require("./components/buttons/baseButton.lua"),
+	primaryButton = require("./components/buttons/primaryButton.lua"),
+	dangerButton = require("./components/buttons/dangerButton.lua"),
+	secondaryButton = require("./components/buttons/secondaryButton.lua"),
+	tertiaryButton = require("./components/buttons/tertiaryButton.lua"),
 
 	appCard = require("devgit:source/libraries/UI/components/cards/app.lua"),
 
 	dropDown = require("devgit:source/libraries/UI/components/dropDowns/dropDown.lua"),
 	dropDownOptions = require("devgit:source/libraries/UI/components/dropDowns/dropDownOptions.lua"),
 
-	textInput = require("devgit:source/libraries/UI/components/inputs/textInput.lua"),
-	numberInput = require("devgit:source/libraries/UI/components/inputs/numberInput.lua"),
+	textInput = require("./inputs/textInput.lua"),
+	numberInput = require("./inputs/numberInput.lua"),
 
 	inlineNotification = require("devgit:source/libraries/UI/components/notifications/inlineNotification.lua"),
 	multilineNotification = require("devgit:source/libraries/UI/components/notifications/multilineNotification.lua"),

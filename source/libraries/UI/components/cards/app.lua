@@ -40,7 +40,7 @@ return function(props)
 
 	props.containerBackgroundColour = colour.hex("#E5E5E5")
 	props.secondaryColour = colour.hex("#000000")
-	props.title = props.title or "Untitled Game"
+	props.title = props.title or "Untitled App"
 	props.name = props.name or "JohnDoe"
 	props.thumbnail = props.thumbnail or ""
 
@@ -160,7 +160,6 @@ return function(props)
 			if state.mode == "hover" then
 				titleLabel.visible = false
 				developerLabel.visible = false
-				thumbnail.size = guiCoord(1, 0, 1, -15)
 				rateContainer.visible = true
 				upButton.visible = true
 				downButton.visible = true
@@ -168,7 +167,6 @@ return function(props)
 			elseif state.mode == "idle" then
 				titleLabel.visible = true
 				developerLabel.visible = true
-				thumbnail.size = guiCoord(1, 0, 1, -30)
 				rateContainer.visible = false
 				upButton.visible = false
 				downButton.visible = false

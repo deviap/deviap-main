@@ -44,7 +44,7 @@ return function(props)
     self.container.position = props.position
     self.container.backgroundAlpha = 0
 
-    self.tooltip = nil
+	self.tooltip = nil
 
     local item = core.construct("guiIcon", {
         parent = self.container,
@@ -52,14 +52,14 @@ return function(props)
         position = guiCoord(0, 0, 0, 0),
         size = guiCoord(1, 0, 1, 0),
         iconColour = props.iconColour
-    })
+	})
 
     if props.tooltip then
         local tempPosition = guiCoord(0, 0, 0, 0)
         if props.navOrientation == "vertical" then
             tempPosition = guiCoord(0.5, (self.container.size.offset.x / 2) + 20, 0.5, (self.container.size.offset.y / 2) - 30)
         elseif props.navOrientation == "horizontal" then 
-            tempPosition = guiCoord(0.5, (self.container.size.offset.x / 2) - 43, 0.5, (self.container.size.offset.y / 2) - 82)
+			tempPosition = guiCoord(0.5, (self.container.size.offset.x / 2) - 43, 0.5, (self.container.size.offset.y / 2) - 82)
         end
 
         self.tooltip = tooltip {
@@ -67,14 +67,15 @@ return function(props)
             position = tempPosition,
             text = props.tooltip
         }
-        self.tooltip.state.dispatch {type = "disable"}
+		self.tooltip.state.dispatch {type = "disable"}
+		
         item:on("mouseEnter", function()
             self.tooltip.state.dispatch {type = "enable"}
         end)
         item:on("mouseExit", function()
             self.tooltip.state.dispatch {type = "disable"}
         end)
-    end
+	end
 
     item:on("mouseEnter", function()
 		self.state.dispatch {type = "setMode", mode = "hover"}
@@ -87,7 +88,7 @@ return function(props)
 	end)
 
     self.state = newState(reducer)
-    self.redirect = props.redirect or function() end
+	self.redirect = props.redirect
     
 	self.render = function()
 		--[[
@@ -110,7 +111,7 @@ return function(props)
             elseif state.mode == "idle" then
                 item.iconColour = props.iconColour
             elseif state.mode == "selected" and props.redirect then
-                props.redirect()
+				props.redirect()
 			end
 		else -- disabled
 			item.iconColour = colour.hex("#E0E0E0")
@@ -123,5 +124,3 @@ return function(props)
 
 	return self
 end
-
-
