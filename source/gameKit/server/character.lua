@@ -12,7 +12,7 @@ local characters = {}
 local function onConnection(client)
     local character = core.construct("block", {
         scale = vector3(1, 1, 1),
-        position = vector3(0, 3, 0),
+        position = vector3(0, 5, 0),
         colour = colour.random(),
         static = false
     })
@@ -37,21 +37,16 @@ core.networking:on("keyDown", function(client, action)
 
     if action == "forward" then
         print("forward")
-        characters[client.name]:applyForce(vector3(0, 20, 35))
+        characters[client.name]:applyForce(vector3(0, 20, -35))
     end
 end)
 
 spawn(function()
-    while sleep() do
-        print("spawn")
-        local test = core.construct("block", {
-            scale = vector3(1, 1, 1),
-            position = vector3(2, 3, 0),
-            colour = colour.random(),
-            static = false
-        })
-        sleep(1)
-        test:destroy()
-        sleep(.5)
+    while sleep(2) do
+        for name, char in pairs(characters) do
+            if char.position.y < -10 then
+                char.position = vector3(0, 5, 0)
+            end
+        end
     end
 end)
