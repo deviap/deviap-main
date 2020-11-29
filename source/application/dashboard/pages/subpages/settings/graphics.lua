@@ -34,8 +34,8 @@ return function(parent)
 
     local rendererOptions = dropdownOptions {
         text = "",
-        position = guiCoord(1, -82, 1, -67),
-        size = guiCoord(0, 80, 0, 30),
+        position = guiCoord(1, -182, 1, -67),
+        size = guiCoord(0, 180, 0, 30),
         textSize = 12
     }
 
@@ -45,7 +45,7 @@ return function(parent)
 		for _, renderer in pairs(availableRenderers) do
 			rendererOptions.addButton(renderer)
 		end
-	end
+    end
 
     -- Renderer Choose
     descriptiveSettingCard {

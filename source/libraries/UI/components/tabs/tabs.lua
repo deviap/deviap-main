@@ -11,7 +11,7 @@ return function(props)
 			table, component
     ]]
 
-	props.isContainer = props.isContainer or false
+	props.isContainer = props.isContainer or true
 
 	local self = newBaseComponent(props)
 	self.container.size = guiCoord(0, 512, 0, 38)

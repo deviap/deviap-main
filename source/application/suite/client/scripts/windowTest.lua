@@ -26,6 +26,8 @@ addBox:on("mouseLeftUp", function()
 
 	libs("windowManager").addWindow({ 
 		subContainer = subContainer,
-		title = "notepad"
+		parent = core.interface,
+		title = "notepad",
+		primaryColour = colour.hex("#1e6c96")
 	})
 end)

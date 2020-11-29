@@ -1,6 +1,9 @@
 -- Copyright 2020 - Deviap (deviap.com)
 -- Author(s): Sanjay-B(Sanjay)
 -- Dashboard Entry file. 
+
+local devMode = core.dev.localDevGitEnabled
+
 local navbar = require("devgit:source/libraries/UI/components/navigation/navbar.lua")
 
 -- Temporary loading screen until we find a better way to do this..?
@@ -65,6 +68,7 @@ verticalNav.addNavItem({
 	redirect = require("devgit:source/application/dashboard/pages/develop.lua")
 })
 
+if devMode then
 -- Groups Sidebar Button
 verticalNav.addNavItem({
 	relativeLocation = "top",
@@ -74,7 +78,9 @@ verticalNav.addNavItem({
 	tooltip = "Groups",
 	redirect = require("devgit:source/application/dashboard/pages/groups.lua")
 })
+end
 
+if devMode then
 -- Shop Sidebar Button
 verticalNav.addNavItem({
 	relativeLocation = "top",
@@ -84,6 +90,7 @@ verticalNav.addNavItem({
 	tooltip = "Shop",
 	redirect = nil
 })
+end
 
 -- Settings Sidebar Button
 verticalNav.addNavItem({
@@ -108,6 +115,7 @@ local horizontalNav = navbar {
 	zIndex = 3
 }
 
+if devMode then
 -- Alerts Navbar Button
 horizontalNav.addNavItem({
 	relativeLocation = "top",
@@ -148,6 +156,7 @@ horizontalNav.addNavItem({
 	tooltip = "Add Friend",
 	redirect = nil
 })
+end
 
 -- Tagging Render
 for _, roleName in pairs(tagsRoles) do
@@ -157,6 +166,7 @@ for _, roleName in pairs(tagsRoles) do
 	})
 end
 
+if devMode then
 -- Report Navbar Button
 horizontalNav.addNavItem({
 	relativeLocation = "bottom",
@@ -176,6 +186,7 @@ horizontalNav.addNavItem({
 	tooltip = "Feedback",
 	redirect = nil
 })
+end
 
 -- Remove loading screen when done
 loadingScreen:destroy()
