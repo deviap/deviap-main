@@ -1,0 +1,15 @@
+{
+    "schema": 1,
+    "id": "suite-level-editor",
+    "version": "0.0.1",
+    "permissions": {
+        "client": {
+            "construct": true,
+            "interface": true,
+            "apps": true,
+            "scene": true,
+            "io": true,
+            "graphics": true
+        }
+    }
+}
