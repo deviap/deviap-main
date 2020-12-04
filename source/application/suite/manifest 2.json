@@ -1,0 +1,16 @@
+{
+    "schema": 1,
+    "id": "example",
+    "networked": false,
+    "version": "0.0.0",
+    "permissions": {
+        "client": {
+            "interface": true,
+			"construct": true,
+			"workshop": true,
+			"disconnect": true,
+			"apps":true,
+			"input": true
+        }
+    }
+}
