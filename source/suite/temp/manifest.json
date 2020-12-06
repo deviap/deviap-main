@@ -10,7 +10,9 @@
 			"workshop": true,
 			"disconnect": true,
 			"apps":true,
-			"input": true
+            "input": true,
+            "scene": true,
+            "graphics": true
         }
     }
 }
