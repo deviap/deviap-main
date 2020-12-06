@@ -46,6 +46,7 @@ return function(props)
     end
 
     self.addNavItem = function(_props)
+
         local page = core.construct("guiFrame", {
             parent = core.interface,
             size = guiCoord(1, -74, 1, -76),
