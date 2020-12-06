@@ -61,8 +61,9 @@ return {
 			textAlign = "middle",
             strokeRadius = 5
         }.state.subscribe(function(state)
-            if state.active then
-                -- Reroute to suite barebones
+			if state.active then
+				self.
+				require("degit:source/suite/main.lua")
             end
         end)
 
