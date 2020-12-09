@@ -21,7 +21,10 @@ local pattern = core.construct("guiImage", {
 })
 
 local tween;
-tween = core.tween:begin(pattern, 10, {imageTopLeft = vector2(-1, 1), imageBottomRight = vector2(24, 26)}, "linear", function()
+tween = core.tween:begin(pattern, 10, {
+	imageTopLeft = vector2(-1, 1),
+	imageBottomRight = vector2(24, 26)
+}, "linear", function()
 	tween:reset()
 	tween:resume()
 end)
@@ -41,14 +44,11 @@ breakpointer:bind(sideContainer, "md", {
 	position = guiCoord(0.5, 0, 0, 100)
 })
 
-local logoBg, logoShadow, logoText = require("devgit:source/application/utilities/logo.lua")(
-                                     				{
-					parent = sideContainer,
-					size = guiCoord(0, 100, 0, 40),
-					position = guiCoord(0.5, -50, 0.5, -80),
-					backgroundColour = colour.black(),
-					backgroundAlpha = 0.98
-				}, colour.white())
+require("devgit:source/application/utilities/logo.lua")({
+	parent = sideContainer,
+	size = guiCoord(0, 50, 0, 50),
+	position = guiCoord(0.5, -25, 0.5, -80)
+})
 
 local button = core.construct("guiFrame", {
 	parent = sideContainer,
