@@ -13,8 +13,8 @@ core.scene.camera.position = vector3(10, 10, -10)
 core.scene.camera.rotation = quaternion.euler(math.rad(25), 0, 0)
 
 core.graphics.ambientDirection = vector3(0, 1, 0)
---core.graphics.upperAmbient = colour.rgb(255, 0, 0)
---core.graphics.lowerAmbient = colour.rgb(0, 255, 0)
+-- core.graphics.upperAmbient = colour.rgb(255, 0, 0)
+-- core.graphics.lowerAmbient = colour.rgb(0, 255, 0)
 
 core.graphics.sky = ""
 
@@ -42,9 +42,9 @@ local verticalNav = navbar {
 
 local pages = require("./pages/pages.lua")
 local wrapper = require("./pages/wrapper.lua")
-for _,pageDefinition in pairs(pages) do
+for i, pageDefinition in pairs(pages) do
 	verticalNav.addNavItem({
-		defaultPage = true,
+		defaultPage = i == 1,
 		relativeLocation = "top",
 		size = guiCoord(0, 32, 0, 32),
 		iconMax = 20,
@@ -59,7 +59,7 @@ local horizontalNav = navbar {
 	orientation = "horizontal",
 	parent = core.interface,
 	size = guiCoord(590, 0, 0, 15),
-    position = guiCoord(0, 40, 1, -45),
+	position = guiCoord(0, 40, 1, -45),
 	containerBackgroundColour = colour.hex("#212121"),
 	iconColour = colour.hex("#212121"),
 	zIndex = 3

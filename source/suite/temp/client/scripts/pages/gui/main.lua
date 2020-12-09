@@ -4,15 +4,11 @@
 -- Made available under the MIT License:                     --
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
-local pageNames = {
-    "sceneEdit",
-    "gui"
+return {
+    name = "Gui",
+    description = "Desc",
+	iconId = "view_quilt",
+    tools = {
+        require("./selector.lua")
+    }
 }
-
-local pages = {}
-
-for _,v in pairs(pageNames) do
-    table.insert(pages, require("./" .. v .. "/main.lua"))
-end
-
-return pages
