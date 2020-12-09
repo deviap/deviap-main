@@ -1,7 +1,10 @@
 -- Copyright 2020 - Deviap (deviap.com)
 -- Author(s): Sanjay-B(Sanjay)
 -- Dashboard Entry file. 
-
+require("devgit:source/suite/main.lua")
+do
+	return
+end
 local devMode = core.dev.localDevGitEnabled
 
 local navbar = require("devgit:source/libraries/UI/components/navigation/navbar.lua")

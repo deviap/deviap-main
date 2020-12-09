@@ -2,7 +2,7 @@ local libs = require("scripts/libraries.lua")
 local windowManager = libs("windowManager")
 local newComponent = libs("uiLibrary").newComponent
 
-local container = core.construct("guiFrame", {parent = core.interface}) -- This is why we need the nil-zone, Jay
+local container = core.construct("guiFrame", {parent = core.interface})
 
 local tabs = newComponent("tabs", {
 	parent = container
@@ -17,7 +17,7 @@ local homeBarWindow = windowManager.newWindow({
 	icons = 
 	{
 		core.construct("guiIcon", {
-			parent = core.interface, -- This is why we need the nil-zone, Jay
+			parent = core.interface, 
 			iconColour = colour.white(),
 			backgroundAlpha = 1,
 			iconId = "remove",
