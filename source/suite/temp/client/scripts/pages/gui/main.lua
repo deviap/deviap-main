@@ -6,7 +6,6 @@
 ---------------------------------------------------------------
 return {
     name = "Gui",
-    description = "Desc",
     iconId = "view_quilt",
     tools = {
         require("./selector.lua")

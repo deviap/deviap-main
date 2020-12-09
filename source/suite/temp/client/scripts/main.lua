@@ -13,15 +13,15 @@ core.scene.camera.position = vector3(10, 10, -10)
 core.scene.camera.rotation = quaternion.euler(math.rad(25), 0, 0)
 
 core.graphics.ambientDirection = vector3(0, 1, 0)
--- core.graphics.upperAmbient = colour.rgb(255, 0, 0)
--- core.graphics.lowerAmbient = colour.rgb(0, 255, 0)
+core.graphics.upperAmbient = colour.rgb(111, 111, 111)
+core.graphics.lowerAmbient = colour.rgb(0, 0, 0)
 
 core.graphics.sky = ""
 
 local base = core.construct("block", {
 	position = vector3(0, -10, 0),
 	scale = vector3(30, 1, 30),
-	colour = colour.hex("#212121")
+	colour = colour.hex("#ffffff")
 })
 
 core.scene.camera:lookAt(base.position)

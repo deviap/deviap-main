@@ -6,8 +6,7 @@
 ---------------------------------------------------------------
 return {
     name = "Scene Edit",
-    description = "Desc",
-	iconId = "view_quilt",
+	iconId = "aspect_ratio",
     tools = {
         require("./translate.lua"),
         require("./rotate.lua")
