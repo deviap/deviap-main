@@ -5,10 +5,10 @@
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
 return {
-	name = "Gui",
-	description = "Desc",
-	iconId = "view_quilt",
-	tools = {
+    name = "Gui",
+    description = "Desc",
+    iconId = "view_quilt",
+    tools = {
         require("./selector.lua")
     }
 }
