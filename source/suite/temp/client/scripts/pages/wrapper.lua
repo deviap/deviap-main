@@ -8,6 +8,8 @@
 local gridLayout = require("devgit:source/libraries/UI/constraints/controllers/gridLayout.lua")
 local navItem = require("devgit:source/libraries/UI/components/navigation/navItem.lua")
 
+local activeDefinition = nil
+
 return {
 	createRedirect = function(pageDefinition)
 		return {
@@ -40,6 +42,22 @@ return {
 						tooltip = nil,
 						redirect = nil
 					}
+
+					tool.container:child("icon"):on("mouseLeftUp", function()
+						if activeDefinition and activeDefinition.deactivate then
+							activeDefinition.deactivate()
+						end
+
+						if activeDefinition ~= toolDefinition and toolDefinition.activate then
+							toolDefinition.activate()
+						end
+
+						if activeDefinition == toolDefinition then
+							activeDefinition = nil
+						else
+							activeDefinition = toolDefinition
+						end
+					end)
 				end
 			end
 		}

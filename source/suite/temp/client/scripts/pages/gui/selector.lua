@@ -7,5 +7,13 @@
 return {
     name = "Selector",
     description = "Desc",
-	iconId = "highlight_alt"
+    iconId = "highlight_alt",
+    
+    activate = function()
+        print("activate")
+    end,
+
+    deactivate = function()
+        print("deactivate")
+    end
 }
