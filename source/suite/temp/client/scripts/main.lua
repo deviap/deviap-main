@@ -40,71 +40,19 @@ local verticalNav = navbar {
 	zIndex = 4
 }
 
--- Scene/World Edit button
-verticalNav.addNavItem({
-	defaultPage = true,
-	relativeLocation = "top",
-	size = guiCoord(0, 32, 0, 32),
-	iconMax = 20,
-	iconId = "pan_tool",
-	tooltip = "Scene Edit",
-	redirect = require("devgit:source/suite/temp/client/scripts/pages/SceneEdit.lua")
-})
-
--- Gui (editing gui/guis) button
-verticalNav.addNavItem({
-	defaultPage = false,
-	relativeLocation = "top",
-	size = guiCoord(0, 32, 0, 32),
-	iconMax = 20,
-	iconId = "view_quilt",
-	tooltip = "Gui",
-	redirect = nil
-})
-
--- Build/Construct button
-verticalNav.addNavItem({
-	defaultPage = false,
-	relativeLocation = "top",
-	size = guiCoord(0, 32, 0, 32),
-	iconMax = 20,
-	iconId = "construction",
-	tooltip = "Build",
-	redirect = nil
-})
-
--- Test/Play button
-verticalNav.addNavItem({
-	defaultPage = false,
-	relativeLocation = "top",
-	size = guiCoord(0, 32, 0, 32),
-	iconMax = 20,
-	iconId = "play_arrow",
-	tooltip = "Test",
-	redirect = nil
-})
-
--- Settings button
-verticalNav.addNavItem({
-	defaultPage = false,
-	relativeLocation = "bottom",
-	size = guiCoord(0, 32, 0, 32),
-	iconMax = 20,
-	iconId = "tune",
-	tooltip = "Settings",
-	redirect = nil
-})
-
--- Save Button (Eventually replace to auto-save)
-verticalNav.addNavItem({
-	defaultPage = false,
-	relativeLocation = "bottom",
-	size = guiCoord(0, 32, 0, 32),
-	iconMax = 20,
-	iconId = "save",
-	tooltip = "Save",
-	redirect = nil
-})
+local pages = require("./pages/pages.lua")
+local wrapper = require("./pages/wrapper.lua")
+for _,pageDefinition in pairs(pages) do
+	verticalNav.addNavItem({
+		defaultPage = true,
+		relativeLocation = "top",
+		size = guiCoord(0, 32, 0, 32),
+		iconMax = 20,
+		iconId = pageDefinition.iconId,
+		tooltip = pageDefinition.name,
+		redirect = wrapper.createRedirect(pageDefinition)
+	})
+end
 
 -- Horizontal Navbar Instance
 local horizontalNav = navbar {
