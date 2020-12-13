@@ -4,9 +4,10 @@
 -- Made available under the MIT License:                     --
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
--- Author(s): Sanjay-B(Sanjay)
 -- Suite Entry Point
 require("devgit:source/application/utilities/camera.lua")
+
+local selection = require("./controllers/selection.lua")
 
 core.scene.simulate = true
 core.scene.camera.position = vector3(10, 10, -10)
