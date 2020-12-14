@@ -87,6 +87,7 @@ core.engine:on("debuggerConnected", function(id, ip, name)
 		textFont = "deviap:fonts/sourceCodeProSemiBold.ttf",
 		textAlpha = 0.8,
 		backgroundAlpha = 0,
+		textWrap = true,
 		textColour = colour.black()
 	})
 
