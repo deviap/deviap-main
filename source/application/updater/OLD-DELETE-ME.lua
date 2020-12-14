@@ -43,6 +43,26 @@ local colours = {
 
 local currentColourIndex = 1
 
+spawn(function()
+	while true do
+		core.tween:begin(container, 4, {
+			backgroundColour = colours[currentColourIndex]
+		})
+		core.tween:begin(logoText, 4, {textColour = colours[currentColourIndex]})
+		currentColourIndex = currentColourIndex + 1
+		if currentColourIndex > #colours then
+			currentColourIndex = 1
+		end
+		sleep(4)
+	end
+end)
+
+--
+sleep(3)
+core.tween:begin(logoShadow, 1, {position = guiCoord(0.5, -200, 0.4, -90)})
+core.tween:begin(logoBg, 1, {position = guiCoord(0.5, -190, 0.4, -100)})
+sleep(1)
+
 -- If devgit is overridden
 if core.dev.localDevGitEnabled then
 
