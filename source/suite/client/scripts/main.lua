@@ -8,7 +8,6 @@
 require("devgit:source/application/utilities/camera.lua")
 
 local selection = require("./controllers/selection.lua")
---require("./windowTest.lua")
 
 core.scene.simulate = true
 core.scene.camera.position = vector3(10, 10, -10)
