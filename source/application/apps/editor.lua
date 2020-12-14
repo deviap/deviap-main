@@ -4,6 +4,10 @@
 ------------------------------------
 ------------------------------------
 -- This script is ran when the user is running a local app/sandbox
+
+-- Porting over to somewhere better suited.
+
+--[[
 local share = core.construct("guiTextBox", {
 	parent = core.engine.coreInterface,
 	size = guiCoord(0, 60, 0, 16),
@@ -125,3 +129,4 @@ test:on("mouseLeftUp", function()
 
 	core.apps:localTest()
 end)
+]]--

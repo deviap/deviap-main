@@ -1,7 +1,7 @@
 -- Copyright 2020 - Deviap (deviap.com)
 -- Test file. Expect to change.
 
-local libs = require("scripts/libraries.lua")
+local libs = require("./libraries.lua")
 
 local addBox = core.construct("guiTextBox", {
 	parent = core.interface,
