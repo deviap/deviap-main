@@ -9,11 +9,11 @@ return {
     description = "Desc",
     iconId = "highlight_alt",
     
-    activate = function()
+    activate = function(self)
         print("activate")
     end,
 
-    deactivate = function()
+    deactivate = function(self)
         print("deactivate")
     end
 }

@@ -9,6 +9,40 @@ local gridLayout = require("devgit:source/libraries/UI/constraints/controllers/g
 local navItem = require("devgit:source/libraries/UI/components/navigation/navItem.lua")
 
 local activeDefinition = nil
+local function setActiveTool(toolDefinition)
+	if activeDefinition and activeDefinition.deactivate then
+		activeDefinition.active = false
+		toolDefinition.navItem.props.iconColour = colour.hex("#212121")
+		toolDefinition.navItem.render()
+		activeDefinition:deactivate()
+	end
+
+	if activeDefinition ~= toolDefinition and toolDefinition.activate then
+		toolDefinition.active = true
+		toolDefinition.navItem.props.iconColour = colour.hex("#0f62fe")
+		toolDefinition.navItem.render()
+		toolDefinition:activate()
+	end
+
+	if activeDefinition == toolDefinition then
+		activeDefinition = nil
+	else
+		activeDefinition = toolDefinition
+	end
+end
+
+local keyMap = {
+	[tonumber(enums.keys.KEY_1)] = 1,
+	[tonumber(enums.keys.KEY_2)] = 2,
+	[tonumber(enums.keys.KEY_3)] = 3,
+	[tonumber(enums.keys.KEY_4)] = 4,
+	[tonumber(enums.keys.KEY_5)] = 5,
+	[tonumber(enums.keys.KEY_6)] = 6,
+	[tonumber(enums.keys.KEY_7)] = 7,
+	[tonumber(enums.keys.KEY_8)] = 8,
+	[tonumber(enums.keys.KEY_9)] = 9,
+	[tonumber(enums.keys.KEY_0)] = 10,
+}
 
 return {
 	createRedirect = function(pageDefinition)
@@ -42,23 +76,21 @@ return {
 						tooltip = nil,
 						redirect = nil
 					}
+					toolDefinition.navItem = tool
 
 					tool.container:child("icon"):on("mouseLeftUp", function()
-						if activeDefinition and activeDefinition.deactivate then
-							activeDefinition.deactivate()
-						end
-
-						if activeDefinition ~= toolDefinition and toolDefinition.activate then
-							toolDefinition.activate()
-						end
-
-						if activeDefinition == toolDefinition then
-							activeDefinition = nil
-						else
-							activeDefinition = toolDefinition
-						end
+						setActiveTool(toolDefinition)
 					end)
 				end
+
+				core.input:on("keyUp", function(key)
+					-- parent is visible if this 'page' is active
+					if parent.visible then
+						if keyMap[tonumber(key)] and pageDefinition.tools[keyMap[tonumber(key)]] then
+							setActiveTool(pageDefinition.tools[keyMap[tonumber(key)]])
+						end
+					end
+				end)
 			end
 		}
 	end
