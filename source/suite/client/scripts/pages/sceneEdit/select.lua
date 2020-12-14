@@ -4,17 +4,15 @@
 -- Made available under the MIT License:                     --
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
+return {
+    name = "select",
+    iconId = "gps_not_fixed",
+    
+    activate = function()
+        print("activate")
+    end,
 
--- To load a page, simply add its folder name below:
-local pageNames = {
-    "sceneEdit",
-    "gui"
+    deactivate = function()
+
+    end
 }
-
-local pages = {}
-
-for _,v in pairs(pageNames) do
-    table.insert(pages, require("./" .. v .. "/main.lua"))
-end
-
-return pages

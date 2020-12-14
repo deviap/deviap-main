@@ -8,6 +8,7 @@ return {
     name = "Scene Edit",
 	iconId = "aspect_ratio",
     tools = {
+        require("./select.lua"),
         require("./translate.lua"),
         require("./rotate.lua")
     }
