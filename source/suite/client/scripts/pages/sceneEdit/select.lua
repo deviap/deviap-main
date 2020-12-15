@@ -24,7 +24,7 @@ return {
 
 		self.mouseLeftUp = core.input:on("mouseLeftUp", function(pos, systemHandled)
 			if systemHandled then return end
-			
+
 			if core.input:isKeyDown(enums.keys.KEY_LSHIFT) then
 				if self.hover then
 					if  selection.isSelected(self.hover) then
@@ -97,6 +97,9 @@ return {
 		self.cursorHighlighter:destroy()
 		self.cursorHighlighter = nil
 
+		if self.hover then
+			outliner.remove(self.hover)
+		end
 		self.hover = nil
 	end
 }
