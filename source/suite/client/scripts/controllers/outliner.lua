@@ -13,17 +13,60 @@
     selection.remove(block)
 ]]
 local controller = {}
+controller.blocks = {}
 
 function controller.add(block, outlineColour)
+    if controller.blocks[block] then
+        controller.update(block, outlineColour)
+        return nil
+    end
 
+    if not outlineColour then outlineColour = colour(1, 0, 0) end
+    local wireframe = block:clone {
+        name = "__WIREFRAME__" .. block.id,
+        wireframe = true,
+        simulated = false,
+        emissiveColour = outlineColour,
+        renderQueue = 200
+    }
+
+    -- we must delete wireframe if actual obj is deleted
+    local onDestroy = block:on("destroying", function()
+        controller.destroy(block)
+    end)
+
+    local onUpdate = block:on("changed", function()
+        wireframe.position = block.position
+        wireframe.rotation = block.rotation
+        wireframe.scale = block.scale
+    end)
+
+    controller.blocks[block] = {
+        wireframe = wireframe,
+        onDestroy = onDestroy,
+        onUpdate = onUpdate
+    }
+
+    return wireframe
 end
 
 function controller.update(block, outlineColour)
+    if not controller.blocks[block] then return false end
 
+    controller.blocks[block].wireframe.colour = outlineColour
+
+    return true
 end
 
 function controller.remove(block)
+    if not controller.blocks[block] then return false end
 
+    controller.blocks[block].wireframe:destroy()
+    core.disconnect(controller.blocks[block].onDestroy)
+    core.disconnect(controller.blocks[block].onUpdate)
+    controller.blocks[block] = nil
+
+    return true
 end
 
 return controller
