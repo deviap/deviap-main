@@ -5,6 +5,8 @@
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
 --[[
+    Manages the user's selection in Suite
+
     local selection = require(...)
     selection.clear()
     selection.set({obj1, obj2, ...})
