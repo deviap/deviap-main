@@ -16,8 +16,7 @@ return {
 		self.cursorHighlighter = core.construct("block", {
 			renderQueue = 200, -- this render the block over the rest of the scene
 			emissiveColour = colour.rgb(0, 255, 0),
-			scale = vector3(0.5, 0.01, 0.5),
-			alpha = 0.2,
+			scale = vector3(0.25, 0.01, 0.25),
 			mesh = "deviap:3d/torus.glb"
 		})
 
@@ -38,7 +37,8 @@ return {
 
 				-- Perform the raycast, exclude our selection highlighter
 				local hits = core.scene:raycast(camPos, camPos + mousePos, {
-					self.cursorHighlighter
+					self.cursorHighlighter,
+					self.hoverWireframe 
 				})
 
 				if #hits > 0 then
