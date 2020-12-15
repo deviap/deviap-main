@@ -7,7 +7,7 @@
 --
 local controller = {}
 
-function controller.promptOpen()
+function controller.open()
     local result = ""
 
 	local backdrop = core.construct("guiFrame", {

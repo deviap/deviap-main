@@ -82,7 +82,6 @@ horizontalNav.addNavTextItem({
 })
 
 --  core.io:list()
-
 --[[
 require("./windows/hierarchy.lua")(
 	core.construct("guiFrame", {
@@ -103,4 +102,12 @@ require("./windows/hierarchy.lua")(
 	},
 	25
 )
---]]
+
+]]
+
+--[[
+-- Get this file via devgit, for IO access
+local filePrompt = require("devgit:source/suite-level-editor/client/scripts/filePrompt.lua")
+sleep(2)
+filePrompt.open()
+]]

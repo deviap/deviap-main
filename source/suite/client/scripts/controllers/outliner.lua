@@ -8,9 +8,9 @@
     Draws a wireframe around objects you choose
 
     local outliner = require(...)
-    selection.add(block, colour(1, 0, 0))
-    selection.update(block, colour(1, 0, 0))
-    selection.remove(block)
+    outliner.add(block, colour(1, 0, 0))
+    outliner.update(block, colour(1, 0, 0))
+    outliner.remove(block)
 ]]
 local controller = {}
 controller.blocks = {}
