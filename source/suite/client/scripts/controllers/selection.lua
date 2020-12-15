@@ -35,7 +35,6 @@ function controller.set(objects)
     controller.clear()
 	for _, object in pairs(objects) do
 		controller.select(object)
-		outliner.add(object)
 	end
 end
 
@@ -50,6 +49,7 @@ end
 function controller.select(object)
     if selectable(object) then
         _selection[object] = {} -- placeholder
+		outliner.add(object)
         return true
     else 
         warn("select failed")
@@ -58,8 +58,9 @@ function controller.select(object)
 end
 
 function controller.deselect(object)
-    if controller.isSelected[object] then
+    if controller.isSelected(object) then
         _selection[object] = nil
+		outliner.remove(object)
     end
 end
 

@@ -21,11 +21,17 @@ return {
 			mesh = "deviap:3d/torus.glb"
 		})
 
-		self.clickEvent = core.input:on("mouseLeftUp", function()
+		self.mouseLeftUp = core.input:on("mouseLeftUp", function()
 			if self.hover then
 				selection.set {self.hover}
 			else
 				selection.clear()
+			end
+		end)
+
+		self.mouseRightUp = core.input:on("mouseRightUp", function()
+			if self.hover then
+				selection.deselect(self.hover)
 			end
 		end)
 
@@ -47,18 +53,18 @@ return {
 					self.cursorHighlighter.position = hits[1].position
 					self.cursorHighlighter.rotation = quaternion.lookRotation(hits[1].normal * 10) * quaternion.euler(math.rad(90), 0, 0)
 
-					-- if the hovered object has changed, we'll need to recreate the wireframe
+					-- if the hovered object has changed, we'll need to delete old wireframe
 					if self.hover ~= hits[1].hit then
 						if self.hover and not selection.isSelected(self.hover) then
 							outliner.remove(self.hover)
 						end
 						
 						self.hover = hits[1].hit
+					end
 
-						if not selection.isSelected(self.hover) then
-							-- add wireframe
-							outliner.add(self.hover, colour(0, 1, 0))
-						end
+					if not selection.isSelected(self.hover) then
+						-- add wireframe
+						outliner.add(self.hover, colour(0, 1, 0))
 					end
 				else
 					-- hide the torus
@@ -78,7 +84,8 @@ return {
 	end,
 
 	deactivate = function(self)
-		core.disconnect(self.clickEvent)
+		core.disconnect(self.mouseLeftUp)
+		core.disconnect(self.mouseRightUp)
 		
 		self.cursorHighlighter:destroy()
 		self.cursorHighlighter = nil
