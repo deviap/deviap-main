@@ -22,7 +22,9 @@ return {
 			simulated = false
 		})
 
-		self.mouseLeftUp = core.input:on("mouseLeftUp", function()
+		self.mouseLeftUp = core.input:on("mouseLeftUp", function(pos, systemHandled)
+			if systemHandled then return end
+			
 			if core.input:isKeyDown(enums.keys.KEY_LSHIFT) then
 				if self.hover then
 					if  selection.isSelected(self.hover) then
