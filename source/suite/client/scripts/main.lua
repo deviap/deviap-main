@@ -75,3 +75,25 @@ horizontalNav.addNavTextItem({
 	text = "EXPLORER",
 	redirect = nil
 })
+
+--  core.io:list()
+
+require("./windows/hierarchy.lua")(
+	core.construct("guiFrame", {
+		parent = core.interface,
+		zIndex = 10,
+		size = guiCoord(1, 0, 1, 0)
+	}),
+	{
+		{
+			text = "hello",
+		},
+		{
+			text = "hello"
+		},
+		{
+			text = "hello"
+		}
+	},
+	25
+)
