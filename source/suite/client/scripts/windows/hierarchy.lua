@@ -32,7 +32,7 @@ construct = function(parent, hierarchy, buttonHeight)
 		core.construct("guiTextBox", {
 			parent = container,
 			size = guiCoord(1, 0, 0, buttonHeight),
-			position = guiCoord(0, 00, 0, buttonHeight*offset),
+			position = guiCoord(0, 0, 0, buttonHeight*offset),
 			text = v.text
 		})
 
