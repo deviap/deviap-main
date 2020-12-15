@@ -21,51 +21,51 @@ local controller = {}
 local _selection = {}
 
 local function selectable(object)
-    return true -- placeholder
+	return true -- placeholder
 end
 
 function controller.clear()
-    for object, selectionData in pairs(_selection) do
+	for object, selectionData in pairs(_selection) do
 		outliner.remove(object)
 	end
-    _selection = {}
+	_selection = {}
 end
 
 function controller.set(objects)
-    controller.clear()
+	controller.clear()
 	for _, object in pairs(objects) do
 		controller.select(object)
 	end
 end
 
 function controller.get()
-    local copy = {}
-    for object, selectionData in pairs(_selection) do
+	local copy = {}
+	for object, selectionData in pairs(_selection) do
 		table.insert(copy, object)
 	end
-    return copy
+	return copy
 end
 
 function controller.select(object)
-    if selectable(object) then
-        _selection[object] = {} -- placeholder
+	if selectable(object) then
+		_selection[object] = {} -- placeholder
 		outliner.add(object)
-        return true
-    else 
-        warn("select failed")
-        return false
-    end
+		return true
+	else
+		warn("select failed")
+		return false
+	end
 end
 
 function controller.deselect(object)
-    if controller.isSelected(object) then
-        _selection[object] = nil
+	if controller.isSelected(object) then
+		_selection[object] = nil
 		outliner.remove(object)
-    end
+	end
 end
 
 function controller.isSelected(object)
-    return _selection[object] ~= nil
+	return _selection[object] ~= nil
 end
 
 return controller

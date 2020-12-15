@@ -83,6 +83,7 @@ horizontalNav.addNavTextItem({
 
 --  core.io:list()
 
+--[[
 require("./windows/hierarchy.lua")(
 	core.construct("guiFrame", {
 		parent = core.interface,
@@ -102,3 +103,4 @@ require("./windows/hierarchy.lua")(
 	},
 	25
 )
+--]]

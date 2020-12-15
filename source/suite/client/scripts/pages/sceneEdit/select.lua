@@ -18,13 +18,18 @@ return {
 			renderQueue = 200, -- this render the block over the rest of the scene
 			emissiveColour = colour.rgb(0, 255, 0),
 			scale = vector3(0.25, 0.01, 0.25),
-			mesh = "deviap:3d/torus.glb"
+			mesh = "deviap:3d/torus.glb",
+			simulated = false
 		})
 
 		self.mouseLeftUp = core.input:on("mouseLeftUp", function()
 			if core.input:isKeyDown(enums.keys.KEY_LSHIFT) then
 				if self.hover then
-					selection.select(self.hover)
+					if  selection.isSelected(self.hover) then
+						selection.deselect(self.hover)
+					else
+						selection.select(self.hover)
+					end
 				end
 			else
 				if self.hover then
@@ -32,12 +37,6 @@ return {
 				else
 					selection.clear()
 				end
-			end
-		end)
-
-		self.mouseRightUp = core.input:on("mouseRightUp", function()
-			if self.hover then
-				selection.deselect(self.hover)
 			end
 		end)
 
@@ -92,7 +91,6 @@ return {
 
 	deactivate = function(self)
 		core.disconnect(self.mouseLeftUp)
-		core.disconnect(self.mouseRightUp)
 		
 		self.cursorHighlighter:destroy()
 		self.cursorHighlighter = nil
