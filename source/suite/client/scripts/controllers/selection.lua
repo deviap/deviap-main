@@ -15,6 +15,8 @@
     selection.deselect(obj)
     selection.isSelected(obj)
 ]]
+local outliner = require("client/scripts/controllers/outliner.lua")
+
 local controller = {}
 local _selection = {}
 
@@ -23,6 +25,9 @@ local function selectable(object)
 end
 
 function controller.clear()
+    for object, selectionData in pairs(_selection) do
+		outliner.remove(object)
+	end
     _selection = {}
 end
 
@@ -30,6 +35,7 @@ function controller.set(objects)
     controller.clear()
 	for _, object in pairs(objects) do
 		controller.select(object)
+		outliner.add(object)
 	end
 end
 

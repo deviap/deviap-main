@@ -38,8 +38,7 @@ return {
 
 				-- Perform the raycast, exclude our selection highlighter
 				local hits = core.scene:raycast(camPos, camPos + mousePos, {
-					self.cursorHighlighter,
-					self.hoverWireframe 
+					self.cursorHighlighter
 				})
 
 				if #hits > 0 then
@@ -50,21 +49,27 @@ return {
 
 					-- if the hovered object has changed, we'll need to recreate the wireframe
 					if self.hover ~= hits[1].hit then
-						if self.hover then
+						if self.hover and not selection.isSelected(self.hover) then
 							outliner.remove(self.hover)
 						end
 						
 						self.hover = hits[1].hit
 
-						-- add wireframe
-						outliner.add(self.hover, colour(0, 1, 0))
+						if not selection.isSelected(self.hover) then
+							-- add wireframe
+							outliner.add(self.hover, colour(0, 1, 0))
+						end
 					end
 				else
 					-- hide the torus
 					self.cursorHighlighter.visible = false
 
 					-- remove any wireframes as the user is not hovering over anything.
-					outliner.remove(self.hover)
+					if not selection.isSelected(self.hover) then
+						outliner.remove(self.hover)
+					else
+						outliner.update(self.hover)
+					end
 
 					self.hover = nil
 				end
@@ -77,11 +82,6 @@ return {
 		
 		self.cursorHighlighter:destroy()
 		self.cursorHighlighter = nil
-
-		if self.hoverWireframe then
-			self.hoverWireframe:destroy()
-			self.hoverWireframe = nil
-		end
 
 		self.hover = nil
 	end

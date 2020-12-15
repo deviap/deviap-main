@@ -16,12 +16,13 @@ local controller = {}
 controller.blocks = {}
 
 function controller.add(block, outlineColour)
+    if not outlineColour then outlineColour = colour(1, 0, 0) end
+
     if controller.blocks[block] then
         controller.update(block, outlineColour)
         return nil
     end
 
-    if not outlineColour then outlineColour = colour(1, 0, 0) end
     local wireframe = block:clone {
         name = "__WIREFRAME__" .. block.id,
         wireframe = true,
@@ -51,9 +52,10 @@ function controller.add(block, outlineColour)
 end
 
 function controller.update(block, outlineColour)
+    if not outlineColour then outlineColour = colour(1, 0, 0) end
     if not controller.blocks[block] then return false end
 
-    controller.blocks[block].wireframe.colour = outlineColour
+    controller.blocks[block].wireframe.emissiveColour = outlineColour
 
     return true
 end
