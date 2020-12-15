@@ -5,6 +5,8 @@
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
 --[[
+    Manages the user's selection in Suite
+
     local selection = require(...)
     selection.clear()
     selection.set({obj1, obj2, ...})
@@ -13,6 +15,8 @@
     selection.deselect(obj)
     selection.isSelected(obj)
 ]]
+local outliner = require("client/scripts/controllers/outliner.lua")
+
 local controller = {}
 local _selection = {}
 
@@ -21,6 +25,9 @@ local function selectable(object)
 end
 
 function controller.clear()
+    for object, selectionData in pairs(_selection) do
+		outliner.remove(object)
+	end
     _selection = {}
 end
 
@@ -42,6 +49,7 @@ end
 function controller.select(object)
     if selectable(object) then
         _selection[object] = {} -- placeholder
+		outliner.add(object)
         return true
     else 
         warn("select failed")
@@ -50,8 +58,9 @@ function controller.select(object)
 end
 
 function controller.deselect(object)
-    if controller.isSelected[object] then
+    if controller.isSelected(object) then
         _selection[object] = nil
+		outliner.remove(object)
     end
 end
 

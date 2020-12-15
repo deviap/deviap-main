@@ -4,16 +4,13 @@
 -- Made available under the MIT License:                     --
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
-return {
-    name = "Selector",
-    description = "Desc",
-    iconId = "highlight_alt",
-    
-    activate = function(self)
-        print("activate")
-    end,
+-- Author(s): Sanjay-B(Sanjay)
+-- Creates the new instance based on name provided.
 
-    deactivate = function(self)
-        print("deactivate")
-    end
+return {
+	default = false,
+    construct = function(name, props)
+        -- Initialize basic instance provided.
+        core.construct(name, props)
+	end
 }
