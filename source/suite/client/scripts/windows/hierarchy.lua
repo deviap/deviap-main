@@ -17,33 +17,40 @@ getDepth = function(start)
 end
 
 local construct
-construct = function(parent, hierarchy, buttonHeight)
+construct = function(props)
+	-- parent, hierarchy, buttonHeight)
 	local container = core.construct("guiFrame", {
-		parent = parent, 
+		parent = props.parent, 
 		strokeAlpha = 1,
-		strokeWidth = 10,
+		strokeWidth = 1,
 		strokeColour = colour(0.5, 0.5, 0.5), 
-		size = guiCoord(0, 200, 0, 500), 
-		position = guiCoord(0, 100, 0, 0)
+		size = props.size, 
+		position = props.position
 	})
 	
 	local offset = 0
-	for k,v in next, hierarchy do
+	for k,v in next, props.hierarchy do
 		core.construct("guiTextBox", {
 			parent = container,
-			size = guiCoord(1, 0, 0, buttonHeight),
-			position = guiCoord(0, 0, 0, buttonHeight*offset),
+			size = guiCoord(1, 0, 0, props.buttonHeight),
+			position = guiCoord(0, 0, 0, props.buttonHeight*offset),
 			text = v.text
 		})
 
 		if v.children then
-			offset = offset + getDepth(v.children)
-			construct(container, v.children, buttonHeight)
+			local childDepth = getDepth(v.children)
+			offset = offset + childDepth
+			construct({
+				parent = container, 
+				hierarchy = v.children, 
+				buttonHeight = props.buttonHeight,
+				position = guiCoord(0, 10, 0, props.buttonHeight*(offset)),
+				size = guiCoord(1, -10, 0, props.buttonHeight*(childDepth))
+			})
 		end
 		offset = offset + 1
 	end
 
-	-- TODO: make props into a table
 	-- make a simple interface
 	return 1
 end

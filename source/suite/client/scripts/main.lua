@@ -82,23 +82,31 @@ horizontalNav.addNavTextItem({
 })
 
 --  core.io:list()
+-- local 	parent = core.construct("guiFrame", {
+-- 	parent = core.interface,
+-- 	zIndex = 10,
+-- 	size = guiCoord(1, 0, 1, 0)
+-- })
 
-require("./windows/hierarchy.lua")(
-	core.construct("guiFrame", {
-		parent = core.interface,
-		zIndex = 10,
-		size = guiCoord(1, 0, 1, 0)
-	}),
-	{
-		{
-			text = "hello",
-		},
-		{
-			text = "hello"
-		},
-		{
-			text = "hello"
-		}
-	},
-	25
-)
+-- require("./windows/hierarchy.lua"){
+-- 	parent = parent,
+-- 	hierarchy = {
+-- 		{
+-- 			text = "hello",
+-- 		},
+-- 		{
+-- 			text = "hello",
+-- 			children = {
+-- 				{
+-- 					text = "bye"
+-- 				}
+-- 			}
+-- 		},
+-- 		{
+-- 			text = "hello"
+-- 		}
+-- 	},
+-- 	buttonHeight = 25,
+-- 	size = guiCoord(0, 200, 0, 500),
+-- 	position = guiCoord(0, 50, 0, 0),
+-- }
