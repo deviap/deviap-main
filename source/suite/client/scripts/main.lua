@@ -25,6 +25,12 @@ local base = core.construct("block", {
 	colour = colour.hex("#ffffff")
 })
 
+local test123 = core.construct("block", {
+	position = vector3(0, -9, 0),
+	scale = vector3(1, 1, 1),
+	colour = colour.hex("#0fffff")
+})
+
 core.scene.camera:lookAt(base.position)
 
 -- MAIN INTERFACE IGNORE ABOVE

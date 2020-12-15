@@ -22,10 +22,16 @@ return {
 		})
 
 		self.mouseLeftUp = core.input:on("mouseLeftUp", function()
-			if self.hover then
-				selection.set {self.hover}
+			if core.input:isKeyDown(enums.keys.KEY_LSHIFT) then
+				if self.hover then
+					selection.select(self.hover)
+				end
 			else
-				selection.clear()
+				if self.hover then
+					selection.set {self.hover}
+				else
+					selection.clear()
+				end
 			end
 		end)
 
@@ -74,6 +80,7 @@ return {
 					if not selection.isSelected(self.hover) then
 						outliner.remove(self.hover)
 					else
+						-- don't remove wireframe, this object is selected
 						outliner.update(self.hover)
 					end
 
