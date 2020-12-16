@@ -4,6 +4,8 @@
 -- Made available under the MIT License:                     --
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
+local newButton = require("devgit:source/libraries/UI/components/buttons/baseButton.lua")
+
 local getDepth 
 getDepth = function(start)
 	local c = 1
@@ -17,33 +19,42 @@ getDepth = function(start)
 end
 
 local construct
-construct = function(parent, hierarchy, buttonHeight)
+construct = function(props)
+	-- parent, hierarchy, buttonHeight)
 	local container = core.construct("guiFrame", {
-		parent = parent, 
+		parent = props.parent, 
 		strokeAlpha = 1,
-		strokeWidth = 10,
+		strokeWidth = 1,
 		strokeColour = colour(0.5, 0.5, 0.5), 
-		size = guiCoord(0, 200, 0, 500), 
-		position = guiCoord(0, 100, 0, 0)
+		size = props.size, 
+		position = props.position
 	})
 	
 	local offset = 0
-	for k,v in next, hierarchy do
-		core.construct("guiTextBox", {
+	for k,v in next, props.hierarchy do
+		local button = newButton {
 			parent = container,
-			size = guiCoord(1, 0, 0, buttonHeight),
-			position = guiCoord(0, 0, 0, buttonHeight*offset),
-			text = v.text
-		})
+			size = guiCoord(1, 0, 0, props.buttonHeight),
+			position = guiCoord(0, 0, 0, props.buttonHeight*offset),
+			text = v.text,
+			iconId = v.icon
+		}
 
 		if v.children then
-			offset = offset + getDepth(v.children)
-			construct(container, v.children, buttonHeight)
+			offset = offset + 1
+			local childDepth = getDepth(v)
+			construct({
+				parent = container, 
+				hierarchy = v.children, 
+				buttonHeight = props.buttonHeight,
+				position = guiCoord(0, 10, 0, props.buttonHeight*(offset)),
+				size = guiCoord(1, -10, 0, props.buttonHeight*(childDepth))
+			})
+			offset = offset + childDepth
 		end
 		offset = offset + 1
 	end
 
-	-- TODO: make props into a table
 	-- make a simple interface
 	return 1
 end

@@ -92,14 +92,23 @@ require("./windows/hierarchy.lua")(
 	}),
 	{
 		{
-			text = "hello",
+			text = "Friend List",
+			icon = "list",
+			children = {
+				{
+					text = "Jay",
+					icon = "emoji_emotions"
+				},
+				{
+					text = "Sanjay",
+					icon = "work"
+				},
+				{
+					text = "Ryan",
+					icon = "favorite"
+				}
+			}
 		},
-		{
-			text = "hello"
-		},
-		{
-			text = "hello"
-		}
 	},
 	25
 )
