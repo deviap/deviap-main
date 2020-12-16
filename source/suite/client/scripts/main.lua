@@ -118,6 +118,7 @@ require("./windows/hierarchy.lua")(
 -- PLACEHOLDER
 -- UNTIL OUR NEW FILE BROWSER IS MADE
 -- Get this file via devgit, for IO access
+--[[
 do
 	local serialiser = require("devgit:source/serialiser/main.lua")
 	local filePrompt = require("devgit:source/suite-level-editor/client/scripts/filePrompt.lua")
@@ -128,3 +129,4 @@ do
 		serialiser.fromFile(file)
 	end
 end
+]]--
