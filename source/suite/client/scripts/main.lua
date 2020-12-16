@@ -156,13 +156,15 @@ horizontalNav.addNavTextItem({
 -- PLACEHOLDER
 -- UNTIL OUR NEW FILE BROWSER IS MADE
 -- Get this file via devgit, for IO access
--- do
--- 	local serialiser = require("devgit:source/serialiser/main.lua")
--- 	local filePrompt = require("devgit:source/suite-level-editor/client/scripts/filePrompt.lua")
--- 	local file = filePrompt.open(".json")
--- 	if file ~= "new" then
--- 		-- user selected resource
--- 		core.scene:destroyChildren()
--- 		serialiser.fromFile(file)
--- 	end
--- end
+--[[
+do
+	local serialiser = require("devgit:source/serialiser/main.lua")
+	local filePrompt = require("devgit:source/suite-level-editor/client/scripts/filePrompt.lua")
+	local file = filePrompt.open(".json")
+	if file ~= "new" then
+		-- user selected resource
+		core.scene:destroyChildren()
+		serialiser.fromFile(file)
+	end
+end
+]]--
