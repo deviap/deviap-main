@@ -10,10 +10,10 @@ return {
     iconId = "highlight_alt",
     
     activate = function(self)
-        print("activate")
+        print("gui selector activate")
     end,
 
     deactivate = function(self)
-        print("deactivate")
+        print("gui selector deactivate")
     end
 }

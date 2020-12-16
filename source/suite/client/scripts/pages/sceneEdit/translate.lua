@@ -6,6 +6,13 @@
 ---------------------------------------------------------------
 return {
     name = "translate",
-    description = "Desc",
-	iconId = "open_with"
+    iconId = "open_with",
+    
+    activate = function()
+
+    end,
+
+    deactivate = function()
+
+    end
 }

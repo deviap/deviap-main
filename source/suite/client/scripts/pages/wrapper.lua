@@ -12,8 +12,8 @@ local activeDefinition = nil
 local function setActiveTool(toolDefinition)
 	if activeDefinition and activeDefinition.deactivate then
 		activeDefinition.active = false
-		toolDefinition.navItem.props.iconColour = colour.hex("#212121")
-		toolDefinition.navItem.render()
+		activeDefinition.navItem.props.iconColour = colour.hex("#212121")
+		activeDefinition.navItem.render()
 		activeDefinition:deactivate()
 	end
 

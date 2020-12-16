@@ -6,6 +6,13 @@
 ---------------------------------------------------------------
 return {
     name = "rotate",
-    description = "Desc",
-	iconId = "cached"
+    iconId = "cached",
+    
+    activate = function()
+
+    end,
+
+    deactivate = function()
+
+    end
 }
