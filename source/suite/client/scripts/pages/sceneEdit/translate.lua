@@ -10,6 +10,7 @@ local translation = require("client/scripts/controllers/translation.lua")
 local outliner = require("client/scripts/controllers/outliner.lua")
 
 local step = 1 -- make gui input
+local draw
 
 return {
     name = "translate",
@@ -34,14 +35,32 @@ return {
                 elseif self.hover and string.find(self.hover.name, "Handle") then
                     local face = string.sub(self.hover.name, 1, (string.find(self.hover.name, "H"))-1)
                     local shift = translation.getFaceMapping(face)[1]
-                    -- Apply action / trigger on each handle based on face
+                    -- Apply action / trigger on each handle based on face.
+
+                    -- Remove axis if draw is valid.
+                    if draw then
+                        draw:destroy()
+                    end
+
+                    draw = core.construct("block", {
+                        position = self.hover.parent.position,
+                        scale = vector3(0.02, 0.02, 0.02)+(shift*99),
+                        colour = colour.hex("546E7A"),
+                        emissiveColour = colour.hex("546E7A"),
+                        renderQueue = 200
+                    })
+
+                    
 				end
 			end
 		end)
 
 		self.mouseRightUp = core.input:on("mouseRightUp", function()
             if self.hover then
-                print("D")
+                if draw then
+                    draw:destroy()
+                    draw = nil
+                end
                 translation.detach(self.hover)
                 selection.deselect(self.hover)
 			end
