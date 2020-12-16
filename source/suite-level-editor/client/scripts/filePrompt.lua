@@ -7,17 +7,22 @@
 --
 local controller = {}
 
-function controller.promptOpen()
+function controller.open(fileType)
     local result = ""
+    if not fileType then fileType = "" end
 
 	local backdrop = core.construct("guiFrame", {
 		parent = core.interface,
-		size = guiCoord(1, 400, 1, 400),
-		position = guiCoord(0, -200, 0, -200),
+		size = guiCoord(1, 460, 1, 400),
+		position = guiCoord(0, -230, 0, -200),
 		backgroundColour = colour(0, 0, 0),
 		zIndex = 1000,
-		backgroundAlpha = 0.6
+		backgroundAlpha = 0
     })
+
+    core.tween:begin(backdrop, 1, {
+        backgroundAlpha = 0.6
+    }, "inOutQuad")
     
     backdrop:on("mouseLeftUp", function()
         result = "new"
@@ -26,11 +31,15 @@ function controller.promptOpen()
 	local container = core.construct("guiFrame", {
 		parent = backdrop,
 		size = guiCoord(0, 230, 0, 220),
-		position = guiCoord(0.5, -115, 0.5, -110),
+		position = guiCoord(0.5, -115, 0.5, -80),
 		backgroundColour = colour(1, 1, 1),
 		strokeRadius = 4,
 		strokeAlpha = 0.2
 	})
+
+    core.tween:begin(container, 1, {
+        position = guiCoord(0.5, -115, 0.5, -110)
+    }, "inOutQuad")
 
 	core.construct("guiTextBox", {
 		parent = container,
@@ -61,7 +70,8 @@ function controller.promptOpen()
     
     local y = 0
     for _,v in pairs(core.io:list()) do
-        if v ~= "manifest.json" and v:len() > 4 and v:sub(v:len() - 4) == ".json" then
+
+        if v:sub((v:len() - fileType:len()) + 1) == fileType then
             local btn = core.construct("guiTextBox", {
                 parent = innerContainer,
                 size = guiCoord(1, 0, 0, 18),

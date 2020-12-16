@@ -39,7 +39,6 @@ return {
             iconColour = colour.hex("#212121"),
             iconMax = 20,
             iconId = "stop",
-            redirect = 
         }
 	end
 }

@@ -8,9 +8,9 @@
     Draws a wireframe around objects you choose
 
     local outliner = require(...)
-    selection.add(block, colour(1, 0, 0))
-    selection.update(block, colour(1, 0, 0))
-    selection.remove(block)
+    outliner.add(block, colour(1, 0, 0))
+    outliner.update(block, colour(1, 0, 0))
+    outliner.remove(block)
 ]]
 local controller = {}
 controller.blocks = {}
@@ -28,7 +28,8 @@ function controller.add(block, outlineColour)
         wireframe = true,
         simulated = false,
         emissiveColour = outlineColour,
-        renderQueue = 200
+        renderQueue = 200,
+        parent = block.parent or core.scene
     }
 
     -- we must delete wireframe if actual obj is deleted

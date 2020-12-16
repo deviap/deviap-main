@@ -8,8 +8,8 @@
 local filePrompt = require("scripts/filePrompt.lua")
 local serialiser = require("devgit:source/serialiser/main.lua")
 core.scene.simulate = true
-local file = filePrompt.promptOpen()
-(if file ~= "new" then)
+local file = filePrompt.open()
+if file ~= "new" then
 	-- user selected resource
 	serialiser.fromFile(file)
 else

@@ -62,29 +62,20 @@ return function(props)
 
 	self.tooltip = nil
 
-	-- Determine fixed sizing based on props.
-	if props.text ~= "" then
-		self.container.size = guiCoord(0, 178, 0, 48)
-
-		-- Instance tooltip component when size fits icon button.
-	else
-		self.container.size = guiCoord(0, 48, 0, 48)
-
-		-- If tooltip is specified in props, create tooltip.
-		if props.tooltip then
-			self.tooltip = tooltip {
-				parent = self.container,
-				position = guiCoord(0.5, (self.container.size.offset.x / 2) - 53, 0.5, (self.container.size.offset.y / 2) + 5),
-				text = props.tooltip
-			}
+	-- If tooltip is specified in props, create tooltip.
+	if props.tooltip then
+		self.tooltip = tooltip {
+			parent = self.container,
+			position = guiCoord(0.5, (self.container.size.offset.x / 2) - 53, 0.5, (self.container.size.offset.y / 2) + 5),
+			text = props.tooltip
+		}
+		self.tooltip.state.dispatch {type = "disable"}
+		self.container:on("mouseEnter", function()
+			self.tooltip.state.dispatch {type = "enable"}
+		end)
+		self.container:on("mouseExit", function()
 			self.tooltip.state.dispatch {type = "disable"}
-			self.container:on("mouseEnter", function()
-				self.tooltip.state.dispatch {type = "enable"}
-			end)
-			self.container:on("mouseExit", function()
-				self.tooltip.state.dispatch {type = "disable"}
-			end)
-		end
+		end)
 	end
 
 	local label = core.construct("guiTextBox", {
@@ -123,6 +114,12 @@ return function(props)
 		icon.size = guiCoord(0, props.textSize, 1, 0)
 		icon.iconId = props.iconId or ""
 		icon.iconColour = props.secondaryColour
+
+		if self.tooltip then
+			self.tooltip.props.size = guiCoord(0.5, (self.container.size.offset.x / 2) - 53, 0.5, (self.container.size.offset.y / 2) + 5)
+			self.tooltip.props.parent = self.container
+			self.tooltip.render() --TODO: add text
+		end
 
 		oldRender()
 	end

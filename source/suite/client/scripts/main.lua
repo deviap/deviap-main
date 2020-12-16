@@ -26,6 +26,7 @@ local base = core.construct("block", {
 })
 
 local test123 = core.construct("block", {
+	parent = base,
 	position = vector3(0, -9, 0),
 	scale = vector3(1, 1, 1),
 	colour = colour.hex("#0fffff")
@@ -80,3 +81,51 @@ horizontalNav.addNavTextItem({
 	text = "EXPLORER",
 	redirect = nil
 })
+
+--  core.io:list()
+--[[
+require("./windows/hierarchy.lua")(
+	core.construct("guiFrame", {
+		parent = core.interface,
+		zIndex = 10,
+		size = guiCoord(1, 0, 1, 0)
+	}),
+	{
+		{
+			text = "Friend List",
+			icon = "list",
+			children = {
+				{
+					text = "Jay",
+					icon = "emoji_emotions"
+				},
+				{
+					text = "Sanjay",
+					icon = "work"
+				},
+				{
+					text = "Ryan",
+					icon = "favorite"
+				}
+			}
+		},
+	},
+	25
+)
+
+]]
+
+
+-- PLACEHOLDER
+-- UNTIL OUR NEW FILE BROWSER IS MADE
+-- Get this file via devgit, for IO access
+do
+	local serialiser = require("devgit:source/serialiser/main.lua")
+	local filePrompt = require("devgit:source/suite-level-editor/client/scripts/filePrompt.lua")
+	local file = filePrompt.open(".json")
+	if file ~= "new" then
+		-- user selected resource
+		core.scene:destroyChildren()
+		serialiser.fromFile(file)
+	end
+end

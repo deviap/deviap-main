@@ -17,4 +17,5 @@ return function(properties)
 		imageColour = colour.white(),
 		imageAlpha = 1.0
 	})
+	return logo, logoShadow
 end
