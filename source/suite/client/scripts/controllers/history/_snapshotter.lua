@@ -16,7 +16,7 @@ function snapshotter.createSnapshot(objs)
     -- This is a simple way to prevent us tracking the same object twice...
     -- Keys are unique.
 	local objects = {}
-	if type(objs) ~= "table" then
+	if type(objs) == "table" then
         for _,v in pairs(objs) do
             objects[v] = true
         end
@@ -34,7 +34,7 @@ function snapshotter.createSnapshot(objs)
     end
 
     -- Bind the appropriate events for each object
-	for object, _ in pairs(objects) do
+    for object, _ in pairs(objects) do
 		pendingSnapshot:_bindObject(object)
 	end
 

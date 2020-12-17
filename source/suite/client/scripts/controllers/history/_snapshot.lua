@@ -49,7 +49,7 @@ end
 
 local function _bindObject(self, object)
     local objectId = object.id
-        
+
     -- Track changes
     local eventHook = object:on("changed", function(property, oldvalue, newvalue)
         local track = self:_getObjectTrack(object, objectId)
