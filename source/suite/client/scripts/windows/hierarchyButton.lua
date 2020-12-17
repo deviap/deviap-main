@@ -4,6 +4,31 @@
 -- Made available under the MIT License:                     --
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
+--[[
+	onDown1;
+	onDown2;
+	onUp1;
+	onUp2;
+	onEnter;
+	onExit;
+	parent;
+	position;
+	backgroundColour;
+	backgroundAlpha;
+	hasDescendants;
+	expanded;
+	iconId;
+	fontSize;
+	size;
+	textColour;
+	text;
+]]
+
+--[[
+	destroy
+	render
+	props
+]]
 local bindAll = function(object, events)
 	for k,v in next, events do
 		object:on(k, v)
@@ -52,7 +77,7 @@ local newButton = function(props)
 		position = guiCoord(0, props.fontSize*2 + 8, 0, 0);
 		textAlign = "middleLeft";
 		backgroundAlpha = 0;
-		textColour = colour.white()
+		textColour = props.textColour
 	})
 
 	return {

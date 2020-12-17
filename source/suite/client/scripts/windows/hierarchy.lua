@@ -26,11 +26,48 @@ end
 
 local construct
 construct = function(props)
+	--[[
+		parent
+		size
+		position
+		backgroundColour
+		buttonHeight
+		indentBy
+		children
+
+		onButtonDown1
+		onButtonDown2
+		onButtonUp1
+		onButtonUp2
+		onButtonEnter
+		onButtonLeave
+	]]
+
+	--[[
+		{
+			text
+			textColour
+			font
+			icon or image
+			isExpanded
+			backgroundColour
+			backgroundAlpha
+			signature
+			children
+		}
+	]]
+	--[[
+		render
+		getSubComponentFromSignature
+		destroy
+		props
+	]]
+
 	local container = core.construct("guiFrame", {
 		parent = props.parent, 
 		size = props.size, 
 		position = props.position,
-		backgroundColour = colour(0.1,0.1,0.1);
+		backgroundColour = props.backgroundColour;
 	})
 	
 	local offset = 0
@@ -43,8 +80,8 @@ construct = function(props)
 			text = v.text,
 			iconId = v.icon,
 			fontSize = props.buttonHeight - 10,
-			backgroundColour = colour(0.1,0.1,0.1);
-			backgroundAlpha = 1;
+			backgroundColour = v.backgroundColour or props.backgroundColour;
+			backgroundAlpha = v.backgroundAlpha;
 			hasDescendants = descendants > 0
 		}
 		offset = offset + 1
@@ -62,14 +99,16 @@ construct = function(props)
 	end
 
 	return {
-		getTreeFromId; -- table function(id)
-		render;
-		props;
-		__ids;
-		
-		-- Events
-		onButtonDown1; -- function disconnect function(callback(id, tree))
-		onButtonUp1;
+		render = function()
+
+		end,
+		destroy = function()
+
+		end,
+		getSubComponentFromSignature = function(signature)
+
+		end,
+		props = props
 	}
 end
 
