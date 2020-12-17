@@ -4,56 +4,14 @@
 -- Made available under the MIT License:                     --
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
-local newButton = function(props)
-	local container = core.construct("guiFrame", {
-		parent = props.parent;
-		size = props.size;
-		position = props.position;
-		backgroundColour = props.backgroundColour;
-		backgroundAlpha = props.backgroundAlpha;
-	})
+local newButton = require("./hierarchyButton.lua")
 
-	if props.hasDescendants then
-		local dropDown = core.construct("guiIcon", {
-			parent = container;
-			iconId = props.expanded and "expand_less" or "expand_more";
-			size = guiCoord(0, props.fontSize, 0, props.fontSize);
-			position = guiCoord(0, 2, 0.5, -props.fontSize/2);
-			backgroundAlpha = 0;
-		})
+local bindAll = function(object, events)
+	for k,v in next, events do
+		object:on(k, v)
 	end
-
-	local icon = core.construct("guiIcon", {
-		parent = container;
-		iconId = props.iconId;
-		size = guiCoord(0, props.fontSize, 0, props.fontSize);
-		position = guiCoord(0, props.fontSize + 4, 0.5, -props.fontSize/2);
-		backgroundAlpha = 0;
-	})
-	local textBox = core.construct("guiTextBox", {
-		parent = container;
-		text = props.text;
-		size = guiCoord(1, -props.fontSize*2 - 8, 1 , 0);
-		position = guiCoord(0, props.fontSize*2 + 8, 0, 0);
-		textAlign = "middleLeft";
-		backgroundAlpha = 0;
-		textColour = colour.white()
-	})
-
-	return {
-		destroy;
-		render;
-		props;
-
-		onDown1;
-		onDown2;
-		onUp1;
-		onUp2;
-		onMove;
-		onEnter;
-		onExit;
-	}
 end
+
 
 local getNumOfEntries 
 getNumOfEntries = function(start)

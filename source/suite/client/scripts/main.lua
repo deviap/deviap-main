@@ -83,72 +83,78 @@ horizontalNav.addNavTextItem({
 
 --  core.io:list()
 
--- require("./windows/hierarchy.lua"){
--- 	parent = core.construct("guiFrame", {
--- 		parent = core.interface,
--- 		zIndex = 10,
--- 		size = guiCoord(1, 0, 1, 0)
--- 	});
--- 	size = guiCoord(0, 400, 0, 800);
--- 	position = guiCoord(0, 50, 0, 0);
--- 	hierarchy = {
--- 		{
--- 			text = "Friend List",
--- 			icon = "list",
--- 			children = {
--- 				{
--- 					text = "Jay",
--- 					icon = "person",
--- 					children = {
--- 						{
--- 							text = "Jaysan would like to know what is due.",
--- 							icon = "label",
--- 						},
--- 						{
--- 							text = "Jaysan needs an alternator?.",
--- 							icon = "label",
--- 						},
--- 						{
--- 							text = "Jaysan and Sanjay are the same person!?.",
--- 							icon = "label",
--- 						},
--- 					}
--- 				},
--- 				{
--- 					text = "Sanjay",
--- 					icon = "person",
--- 					children = {
--- 						{
--- 							text = "Needs a update ASAP",
--- 							icon = "label",
--- 						},
--- 						{
--- 							text = "Explain that refactoring is good!",
--- 							icon = "label"
--- 						},
--- 						{
--- 							text = "Sanjay hook up with Ryan?",
--- 							icon = "label"
--- 						},
--- 						{
--- 							text = "Sanjay needs to get more sleep.",
--- 							icon = "label"
--- 						},
--- 					}
--- 				},
--- 				{
--- 					text = "Ryan",
--- 					icon = "person"
--- 				},
--- 				{
--- 					text = "Neztore",
--- 					icon = "person"
--- 				},
--- 			}
--- 		},
--- 	},
--- 	buttonHeight = 25
--- }
+
+require("./windows/hierarchy.lua"){
+	parent = core.construct("guiFrame", {
+		parent = core.interface,
+		zIndex = 10,
+		size = guiCoord(1, 0, 1, 0)
+	});
+	size = guiCoord(0, 400, 0, 800);
+	position = guiCoord(0, 50, 0, 0);
+	hierarchy = {
+		{
+			text = "Friend List",
+			icon = "list",
+			children = {
+				{
+					text = "Jay",
+					icon = "person",
+					children = {
+						{
+							text = "Jaysan would like to know what is due.",
+							icon = "label",
+						},
+						{
+							text = "Jaysan needs an alternator?.",
+							icon = "label",
+						},
+						{
+							text = "Jaysan and Sanjay are the same person!?.",
+							icon = "label",
+						},
+					}
+				},
+				{
+					text = "Sanjay",
+					icon = "person",
+					children = {
+						{
+							text = "Needs a update ASAP",
+							icon = "label",
+						},
+						{
+							text = "Explain that refactoring is good!",
+							icon = "label"
+						},
+						{
+							text = "Sanjay hook up with Ryan?",
+							icon = "label"
+						},
+						{
+							text = "Sanjay needs to get more sleep.",
+							icon = "label",
+							children = {
+								{
+									text = "Literally impossible, stop trying already."
+								}
+							}
+						},
+					}
+				},
+				{
+					text = "Ryan",
+					icon = "person"
+				},
+				{
+					text = "Neztore",
+					icon = "person"
+				},
+			}
+		},
+	},
+	buttonHeight = 25
+}
 
 
 
