@@ -35,7 +35,7 @@ construct = function(props)
 		indentBy
 		children
 
-		onButtonDown1
+		onButtonDown1(button, signature)
 		onButtonDown2
 		onButtonUp1
 		onButtonUp2
@@ -44,6 +44,7 @@ construct = function(props)
 	]]
 
 	--[[
+		hierarchy = 
 		{
 			text
 			textColour
@@ -81,6 +82,7 @@ construct = function(props)
 			iconId = v.icon,
 			fontSize = props.buttonHeight - 10,
 			backgroundColour = v.backgroundColour or props.backgroundColour;
+			textColour = v.textColour or props.textColour;
 			backgroundAlpha = v.backgroundAlpha;
 			hasDescendants = descendants > 0
 		}
@@ -91,6 +93,8 @@ construct = function(props)
 				parent = container, 
 				hierarchy = v.children, 
 				buttonHeight = props.buttonHeight,
+				backgroundColour = props.backgroundColour,
+				textColour = props.textColour,
 				position = guiCoord(0, 10, 0, props.buttonHeight*offset),
 				size = guiCoord(1, -10, 0, props.buttonHeight*descendants)
 			})
