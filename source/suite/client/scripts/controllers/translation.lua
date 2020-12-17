@@ -32,7 +32,8 @@ local function attachHandles(obj)
             scale = vector3(0.1, 0.1, 0.1),
             colour = data[2],
             emissiveColour = data[2],
-            renderQueue = 200
+            renderQueue = 200,
+            mesh = "deviap:3d/Sphere.glb"
         })
     end
 end
