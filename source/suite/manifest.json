@@ -12,7 +12,8 @@
 			"apps":true,
             "input": true,
             "scene": true,
-            "graphics": true
+            "graphics": true,
+            "reflection": true
         }
     }
 }

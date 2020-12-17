@@ -12,6 +12,9 @@
         local block = ...
         local snapshot = history.createSnapshot(block)
         block.colour = colour.random()
+
+        -- create a new objectc
+
         snapshot:commit("Some useful or not so useful description about this snapshot")
 ]]
 

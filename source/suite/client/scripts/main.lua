@@ -172,4 +172,10 @@ end
 local history = require("./controllers/history.lua")
 local snapshot = history.createSnapshot(base)
 base.colour = colour.random()
+
+local nb = core.construct("block", {
+	
+})
+snapshot:add(nb)
+
 snapshot:commit()

@@ -35,25 +35,7 @@ function snapshotter.createSnapshot(objs)
 
     -- Bind the appropriate events for each object
 	for object, _ in pairs(objects) do
-        local objectId = object.id
-        
-        -- Track changes
-		local eventHook = object:on("changed", function(property, value)
-			if not pendingSnapshot.tracking[objectId] then
-				pendingSnapshot.tracking[objectId] = {object = object, changes = {}}
-			end
-			pendingSnapshot.tracking[objectId].changes[property] = value
-		end)
-		table.insert(pendingSnapshot.eventHooks, eventHook)
-
-        -- Track destruction
-		local eventHook = object:on("destroying", function()
-			if not pendingSnapshot.tracking[objectId] then
-				pendingSnapshot.tracking[objectId] = {object = object, changes = {}}
-			end
-			pendingSnapshot.tracking[objectId]._DESTROYED = true
-		end)
-		table.insert(pendingSnapshot.eventHooks, eventHook)
+		pendingSnapshot:_bindObject(object)
 	end
 
 	return pendingSnapshot

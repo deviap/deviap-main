@@ -13,7 +13,7 @@ local snapshots = require("./_snapshots.lua")
 
 local function commit(self, message)
     -- We need to wait for all the events to fire.
-    -- Sleeping for a negative value essentially waits for other tasks to finish
+    -- Sleeping for a negative value essentially waits for other tasks scheduled for this frame to finish
     sleep(-1)
 
     if self.eventHooks then
@@ -39,13 +39,58 @@ local function kill(self)
     self.eventHooks = nil
 end
 
+local function _getObjectTrack(self, object, id)
+    if not self.tracking[id] then
+        self.tracking[id] = {object = object, changes = {}}
+    end
+
+    return self.tracking[id]
+end
+
+local function _bindObject(self, object)
+    local objectId = object.id
+        
+    -- Track changes
+    local eventHook = object:on("changed", function(property, value)
+        self:_getObjectTrack(object, objectId).changes[property] = value
+    end)
+    table.insert(self.eventHooks, eventHook)
+
+    -- Track destruction
+    local eventHook = object:on("destroying", function()
+        self:_getObjectTrack(object, objectId)._DESTROYED = true
+    end)
+    table.insert(self.eventHooks, eventHook)
+end
+
+local function add(self, object)
+    local track = self:_getObjectTrack(object, object.id)
+    track._CREATED = true
+
+    local info = core.reflection:getClassReflection(object.className)
+    for k, v in pairs(info.properties) do
+		local value = object[k]
+		if v.hasSetter then
+			track.changes[k] = value
+		end
+	end
+end
+
 return function()
     return {
         startTime = os.time(),
         tracking = {},
         eventHooks = {},
 
+        -- to finish/save a snapshot:
         commit = commit,
-        kill = kill
+
+        -- to mark an object as created:
+        add = add,
+
+        -- internal:
+        kill = kill,
+        _getObjectTrack = _getObjectTrack,
+        _bindObject = _bindObject
     }
 end
