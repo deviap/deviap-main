@@ -51,8 +51,16 @@ local function _bindObject(self, object)
     local objectId = object.id
         
     -- Track changes
-    local eventHook = object:on("changed", function(property, value)
-        self:_getObjectTrack(object, objectId).changes[property] = value
+    local eventHook = object:on("changed", function(property, oldvalue, newvalue)
+        local track = self:_getObjectTrack(object, objectId)
+        if not track.changes[property] then
+            track.changes[property] = {
+                old = oldvalue,
+                new = newvalue
+            }
+        else
+            track.changes[property].new = newvalue
+        end
     end)
     table.insert(self.eventHooks, eventHook)
 
@@ -71,7 +79,10 @@ local function add(self, object)
     for k, v in pairs(info.properties) do
 		local value = object[k]
 		if v.hasSetter then
-			track.changes[k] = value
+			track.changes[k] = {
+                old = nil,
+                new = value
+            }
 		end
 	end
 end
