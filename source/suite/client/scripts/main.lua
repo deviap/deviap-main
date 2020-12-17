@@ -130,3 +130,8 @@ do
 	end
 end
 ]]--
+
+local history = require("./controllers/history.lua")
+local snapshot = history.createSnapshot(base)
+base.colour = colour.random()
+snapshot:commit()
