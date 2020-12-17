@@ -50,7 +50,22 @@ return {
                         renderQueue = 200
                     })
 
-                    
+                    local mousePos = camera:screenToWorld(core.input.mousePosition) * 500
+    
+                    -- Perform the raycast.
+                    local hits = core.scene:raycast(self.hover.position, self.hover.position + mousePos, {})
+
+                    if #hits > 0 then
+                        local handleOriginHit = hits[1].hit
+                        local handleOriginPosition = hits[1].position
+                        local handleOriginNormal = hits[1].normal
+
+                        while(sleep(0.1) and core.input:isKeyDown(enums.keys.KEY_Z)) do
+                            if self.hover.parent then
+                                self.hover.parent.position = self.hover.parent.position + (shift*step)
+                            end
+                        end
+                    end
 				end
 			end
 		end)
