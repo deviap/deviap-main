@@ -29,11 +29,12 @@ local function attachHandles(obj)
             parent = obj,
             name = direction.."Handle",
             position = data[1],
-            scale = vector3(0.1, 0.1, 0.1),
+            scale = vector3(0.4, 0.4, 0.4),
             colour = data[2],
             emissiveColour = data[2],
             renderQueue = 200,
-            mesh = "deviap:3d/Sphere.glb"
+            mesh = "deviap:3d/Sphere.glb",
+            inheritsScale = false
         })
     end
 end
