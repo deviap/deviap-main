@@ -28,7 +28,8 @@ function controller.add(block, outlineColour)
         wireframe = true,
         simulated = false,
         emissiveColour = outlineColour,
-        renderQueue = 200
+        renderQueue = 200,
+        parent = block.parent or core.scene
     }
 
     -- we must delete wireframe if actual obj is deleted

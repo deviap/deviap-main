@@ -6,7 +6,6 @@
 ---------------------------------------------------------------
 local camera = core.scene.camera
 local selection = require("client/scripts/controllers/selection.lua")
-local outliner = require("client/scripts/controllers/outliner.lua")
 
 return {
 	name = "select",
@@ -60,31 +59,10 @@ return {
 					self.cursorHighlighter.position = hits[1].position
 					self.cursorHighlighter.rotation = quaternion.lookRotation(hits[1].normal * 10) * quaternion.euler(math.rad(90), 0, 0)
 
-					-- if the hovered object has changed, we'll need to delete old wireframe
-					if self.hover ~= hits[1].hit then
-						if self.hover and not selection.isSelected(self.hover) then
-							outliner.remove(self.hover)
-						end
-						
-						self.hover = hits[1].hit
-					end
-
-					if not selection.isSelected(self.hover) then
-						-- add wireframe
-						outliner.add(self.hover, colour(0, 1, 0))
-					end
+					self.hover = hits[1].hit
 				else
 					-- hide the torus
 					self.cursorHighlighter.visible = false
-
-					-- remove any wireframes as the user is not hovering over anything.
-					if not selection.isSelected(self.hover) then
-						outliner.remove(self.hover)
-					else
-						-- don't remove wireframe, this object is selected
-						outliner.update(self.hover)
-					end
-
 					self.hover = nil
 				end
 			end
@@ -97,9 +75,6 @@ return {
 		self.cursorHighlighter:destroy()
 		self.cursorHighlighter = nil
 
-		if self.hover then
-			outliner.remove(self.hover)
-		end
 		self.hover = nil
 	end
 }
