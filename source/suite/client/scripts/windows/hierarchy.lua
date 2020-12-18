@@ -76,7 +76,7 @@ renderHierarchy = function(props, __id)
 		parent = props.parent, 
 		size = props.size, 
 		position = props.position,
-		backgroundColour = props.backgroundColour,
+		backgroundColour = props.defaultBackgroundColour,
 	})
 
 	local offset = 0
