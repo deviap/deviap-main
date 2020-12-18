@@ -20,6 +20,15 @@ obj = require("./hierarchy.lua"){
 		child.backgroundColour = colour(0.1, 0.1, 0.1)
 		obj.render()
 	end,
+	onButtonDown1 = function(child)
+		print("pressed")
+		if child.isExpanded then
+			child.isExpanded = false
+		else
+			child.isExpanded = true
+		end
+		obj.render()
+	end,
 	hierarchy = {
 		{
 			text = "Teams",

@@ -77,6 +77,7 @@ local renderButton = function(props)
 			size = guiCoord(0, props.textSize, 0, props.textSize);
 			position = guiCoord(0, 2, 0.5, -props.textSize/2);
 			backgroundAlpha = 0;
+			active = false,
 		})
 	end
 
@@ -88,6 +89,7 @@ local renderButton = function(props)
 		size = guiCoord(0, props.textSize, 0, props.textSize);
 		position = guiCoord(0, props.textSize + 4, 0.5, -props.textSize/2);
 		backgroundAlpha = 0;
+		active = false,
 	})
 
 	local textBox = core.construct("guiTextBox", {
@@ -98,7 +100,8 @@ local renderButton = function(props)
 		textAlign = "middleLeft";
 		textAlpha = props.textAlpha;
 		backgroundAlpha = 0;
-		textColour = props.textColour
+		textColour = props.textColour,
+		active = false,
 	})
 
 	return container

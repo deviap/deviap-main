@@ -59,12 +59,6 @@ local bindAll = function(object, events)
 	end
 end
 
-local curryFunction = function(func, arg)
-	return function(...)
-		func(arg, ...)
-	end
-end
-
 local getNumberOfDescendants 
 getNumberOfDescendants = function(start)
 	local count = 0
