@@ -1,34 +1,40 @@
 
-local obj
-obj = require("./hierarchy.lua"){
+local hierarchyMenu
+hierarchyMenu = require("./hierarchy.lua"){
 	parent = core.construct("guiFrame", {
 		parent = core.interface,
 		zIndex = 10,
 		size = guiCoord(1, 0, 1, 0)
-	});
-	size = guiCoord(0, 400, 0, 800);
-	position = guiCoord(0, 50, 0, 0);
+	}),
+	size = guiCoord(0, 400, 0, 800),
+	position = guiCoord(0, 50, 0, 0),
+
 	defaultBackgroundColour = colour(0.1, 0.1, 0.1),
 	defaultTextColour = colour(0.9, 0.9, 0.9),
+
+	buttonHeight = 25,
+	insetBy = 10,
+
 	onButtonEnter = function(child)
-		print("enter")
 		child.backgroundColour = colour(0.5, 0.5, 0.5)
-		obj.render()
+		hierarchyMenu.render()
 	end,
-	onButtonExit= function(child)
-		print("exit")
+
+	onButtonExit = function(child)
 		child.backgroundColour = colour(0.1, 0.1, 0.1)
-		obj.render()
+		hierarchyMenu.render()
 	end,
+
 	onButtonDown1 = function(child)
-		print("pressed")
 		if child.isExpanded then
 			child.isExpanded = false
 		else
 			child.isExpanded = true
 		end
-		obj.render()
+
+		hierarchyMenu.render()
 	end,
+
 	hierarchy = {
 		{
 			text = "Teams",
@@ -116,8 +122,5 @@ obj = require("./hierarchy.lua"){
 				}
 			}
 		},
-		
-	},
-	buttonHeight = 25,
-	insetBy = 10,
+	}
 }

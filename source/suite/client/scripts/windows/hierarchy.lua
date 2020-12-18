@@ -14,31 +14,31 @@
 	generic. You also have tagging to help select only parts of the tree.
 
 	Properties:
-		parent = guiObject;
-		size = guiCoord;
-		position = guiCoord;
-		backgroundColour = colour;
-		buttonHeight = number;
-		indentBy = number;
-		children = { child, ... };
+		parent = guiObject,
+		size = guiCoord,
+		position = guiCoord,
+		backgroundColour = colour,
+		buttonHeight = number,
+		indentBy = number,
+		children = { child, ... },
 
-		onButtonDown1 = function;
-		onButtonDown2 = function;
-		onButtonUp1 = function;
-		onButtonUp2 = function;
-		onButtonEnter = function;
-		onButtonLeave = function;
+		onButtonDown1 = function,
+		onButtonDown2 = function,
+		onButtonUp1 = function,
+		onButtonUp2 = function,
+		onButtonEnter = function,
+		onButtonLeave = function,
 
 	Child:
-		text = string;
-		textColour = colour;
-		font = string or enum.fonts;
-		icon = string;
-		isExpanded = boolean;
-		backgroundColour = colour;
-		backgroundAlpha = number;
-		signature = any;
-		children = { child, ... };
+		text = string,
+		textColour = colour,
+		font = string or enum.fonts,
+		icon = string,
+		isExpanded = boolean,
+		backgroundColour = colour,
+		backgroundAlpha = number,
+		signature = any,
+		children = { child, ... },
 
 	Interface:
 		function render(nil)
@@ -54,8 +54,8 @@
 local newButton = require("./hierarchyButton.lua")
 
 local bindAll = function(object, events)
-	for k,v in next, events do
-		object:on(k, v)
+	for eventName, callback in next, events do
+		object:on(eventName, callback)
 	end
 end
 
@@ -76,7 +76,7 @@ renderHierarchy = function(props, __id)
 		parent = props.parent, 
 		size = props.size, 
 		position = props.position,
-		backgroundColour = props.backgroundColour;
+		backgroundColour = props.backgroundColour,
 	})
 
 	local offset = 0
@@ -96,10 +96,10 @@ renderHierarchy = function(props, __id)
 
 		newButton {
 			parent = container,
-			position = guiCoord(0, props.insetBy*inset, 0, props.buttonHeight*offset),
-			size = guiCoord(1, -props.insetBy*inset, 0, props.buttonHeight),
-			backgroundColour = child.backgroundColour or props.defaultBackgroundColour;
-			backgroundAlpha = child.backgroundAlpha or props.defaultBackgroundAlpha;
+			position = guiCoord(0, props.insetBy * inset, 0, props.buttonHeight * offset),
+			size = guiCoord(1, -props.insetBy * inset, 0, props.buttonHeight),
+			backgroundColour = child.backgroundColour or props.defaultBackgroundColour,
+			backgroundAlpha = child.backgroundAlpha or props.defaultBackgroundAlpha,
 			
 			text = child.text or "",
 			textSize = props.buttonHeight - 10,
@@ -107,30 +107,30 @@ renderHierarchy = function(props, __id)
 			textAlpha = child.textAlpha or props.defaultTextAlpha,
 			
 			iconId = child.iconId,
-			iconType = child.iconType or props.defaultIconType;
-			iconColour = child.iconColour or props.defaultIconColour;
+			iconType = child.iconType or props.defaultIconType,
+			iconColour = child.iconColour or props.defaultIconColour,
 			
-			hasDescendants = numOfDescendants > 0;
-			isExpanded = child.isExpanded;
+			hasDescendants = numOfDescendants > 0,
+			isExpanded = child.isExpanded,
 
 			onDown1 = onButtonDown1 and function()
 				onButtonDown1(child)
-			end;
+			end,
 			onDown2 = onButtonDown2 and function()
 				onButtonDown2(child)
-			end;
+			end,
 			onUp1 = onButtonUp2 and function()
 				onButtonUp2(child)
-			end;
+			end,
 			onUp2 = onButtonDown2 and function()
 				onButtonDown2(child)
-			end;
+			end,
 			onEnter = onButtonEnter and function()
 				onButtonEnter(child)
-			end;
+			end,
 			onExit = onButtonExit and function()
 				onButtonExit(child)
-			end;
+			end,
 		}
 
 		offset = offset + 1
