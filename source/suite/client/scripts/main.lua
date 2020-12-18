@@ -77,9 +77,7 @@ horizontalNav.addNavTextItem({
 
 --  core.io:list()
 
-
-
-require("./windows/hierarchyTest.lua")
+--require("./windows/hierarchyTest.lua")
 
 
 -- PLACEHOLDER
