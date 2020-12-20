@@ -55,7 +55,7 @@
 	Interface:
 		function render(nil)
 			Rerender this component.
-		table getSubComponentFromSignature(any: id)
+		table getButtonFromSignature(any: id)
 			This returns the table associated with the signature
 		destroy
 			Destroy component.
