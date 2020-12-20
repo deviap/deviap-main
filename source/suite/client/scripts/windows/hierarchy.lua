@@ -22,6 +22,11 @@
 		indentBy = number,
 		children = { child, ... },
 
+		scrollbarAlpha = number
+		scrollbarColour = colour
+		scrollbarRadius = number
+		scrollbarWidth = number
+
 		defaultBackgroundColour = colour,
 		defaultBackgroundAlpha = number,
 		defaultTextColour = colour,
