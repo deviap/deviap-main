@@ -22,6 +22,13 @@
 		indentBy = number,
 		children = { child, ... },
 
+		defaultBackgroundColour = colour,
+		defaultBackgroundAlpha = number,
+		defaultTextColour = colour,
+		defaultTextAlpha = number,
+		defaultIconColour = colour,
+		defaultIconType = string,
+
 		onButtonDown1 = function,
 		onButtonDown2 = function,
 		onButtonUp1 = function,
