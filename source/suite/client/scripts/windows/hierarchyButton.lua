@@ -126,7 +126,7 @@ return function(props)
 				else
 					dropDown = core.construct("guiIcon", {
 						parent = container,
-						iconId = isExpanded and "expand_less" or "chevron_right",
+						iconId = isExpanded and "expand_less" or "expand_more",
 						iconColour = dropDownColour or colour(1, 1, 1),
 						size = guiCoord(0, textSize, 0, textSize),
 						position = guiCoord(0, 2, 0.5, -textSize / 2),
