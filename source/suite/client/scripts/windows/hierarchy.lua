@@ -78,7 +78,7 @@ getNumberOfDescendants = function(start)
 end
 
 return function(props)
-	local container = core.construct("guiFrame", { parent = props.parent })
+	local container = core.construct("guiScrollView", { parent = props.parent })
 	local rendered = {}
 	local __id = {}
 
@@ -91,6 +91,10 @@ return function(props)
 			local size = props.size or guiCoord(0, 0, 0, 0)
 			local position = props.position or guiCoord(0, 0, 0, 0)
 			local backgroundColour = props.backgroundColour or colour(1, 1, 1)
+			local scrollbarAlpha = props.scrollbarAlpha or 1
+			local scrollbarColour = props.scrollbarColour or colour(0, 0, 0)
+			local scrollbarRadius = props.scrollbarRadius or 0
+			local scrollbarWidth = props.scrollbarWidth or 3
 
 			local buttonHeight = props.buttonHeight or 25
 			local insetBy = props.insetBy or 25
@@ -113,6 +117,10 @@ return function(props)
 			container.size = size
 			container.position = position
 			container.backgroundColour = backgroundColour
+			container.scrollbarAlpha = scrollbarAlpha
+			container.scrollbarColour = scrollbarColour
+			container.scrollbarRadius = scrollbarRadius
+			container.scrollbarWidth = scrollbarWidth
 
 			local offset = 0
 			local visited = {}
@@ -197,6 +205,8 @@ return function(props)
 					end
 				end
 			end
+
+			container.canvasSize = guiCoord(1, 0, 0, offset * buttonHeight)
 		end,
 		getButtonFromSignature = function(signature)
 			return __id[signature]
