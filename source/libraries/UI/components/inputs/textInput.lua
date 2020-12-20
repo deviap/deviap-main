@@ -66,6 +66,13 @@ return function(props)
 	props.label = props.label or ""
 	props.helper = props.helper or ""
 	props.text = props.text or ""
+	props.activeBorder = props.activeBorder or 1
+	props.textAlign = props.textAlign or "middleLeft"
+	props.backgroundColour = props.backgroundColour or colour.hex("f4f4f4")
+	props.textAlpha = props.textAlpha or 1
+	props.textColour = props.textColour or colour.hex("212121")
+	props.borderBottom = props.borderBottom or false
+	props.borderBottomColour = props.borderBottomColour or colour.hex("8d8d8d")
 
 	local self = newBaseComponent(props)
 	self.container.backgroundAlpha = 0
@@ -99,7 +106,7 @@ return function(props)
 		name = "inputContainer",
 		parent = self.container,
 		active = false,
-		backgroundColour = colour.hex("f4f4f4"),
+		backgroundColour = colour.hex("ffffff"),
 		size = guiCoord(1, 0, 1, 0),
 		position = guiCoord(0, 0, 0, 0)
 	})
@@ -112,8 +119,8 @@ return function(props)
 		size = guiCoord(1, -30, 1, -10),
 		position = guiCoord(0, 15, 0, 5),
 		textEditable = true,
-		textAlign = "middleLeft",
-		text = props.text == "" and props.placeholder or props.text
+		textAlign = props.textAlign,
+		text = props.text == "" and props.placeholder or props.text,
 	})
 
 	self.input = input
@@ -187,7 +194,9 @@ return function(props)
 			helper.textColour = colour.hex("da1e28")
 			helper.text = state.error
 			activeBorder.visible = true
-			borderBottom.visible = false
+			if not props.borderBottom then 
+				borderBottom.visible = false
+			end
 			icon.visible = true
 		else
 			icon.visible = false
@@ -197,10 +206,14 @@ return function(props)
 		if state.active then
 			activeBorder.strokeColour = colour.hex("0f62fe")
 			activeBorder.visible = true
-			borderBottom.visible = false
+			if not props.borderBottom then 
+				borderBottom.visible = false
+			end
+			borderBottom.lineColour = props.borderBottomColour
 		elseif state.valid then
 			activeBorder.visible = false
 			borderBottom.visible = true
+			borderBottom.lineColour = colour.hex("8d8d8d")
 		end
 
 		if state.enabled then
@@ -208,7 +221,9 @@ return function(props)
 			helper.textAlpha = 1.0
 		else
 			activeBorder.visible = false
-			borderBottom.visible = false
+			if not props.borderBottom then 
+				borderBottom.visible = false
+			end
 			label.textAlpha = 0.5
 			helper.textAlpha = 0.5
 		end
@@ -233,12 +248,14 @@ return function(props)
 
 		if isPlaceholder then
 			input.text = props.placeholder
-			input.textAlpha = 0.75
+			input.textAlpha = props.textAlpha
 		else
-			input.textAlpha = 1.0
+			input.textAlpha = 1
 		end
 
+		activeBorder.strokeAlpha = props.activeBorder
 		input.textSize = props.textSize
+		input.textColour = props.textColour
 	end
 
 	self.render()

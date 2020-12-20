@@ -75,12 +75,17 @@ horizontalNav.addNavTextItem({
 	redirect = nil
 })
 
+-- IO List Test
 --  core.io:list()
 
+-- Hierarchy Test
 --require("./windows/hierarchyTest.lua")
 
+-- Properties Test
+--local test = require("./windows/properties.lua")
+--test.construct(core.interface, base)
 
--- PLACEHOLDER
+-- PLACEHOLDER (COMMENTED OUT)
 -- UNTIL OUR NEW FILE BROWSER IS MADE
 -- Get this file via devgit, for IO access
 --[[
