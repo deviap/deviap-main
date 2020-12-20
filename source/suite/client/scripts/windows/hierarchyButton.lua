@@ -58,6 +58,43 @@ local bindAll = function(object, events)
 	end
 end
 
+local createTooltip = function(parent)
+	local tooltip = require("devgit:source/libraries/UI/components/tooltip.lua") {
+		parent = parent.parent,
+	}
+
+	tooltip.state.dispatch { type = "disable" }
+	tooltip.container.zIndex = 2
+
+	local inside = false
+	parent:on("mouseEnter", function()
+		inside = true
+		local acc = 0
+		while sleep(0.05) and acc < 1 do
+			acc = acc + 0.05
+			if not inside then return end
+		end
+
+		local moved
+		moved = core.input:on("mouseMoved", function()
+			local pos = core.input.mousePosition - parent.parent.absolutePosition
+			tooltip.container.position = guiCoord(0, pos.x, 0, pos.y - tooltip.container.absoluteSize.y)
+			if not inside then core.disconnect(moved) end
+		end)
+
+		local pos = core.input.mousePosition - parent.parent.absolutePosition
+		tooltip.container.position = guiCoord(0, pos.x, 0, pos.y - tooltip.container.absoluteSize.y)
+		tooltip.state.dispatch { type = "enable" }
+	end)
+
+	parent:on("mouseExit", function()
+		inside = false
+		tooltip.state.dispatch { type = "disable" }
+	end)
+
+	return tooltip
+end
+
 return function(props)
 	local container = core.construct("guiFrame", { parent = props.parent })
 	local disconnectEvents = bindAll(container, {
@@ -72,32 +109,8 @@ return function(props)
 	local dropDown = core.construct("guiIcon", { parent = container })
 	local icon = core.construct("guiIcon", { parent = container })
 	local textBox = core.construct("guiTextBox", { parent = container })
-	local tooltip = require("devgit:source/libraries/UI/components/tooltip.lua") {
-		parent = props.parent,
-		text = props.text,
-	}
-	--tooltip.container.position = props.position 
-	--tooltip.state.dispatch { type = "disable" }
+	local tooltip = createTooltip(container)
 
-	local inside = false
-
-	container:on("mouseEnter", function()
-		inside = true
-		local acc = 0
-		while sleep(0.1) and acc < 2 do
-			print(acc)
-		acc = acc + 0.1
-			if not inside then return end
-		end
-		print"hello"
-
-		tooltip.state.dispatch { type = "enable" }
-	end)
-
-	container:on("mouseExit", function()
-		inside = false
-		tooltip.state.dispatch { type = "disable" }
-	end)
 	local self
 	self = {
 		destroy = function()
@@ -122,7 +135,10 @@ return function(props)
 			local textSize = props.textSize or 16
 			local textColour = props.textColour or colour(0, 0, 0)
 			local textAlpha = props.textAlpha or  1
-			tooltip.container.position = position
+
+			tooltip.props.text = text
+			tooltip.render()
+
 			container.parent = parent
 			container.size = size
 			container.position = position
