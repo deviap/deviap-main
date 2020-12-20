@@ -73,7 +73,8 @@ return function(props)
 	local icon = core.construct("guiIcon", { parent = container })
 	local textBox = core.construct("guiTextBox", { parent = container })
 
-	local self = {
+	local self
+	self = {
 		destroy = function()
 			container:destroy()
 		end,
@@ -134,8 +135,10 @@ return function(props)
 					})
 				end
 			else
-				dropDown:destroy()
-				dropDown = nil
+				if dropDown then					
+					dropDown:destroy()
+					dropDown = nil
+				end
 			end
 
 			icon.iconId = iconId
@@ -155,6 +158,12 @@ return function(props)
 			textBox.backgroundAlpha = 0
 			textBox.textColour = textColour
 			textBox.active = false
+		end,
+		propsThenRender = function(changes)
+			for k,v in next, changes do
+				props[k] = v
+			end
+			self.render()
 		end,
 		props = props,
 	}

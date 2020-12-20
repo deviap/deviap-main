@@ -178,4 +178,127 @@ construct = function(props)
 	}
 end
 
-return construct
+return function(props)
+	local container = core.construct("guiFrame", { parent = props.parent })
+	local rendered = {}
+	local __id = {}
+
+	local self = {
+		props = props,
+		destroy = function()
+		end,
+		render = function()
+			local parent = props.parent
+			local size = props.size or guiCoord(0, 0, 0, 0)
+			local position = props.position or guiCoord(0, 0, 0, 0)
+			local backgroundColour = props.backgroundColour or colour(1, 1, 1)
+
+			local buttonHeight = props.buttonHeight or 25
+			local insetBy = props.insetBy or 25
+
+			local defaultBackgroundColour = props.defaultBackgroundColour or backgroundColour
+			local defaultBackgroundAlpha = props.defaultBackgroundAlpha or 1
+			local defaultTextColour = props.defaultTextColour or colour(0, 0, 0)
+			local defaultTextAlpha = props.defaultTextAlpha or 1
+			local defaultIconType = props.defaultIconType or "material"
+			local defaultIconColour = props.defaultIconColour or colour(0, 0, 0)
+
+			local onButtonDown1 = props.onButton1Down
+			local onButtonDown2 = props.onButtonDown2
+			local onButtonUp2 = props.onButtonUp2
+			local onButtonDown2 = props.onButtonDown2
+			local onButtonEnter = props.onButtonEnter
+			local onButtonExit = props.onButtonExit
+
+			container.parent = parent
+			container.size = size
+			container.position = position
+			container.backgroundColour = backgroundColour
+
+			local offset = 0
+			local visited = {}
+
+			local renderChild 
+			renderChild = function(child, inset)
+				visited[child] = true
+				
+				local button = rendered[child]
+				if button == nil then
+					button = newButton { parent = container }
+					rendered[child] = button
+				end
+
+				button.propsThenRender {
+					position = guiCoord(0, insetBy * inset, 0, buttonHeight * offset),
+					size = guiCoord(1, -insetBy * inset, 0, buttonHeight),
+					backgroundColour = child.backgroundColour or defaultBackgroundColour,
+					backgroundAlpha = child.backgroundAlpha or defaultBackgroundAlpha,
+					
+					text = child.text or "",
+					textSize = buttonHeight - 10,
+					textColour = child.textColour or defaultTextColour,
+					textAlpha = child.textAlpha or defaultTextAlpha,
+					
+					iconId = child.iconId,
+					iconType = child.iconType or defaultIconType,
+					iconColour = child.iconColour or defaultIconColour,
+					
+					hasDescendants = child.hasDescendants == nil and child.children ~= nil or child.hasDescendants,
+					isExpanded = child.isExpanded,
+		
+					onDown1 = onButtonDown1 and function()
+						onButtonDown1(child)
+					end,
+					onDown2 = onButtonDown2 and function()
+						onButtonDown2(child)
+					end,
+					onUp1 = onButtonUp2 and function()
+						onButtonUp2(child)
+					end,
+					onUp2 = onButtonDown2 and function()
+						onButtonDown2(child)
+					end,
+					onEnter = onButtonEnter and function()
+						onButtonEnter(child)
+					end,
+					onExit = onButtonExit and function()
+						onButtonExit(child)
+					end,
+				}
+
+				offset = offset + 1
+
+				
+				if child.children and child.isExpanded then
+					for _, _child in next, child.children do
+						renderChild(_child, inset + 1)
+					end
+				end
+
+				if child.signature then
+					local possibleChild = __id[child.signature] 
+					if possibleChild and possibleChild ~= child then
+						error(("HIERARCHY: Two children have matching signature (%s)")
+							:format(child.signature))
+					end
+					__id[child.signature] = child
+				end
+			end
+
+			for _, child in next, props.hierarchy do
+				renderChild(child, 0)
+			end
+
+			for child, button in next, rendered do
+				if not visited[child] then
+					button.destroy()
+					rendered[child] = nil
+					__id[child.signature] = nil
+				end
+			end
+		end
+	}
+
+	self.render()
+	return self
+end
