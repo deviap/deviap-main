@@ -146,22 +146,22 @@ return function(props)
 					isExpanded = child.isExpanded,
 		
 					onDown1 = onButtonDown1 and function()
-						onButtonDown1(child)
+						onButtonDown1(child, button)
 					end,
 					onDown2 = onButtonDown2 and function()
-						onButtonDown2(child)
+						onButtonDown2(child, button)
 					end,
 					onUp1 = onButtonUp2 and function()
-						onButtonUp2(child)
+						onButtonUp2(child, button)
 					end,
 					onUp2 = onButtonDown2 and function()
-						onButtonDown2(child)
+						onButtonDown2(child, button)
 					end,
 					onEnter = onButtonEnter and function()
-						onButtonEnter(child)
+						onButtonEnter(child, button)
 					end,
 					onExit = onButtonExit and function()
-						onButtonExit(child)
+						onButtonExit(child, button)
 					end,
 				}
 
