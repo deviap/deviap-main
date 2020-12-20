@@ -33,7 +33,7 @@ local function attachHandles(obj)
             colour = data[2],
             emissiveColour = data[2],
             renderQueue = 200,
-            mesh = "deviap:3d/Sphere.glb",
+            mesh = "deviap:3d/sphere.glb",
             inheritsScale = false
         })
     end
