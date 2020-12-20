@@ -192,8 +192,14 @@ return function(props)
 				if not visited[child] then
 					button.destroy()
 					rendered[child] = nil
+					if child.signature then
+						__id[child.signature] = nil
+					end
 				end
 			end
+		end,
+		getButtonFromSignature = function(signature)
+			return __id[signature]
 		end
 	}
 
