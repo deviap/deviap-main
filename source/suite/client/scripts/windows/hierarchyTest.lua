@@ -17,14 +17,18 @@ hierarchyMenu = require("./hierarchy.lua"){
 	buttonHeight = 25,
 	insetBy = 10,
 
-	onButtonEnter = function(child)
+	onButtonEnter = function(child, button)
 		child.backgroundColour = colour(0.2, 0.2, 0.2)
-		hierarchyMenu.render()
+		button.propsThenRender {
+			backgroundColour = child.backgroundColour
+		}
 	end,
 
-	onButtonExit = function(child)
+	onButtonExit = function(child, button)
 		child.backgroundColour = nil
-		hierarchyMenu.render()
+		button.propsThenRender {
+			backgroundColour = child.backgroundColour
+		}
 	end,
 
 	onButtonDown1 = function(child)
