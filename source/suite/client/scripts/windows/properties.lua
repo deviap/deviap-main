@@ -38,19 +38,21 @@ return {
 			scrollbarColour = colour.hex("#212121"),
 			scrollbarRadius = 0,
 			scrollbarWidth = 2,
-			scrollbarAlpha = 0
+			scrollbarAlpha = 1
 		})
 
 
         -- Generate Properties (might split into seperate method)
         local properties = core.reflection:getClassReflection(object.className)["properties"]
-        local count = 0
+		local count = 0
+		local longestWidth = 0
+
         if properties then
-            for property, data in pairs(properties) do
+			for property, data in pairs(properties) do
                 local subcontainer = core.construct("guiFrame", {
                     parent = scrollContainer,
                     position = guiCoord(0, 10, 0, (40*count)+0),
-                    size = guiCoord(0, 400, 0, 50),
+                    size = guiCoord(1, -20, 0, 40),
                     backgroundAlpha = 0
                 })
         
@@ -64,16 +66,16 @@ return {
                     textColour = colour.hex("212121"),
                     textAlpha = 0.49,
                     backgroundAlpha = 0
-                })
-
+				})
+				
                 -- Clear inputs based on parameter type.
                 local propertyType = data.type
-
-                if propertyType == "vector3" then
+				local neededWidth = label.textDimensions.x
+				if propertyType == "vector3" then
                     for i=0, 2, 1 do
                         local input = textInput {
                             parent = subcontainer,
-                            position = guiCoord(0, (label.textDimensions.x+10)+(i*25), 0, 15),
+							position = guiCoord(1, -20-((2-i)*25), 0, 15),
                             size = guiCoord(0, 20, 0, 23),
                             placeholder = (i == 0 and tostring(object[property].x)) or (i == 1 and tostring(object[property].y)) or (i == 2 and tostring(object[property].x)),
                             textSize = 18,
@@ -85,12 +87,13 @@ return {
                             borderBottomColour = colour.hex("0f62fe"),
                             backgroundAlpha = 0
                         }
-                    end
+					end
+					neededWidth = neededWidth + 75
                 elseif propertyType == "colour" then
                     for i=0, 2, 1 do
                         local input = textInput {
                             parent = subcontainer,
-                            position = guiCoord(0, (label.textDimensions.x+10)+(i*25), 0, 15),
+                            position = guiCoord(1, -20-((2-i)*25), 0, 15),
                             size = guiCoord(0, 20, 0, 23),
                             placeholder = (i == 0 and tostring(object[property].r)) or (i == 1 and tostring(object[property].g)) or (i == 2 and tostring(object[property].b)),
                             textSize = 18,
@@ -102,11 +105,12 @@ return {
                             borderBottomColour = colour.hex("0f62fe"),
                             backgroundAlpha = 0
                         }
-                    end
+					end
+					neededWidth = neededWidth + 75
                 elseif propertyType == "number" or propertyType == "uint8_t" then
                     local input = textInput {
                         parent = subcontainer,
-                        position = guiCoord(0, label.textDimensions.x+10, 0, 15),
+                        position = guiCoord(1, -20, 0, 15),
                         size = guiCoord(0, 20, 0, 23),
                         placeholder = tostring(object[property]),
                         textSize = 18,
@@ -117,11 +121,12 @@ return {
                         borderBottom = true,
                         borderBottomColour = colour.hex("0f62fe"),
                         backgroundAlpha = 0
-                    }
+					}
+					neededWidth = 25 + neededWidth
                 elseif propertyType == "string" then
                     local input = textInput {
                         parent = subcontainer,
-                        position = guiCoord(0, label.textDimensions.x+10, 0, 15),
+                        position = guiCoord(1, -130, 0, 15),
                         size = guiCoord(0, 130, 0, 23),
                         placeholder = object[property],
                         textSize = 18,
@@ -131,20 +136,26 @@ return {
                         borderBottom = true,
                         borderBottomColour = colour.hex("0f62fe"),
                         backgroundAlpha = 0
-                    }
+					}
+					neededWidth = neededWidth + 135
                 elseif propertyType == "boolean" then
                     local _checkbox = checkbox {
                         parent = subcontainer,
-                        position = guiCoord(0, label.textDimensions.x+10, 0, 18),
+                        position = guiCoord(1, -20, 0, 18),
                         size = guiCoord(0, 20, 0, 16)
                     }
 
                     if object[property] then
                         _checkbox.state.dispatch({type = "setMode", mode = "active"})
-                    end
-                end
+					end
+					
+					neededWidth = neededWidth + 25
+				end
+				longestWidth = longestWidth > neededWidth and longestWidth or neededWidth
                 count = count + 1
             end
-        end
+		end
+
+		scrollContainer.canvasSize = guiCoord(0, longestWidth + 10, 0, count*40)
     end
 }
