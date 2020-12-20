@@ -72,7 +72,32 @@ return function(props)
 	local dropDown = core.construct("guiIcon", { parent = container })
 	local icon = core.construct("guiIcon", { parent = container })
 	local textBox = core.construct("guiTextBox", { parent = container })
+	local tooltip = require("devgit:source/libraries/UI/components/tooltip.lua") {
+		parent = props.parent,
+		text = props.text,
+	}
+	--tooltip.container.position = props.position 
+	--tooltip.state.dispatch { type = "disable" }
 
+	local inside = false
+
+	container:on("mouseEnter", function()
+		inside = true
+		local acc = 0
+		while sleep(0.1) and acc < 2 do
+			print(acc)
+		acc = acc + 0.1
+			if not inside then return end
+		end
+		print"hello"
+
+		tooltip.state.dispatch { type = "enable" }
+	end)
+
+	container:on("mouseExit", function()
+		inside = false
+		tooltip.state.dispatch { type = "disable" }
+	end)
 	local self
 	self = {
 		destroy = function()
@@ -97,7 +122,7 @@ return function(props)
 			local textSize = props.textSize or 16
 			local textColour = props.textColour or colour(0, 0, 0)
 			local textAlpha = props.textAlpha or  1
-		
+			tooltip.container.position = position
 			container.parent = parent
 			container.size = size
 			container.position = position

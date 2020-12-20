@@ -49,6 +49,7 @@ return function(props)
 
 	self.state = newState(reducer)
 
+	local oldRender = self.render
 	self.render = function()
 		--[[
 			@description
@@ -68,6 +69,7 @@ return function(props)
 		textBox.backgroundColour = colour.hex("#212121")
 		textBox.strokeRadius = 3
 		textBox.text = props.text
+		oldRender()
 	end
 
 	self.state.subscribe(function(state)

@@ -79,7 +79,7 @@ horizontalNav.addNavTextItem({
 --  core.io:list()
 
 -- Hierarchy Test
---require("./windows/hierarchyTest.lua")
+require("./windows/hierarchyTest.lua")
 
 -- Properties Test
 --local test = require("./windows/properties.lua")
