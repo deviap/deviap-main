@@ -27,7 +27,7 @@ hierarchyMenu = require("./hierarchy.lua"){
 	onButtonExit = function(child, button)
 		child.backgroundColour = nil
 		button.propsThenRender {
-			backgroundColour = child.backgroundColour
+			backgroundColour = hierarchyMenu.props.backgroundColour
 		}
 	end,
 
