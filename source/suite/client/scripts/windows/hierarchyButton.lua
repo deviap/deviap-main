@@ -46,21 +46,21 @@
 --]]
 
 local bindAll = function(object, events)
+	local binded = {}
 	for eventName, callback in next, events do
-		object:on(eventName, callback)
+		binded[eventName] = object:on(eventName, callback)
+	end
+
+	return function()
+		for _, index in next, binded do
+			core.disconnect(index)
+		end
 	end
 end
 
-local renderButton = function(props)
-	local container = core.construct("guiFrame", {
-		parent = props.parent,
-		size = props.size,
-		position = props.position,
-		backgroundColour = props.backgroundColour,
-		backgroundAlpha = props.backgroundAlpha,
-	})
-
-	bindAll(container, {
+return function(props)
+	local container = core.construct("guiFrame", { parent = props.parent })
+	local disconnectEvents = bindAll(container, {
 		mouseLeftDown = props.onDown1,
 		mouseRightDown = props.onDown2,
 		mouseLeftUp = props.onUp1,
@@ -69,54 +69,105 @@ local renderButton = function(props)
 		mouseExit = props.onExit,
 	})
 
-	if props.hasDescendants then
-		local dropDown = core.construct("guiIcon", {
-			parent = container,
-			iconId = props.isExpanded and "expand_less" or "expand_more",
-			iconColour = props.dropDownColour or colour(1, 1, 1),
-			size = guiCoord(0, props.textSize, 0, props.textSize),
-			position = guiCoord(0, 2, 0.5, -props.textSize / 2),
-			backgroundAlpha = 0,
-			active = false,
-		})
-	end
+	local dropDown = core.construct("guiIcon", { parent = container })
+	local icon = core.construct("guiIcon", { parent = container })
+	local textBox = core.construct("guiTextBox", { parent = container })
 
-	local icon = core.construct("guiIcon", {
-		parent = container,
-		iconId = props.iconId,
-		iconColour = props.iconColour,
-		iconType = props.iconType,
-		size = guiCoord(0, props.textSize, 0, props.textSize),
-		position = guiCoord(0, props.textSize + 4, 0.5, -props.textSize / 2),
-		backgroundAlpha = 0,
-		active = false,
-	})
-
-	local textBox = core.construct("guiTextBox", {
-		parent = container,
-		text = props.text,
-		size = guiCoord(1, -props.textSize * 2 - 8, 1 , 0),
-		position = guiCoord(0, props.textSize * 2 + 8, 0, 0),
-		textAlign = "middleLeft",
-		textAlpha = props.textAlpha,
-		backgroundAlpha = 0,
-		textColour = props.textColour,
-		active = false,
-	})
-
-	return container
-end
-
-return function(props)
-	local container = renderButton(props)
-	return {
+	local self
+	self = {
 		destroy = function()
 			container:destroy()
 		end,
 		render = function()
-			container:destroy()
-			container = renderButton(props)
+			local parent = props.parent
+			local size = props.size or guiCoord(0, 0, 0, 0)
+			local position = props.position or guiCoord(0, 0, 0, 0)
+			local backgroundColour = props.backgroundColour or colour(1, 1, 1)
+			local backgroundAlpha = props.backgroundAlpha or 1
+			
+			local isExpanded = props.isExpanded -- Default false
+			local hasDescendants = props.hasDescendants -- Default false
+			local dropDownColour = props.dropDownColour or colour(1, 1, 1)
+
+			local iconId = props.iconId or ""
+			local iconColour = props.iconColour or colour(1, 1, 1)
+			local iconType = props.iconType or "material"
+
+			local text = props.text or ""
+			local textSize = props.textSize or 16
+			local textColour = props.textColour or colour(0, 0, 0)
+			local textAlpha = props.textAlpha or  1
+		
+			container.parent = parent
+			container.size = size
+			container.position = position
+			container.backgroundColour = backgroundColour
+			container.backgroundAlpha = backgroundAlpha
+
+			disconnectEvents()
+			disconnectEvents = bindAll(container, {
+				mouseLeftDown = props.onDown1,
+				mouseRightDown = props.onDown2,
+				mouseLeftUp = props.onUp1,
+				mouseRightUp = props.onUp2,
+				mouseEnter = props.onEnter,
+				mouseExit = props.onExit,
+			})
+
+			if hasDescendants then
+				if dropDown then
+					dropDown.parent = container
+					dropDown.iconId = isExpanded and "expand_less" or "expand_more"
+					dropDown.iconColour = dropDownColour or colour(1, 1, 1)
+					dropDown.size = guiCoord(0, textSize, 0, textSize)
+					dropDown.position = guiCoord(0, 2, 0.5, -textSize / 2)
+					dropDown.backgroundAlpha = 0
+					dropDown.active = false
+				else
+					dropDown = core.construct("guiIcon", {
+						parent = container,
+						iconId = isExpanded and "expand_less" or "expand_more",
+						iconColour = dropDownColour or colour(1, 1, 1),
+						size = guiCoord(0, textSize, 0, textSize),
+						position = guiCoord(0, 2, 0.5, -textSize / 2),
+						backgroundAlpha = 0,
+						active = false,
+					})
+				end
+			else
+				if dropDown then					
+					dropDown:destroy()
+					dropDown = nil
+				end
+			end
+
+			icon.iconId = iconId
+			icon.iconColour = iconColour
+			icon.iconType = iconType
+			icon.size = guiCoord(0, textSize, 0, textSize)
+			icon.position = guiCoord(0, textSize + 4, 0.5, -textSize / 2)
+			icon.backgroundAlpha = 0
+			icon.active = false
+
+			textBox.parent = container
+			textBox.text = text
+			textBox.size = guiCoord(1, -textSize * 2 - 8, 1 , 0)
+			textBox.position = guiCoord(0, textSize * 2 + 8, 0, 0)
+			textBox.textAlign = "middleLeft"
+			textBox.textAlpha = textAlpha
+			textBox.backgroundAlpha = 0
+			textBox.textColour = textColour
+			textBox.active = false
+		end,
+		propsThenRender = function(changes)
+			for k,v in next, changes do
+				props[k] = v
+			end
+			self.render()
 		end,
 		props = props,
 	}
+
+	self.render()
+	return self
 end
