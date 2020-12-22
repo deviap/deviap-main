@@ -75,15 +75,18 @@ local createTooltip = function(parent)
 			if not inside then return end
 		end
 
-		local moved
-		moved = core.input:on("mouseMoved", function()
+		local update = function()
 			local pos = core.input.mousePosition - parent.parent.absolutePosition
 			tooltip.container.position = guiCoord(0, pos.x, 0, pos.y - tooltip.container.absoluteSize.y)
+		end
+
+		local moved
+		moved = core.input:on("mouseMoved", function()
+			update()
 			if not inside then core.disconnect(moved) end
 		end)
 
-		local pos = core.input.mousePosition - parent.parent.absolutePosition
-		tooltip.container.position = guiCoord(0, pos.x, 0, pos.y - tooltip.container.absoluteSize.y)
+		update()
 		tooltip.state.dispatch { type = "enable" }
 	end)
 
