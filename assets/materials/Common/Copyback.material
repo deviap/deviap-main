@@ -58,6 +58,17 @@ material Ogre/Copy/4xFP32
 	}
 }
 
+material Ogre/Copy/4xFP32_AlphaBlending : Ogre/Copy/4xFP32 
+{
+	technique 
+	{
+		pass 
+		{
+			scene_blend alpha_blend
+		}
+	}
+}
+
 fragment_program Ogre/Copy/4xFP32_2DArray_ps_HLSL hlsl
 {
 	source Copyback_4xFP32_2DArray_ps.hlsl
