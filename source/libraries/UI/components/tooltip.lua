@@ -39,7 +39,6 @@ return function(props)
 
 	local self = newBaseComponent(props)
 	self.container.size = guiCoord(0, 58, 0, 29)
-	self.container.backgroundAlpha = 0
 
 	local textBox = core.construct("guiTextBox", {
 		name = "textBox",
@@ -70,6 +69,7 @@ return function(props)
 		textBox.strokeRadius = 3
 		textBox.text = props.text
 		oldRender()
+		self.container.backgroundAlpha = 0
 	end
 
 	self.state.subscribe(function(state)
