@@ -9,20 +9,26 @@ hierarchyMenu = require("./hierarchy.lua"){
 	size = guiCoord(0, 400, 0, 800),
 	position = guiCoord(0, 50, 0, 0),
 
-	defaultBackgroundColour = colour(0.1, 0.1, 0.1),
+	defaultBackgroundColour = colour(0.0, 0.0, 0.0),
 	defaultTextColour = colour(0.9, 0.9, 0.9),
+	defaultIconColour = colour(1, 1, 1),
+	backgroundColour = colour(0, 0, 0),
 
 	buttonHeight = 25,
 	insetBy = 10,
 
-	onButtonEnter = function(child)
-		child.backgroundColour = colour(0.5, 0.5, 0.5)
-		hierarchyMenu.render()
+	onButtonEnter = function(child, button)
+		child.backgroundColour = colour(0.2, 0.2, 0.2)
+		button.propsThenRender {
+			backgroundColour = child.backgroundColour
+		}
 	end,
 
-	onButtonExit = function(child)
-		child.backgroundColour = colour(0.1, 0.1, 0.1)
-		hierarchyMenu.render()
+	onButtonExit = function(child, button)
+		child.backgroundColour = nil
+		button.propsThenRender {
+			backgroundColour = hierarchyMenu.props.backgroundColour
+		}
 	end,
 
 	onButtonDown1 = function(child)
