@@ -87,6 +87,7 @@ return function(props)
 
 		correctSize()
 		oldRender()
+		self.container.backgroundAlpha = 0
 	end
 
 	self.state.subscribe(function(state)
