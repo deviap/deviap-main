@@ -25,6 +25,14 @@ local base = core.construct("block", {
 	colour = colour.hex("#ffffff")
 })
 
+local block = core.construct("block", {
+	position = vector3(0, -9, 0),
+	colour = colour.hex("#ffff00")
+})
+
+local translation = require("client/scripts/controllers/translation.lua")
+--translation.attach(block)
+
 core.scene.camera:lookAt(base.position)
 
 -- MAIN INTERFACE IGNORE ABOVE
