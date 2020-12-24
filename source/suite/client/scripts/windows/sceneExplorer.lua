@@ -79,10 +79,15 @@ return function(props)
 			end
 		end
 
-		-- child:on("childAdded", function(newChild)
-		-- 	node.children[#node.children+1] = helper(newChild)
-		-- 	hierarchy.render()
-		-- end)
+		child:on("childAdded", function(newChild)
+			node.children[#node.children+1] = helper(newChild) --OK ERRORS HERE
+			hierarchy.render() -- NOT FULL PICTURE
+
+			-- COMMENT ABOVE CODE AND UNCOMMENT BELOW
+			-- print(newChild)
+			-- print(newChild.parent)
+			-- print(child)
+		end)
 
 		-- child:on("childRemoved", function(newChild)
 		-- 	local newChildHierarchy = hierarchy.getButtonFromSignature(newChild)
