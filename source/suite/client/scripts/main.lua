@@ -86,6 +86,16 @@ horizontalNav.addNavTextItem({
 -- IO List Test
 --  core.io:list()
 
+require("./windows/sceneExplorer.lua")({ 
+	parent = core.construct("guiFrame", {
+		parent = core.interface,
+		size = guiCoord(1,0,1,0),
+		zIndex = 100,
+		backgroundColour = colour(0, 0, 0)
+	}),
+	size = guiCoord(0, 200, 0, 400),
+	position = guiCoord(0, 50, 0, 20),
+})
 -- Hierarchy Test
 --require("./windows/hierarchyTest.lua")
 

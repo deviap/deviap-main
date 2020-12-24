@@ -127,13 +127,13 @@ return function(props)
 			local backgroundColour = props.backgroundColour or colour(1, 1, 1)
 			local backgroundAlpha = props.backgroundAlpha or 1
 			
-			local isExpanded = props.isExpanded -- Default false
-			local hasDescendants = props.hasDescendants -- Default false
-			local dropDownColour = props.dropDownColour or colour(1, 1, 1)
-
 			local iconId = props.iconId or ""
 			local iconColour = props.iconColour or colour(1, 1, 1)
 			local iconType = props.iconType or "material"
+
+			local isExpanded = props.isExpanded -- Default false
+			local hasDescendants = props.hasDescendants -- Default false
+			local dropDownColour = props.dropDownColour or iconColour
 
 			local text = props.text or ""
 			local textSize = props.textSize or 16

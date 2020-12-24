@@ -25,8 +25,39 @@ parseSceneToHierarchy = function(root)
 end
 
 return function(props)
+	local selected = {}
+
 	props.hierarchy = {}
+	props.name = "__SCENE_EXPLORER_DO_NOT_ENTER"
 	local hierarchy = newHierarchy(props)
+
+	props.onButtonDown1 = function(node, button, updateHandler)
+		if core.input:isKeyDown(enums.keys.KEY_LSHIFT) then
+			if selected[node] then
+				selected[node] = nil
+				node.backgroundColour = nil
+			else
+				selected[node] = true
+				node.backgroundColour = colour(0.8, 0.8, 0.8)
+			end
+		else
+			for k,v in next, selected do
+				k.backgroundColour = nil
+				selected[k] = nil
+			end
+
+			selected[node] = true
+			node.backgroundColour = colour(0.8, 0.8, 0.8)
+
+			if node.children and #node.children > 0 then
+				node.isExpanded = not node.isExpanded
+			end
+			hierarchy.render()
+
+		end
+
+		updateHandler()
+	end
 
 	local helper
 	helper = function(child)
@@ -35,29 +66,34 @@ return function(props)
 		node.iconId = "stop"
 		node.signature = child
 
+		if child.name == "__SCENE_EXPLORER_DO_NOT_ENTER" then
+			return node
+		end
+
 		if #child.children > 0 then
 			node.children = {}
 		
 			for k,v in next, child.children do
+				print(v)
 				node.children[k] = helper(v)
 			end
 		end
 
-		child:on("childAdded", function(newChild)
-			node.children[#node.children+1] = helper(newChild)
-			hierarchy.render()
-		end)
+		-- child:on("childAdded", function(newChild)
+		-- 	node.children[#node.children+1] = helper(newChild)
+		-- 	hierarchy.render()
+		-- end)
 
-		child:on("childRemoved", function(newChild)
-			local newChildHierarchy = hierarchy.getButtonFromSignature(newChild)
-			for k,v in next, node.children do
-				if v == newChildHierarchy then
-					table.remove(node.children, k)
-					hierarchy.render()
-					break
-				end
-			end
-		end)
+		-- child:on("childRemoved", function(newChild)
+		-- 	local newChildHierarchy = hierarchy.getButtonFromSignature(newChild)
+		-- 	for k,v in next, node.children do
+		-- 		if v == newChildHierarchy then
+		-- 			table.remove(node.children, k)
+		-- 			hierarchy.render()
+		-- 			break
+		-- 		end
+		-- 	end
+		-- end)
 		
 		return node
 	end

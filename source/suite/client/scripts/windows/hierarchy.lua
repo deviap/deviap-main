@@ -96,6 +96,7 @@ return function(props)
 			local size = props.size or guiCoord(0, 0, 0, 0)
 			local position = props.position or guiCoord(0, 0, 0, 0)
 			local backgroundColour = props.backgroundColour or colour(1, 1, 1)
+			local name = props.name or "object"
 			local scrollbarAlpha = props.scrollbarAlpha or 1
 			local scrollbarColour = props.scrollbarColour or colour(0, 0, 0)
 			local scrollbarRadius = props.scrollbarRadius or 0
@@ -113,6 +114,7 @@ return function(props)
 
 			local onButtonDown1 = props.onButtonDown1
 			local onButtonDown2 = props.onButtonDown2
+			local onButtonUp1 = props.onButtonUp1
 			local onButtonUp2 = props.onButtonUp2
 			local onButtonDown2 = props.onButtonDown2
 			local onButtonEnter = props.onButtonEnter
@@ -125,7 +127,6 @@ return function(props)
 			container.scrollbarAlpha = scrollbarAlpha
 			container.scrollbarColour = scrollbarColour
 			container.scrollbarRadius = scrollbarRadius
-			container.scrollbarWidth = scrollbarWidth
 
 			local offset = 0
 			local visited = {}
@@ -138,6 +139,26 @@ return function(props)
 				if button == nil then
 					button = newButton { parent = container }
 					rendered[child] = button
+				end
+
+				local update 
+				update = function()
+					button.propsThenRender {
+						backgroundColour = child.backgroundColour or defaultBackgroundColour,
+						backgroundAlpha = child.backgroundAlpha or defaultBackgroundAlpha,
+						
+						text = child.text or "",
+						textSize = buttonHeight - 10,
+						textColour = child.textColour or defaultTextColour,
+						textAlpha = child.textAlpha or defaultTextAlpha,
+						
+						iconId = child.iconId,
+						iconType = child.iconType or defaultIconType,
+						iconColour = child.iconColour or defaultIconColour,
+						
+						hasDescendants = child.hasDescendants == nil and child.children ~= nil or child.hasDescendants,
+						isExpanded = child.isExpanded,
+					}
 				end
 
 				button.propsThenRender {
@@ -159,24 +180,26 @@ return function(props)
 					isExpanded = child.isExpanded,
 		
 					onDown1 = onButtonDown1 and function()
-						onButtonDown1(child, button)
+						onButtonDown1(child, button, update)
 					end,
 					onDown2 = onButtonDown2 and function()
-						onButtonDown2(child, button)
+						onButtonDown2(child, button, update)
 					end,
-					onUp1 = onButtonUp2 and function()
-						onButtonUp2(child, button)
+					onUp1 = onButtonUp1 and function()
+						onButtonUp2(child, button, update)
 					end,
-					onUp2 = onButtonDown2 and function()
-						onButtonDown2(child, button)
+					onUp2 = onButtonUp2 and function()
+						onButtonDown2(child, button, update)
 					end,
 					onEnter = onButtonEnter and function()
-						onButtonEnter(child, button)
+						onButtonEnter(child, button, update)
 					end,
 					onExit = onButtonExit and function()
-						onButtonExit(child, button)
+						onButtonExit(child, update, button, update)
 					end,
 				}
+
+				update()
 
 				offset = offset + 1
 
