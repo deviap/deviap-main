@@ -65,16 +65,14 @@ return function(props)
 		node.text = child.name
 		node.iconId = "stop"
 		node.signature = child
+		node.children = {}
 
 		if child.name == "__SCENE_EXPLORER_DO_NOT_ENTER" then
 			return node
 		end
 
 		if #child.children > 0 then
-			node.children = {}
-		
 			for k,v in next, child.children do
-				print(v)
 				node.children[k] = helper(v)
 			end
 		end
@@ -82,11 +80,13 @@ return function(props)
 		child:on("childAdded", function(newChild)
 			node.children[#node.children+1] = helper(newChild) --OK ERRORS HERE
 			hierarchy.render() -- NOT FULL PICTURE
+			-- newChild.children is nill for some reason. I don't know why.
 
 			-- COMMENT ABOVE CODE AND UNCOMMENT BELOW
-			-- print(newChild)
-			-- print(newChild.parent)
-			-- print(child)
+			-- print(newChild) --> textbox
+			-- print(newChild.parent) --> nil
+			-- print(newChild.children) --> nil
+			-- print(child) --> scrollView
 		end)
 
 		-- child:on("childRemoved", function(newChild)
