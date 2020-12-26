@@ -85,7 +85,7 @@ return function(props)
 		textBox.strokeRadius = 3
 		textBox.text = props.text
 
-		correctSize()
+		--correctSize()
 		oldRender()
 		self.container.backgroundAlpha = 0
 	end
