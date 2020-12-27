@@ -121,6 +121,7 @@ return function(props)
 			local onButtonExit = props.onButtonExit
 
 			container.parent = parent
+			container.name = name
 			container.size = size
 			container.position = position
 			container.backgroundColour = backgroundColour

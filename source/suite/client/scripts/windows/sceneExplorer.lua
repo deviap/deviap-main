@@ -61,6 +61,7 @@ return function(props)
 
 	local helper
 	helper = function(child)
+	
 		local node = {}
 		node.text = child.name
 		node.iconId = "stop"
@@ -71,6 +72,10 @@ return function(props)
 			return node
 		end
 
+		if child.name == "outputWindow" then
+			return node
+		end
+	
 		if #child.children > 0 then
 			for k,v in next, child.children do
 				node.children[k] = helper(v)
@@ -78,15 +83,16 @@ return function(props)
 		end
 
 		child:on("childAdded", function(newChild)
-			node.children[#node.children+1] = helper(newChild) --OK ERRORS HERE
+			local children = child.children
+			if not children[#children] then return end -- Meant object was deleted.
+			if hierarchy.getButtonFromSignature(children[#children]) then return end --Was already registered.
+			sleep(100)
+			print(child.parent.name)
+			print(child.parent.parent.name)
+			print(child.parent.parent.parent.name)
+			print(child.parent.parent.parent.parent.name)
+			node.children[#node.children+1] = helper(children[#children]) --OK ERRORS HERE
 			hierarchy.render() -- NOT FULL PICTURE
-			-- newChild.children is nill for some reason. I don't know why.
-
-			-- COMMENT ABOVE CODE AND UNCOMMENT BELOW
-			-- print(newChild) --> textbox
-			-- print(newChild.parent) --> nil
-			-- print(newChild.children) --> nil
-			-- print(child) --> scrollView
 		end)
 
 		-- child:on("childRemoved", function(newChild)
