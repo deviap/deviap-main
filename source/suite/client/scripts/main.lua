@@ -14,8 +14,8 @@ core.scene.camera.position = vector3(10, 10, -10)
 core.scene.camera.rotation = quaternion.euler(math.rad(25), 0, 0)
 
 core.graphics.ambientDirection = vector3(0, 1, 0)
-core.graphics.upperAmbient = colour.rgb(111, 111, 111)
-core.graphics.lowerAmbient = colour.rgb(0, 0, 0)
+core.graphics.upperAmbient = colour.rgb(244, 244, 244)
+core.graphics.lowerAmbient = colour.rgb(125, 124, 134)
 
 core.graphics.sky = ""
 
@@ -27,6 +27,7 @@ local base = core.construct("block", {
 
 local block = core.construct("block", {
 	position = vector3(0, -9, 0),
+	scale = vector3(2, 1, 2),
 	colour = colour.hex("#ffff00")
 })
 
@@ -83,10 +84,25 @@ horizontalNav.addNavTextItem({
 	redirect = nil
 })
 
+-- Window / Widget Test
+--[[
+local window = require("devgit:source/libraries/UI/components/widgets/window.lua")
+local properties = require("./windows/properties.lua")
+
+window {
+	parent = core.interface,
+	position = guiCoord(0, 200, 0, 100),
+	size = guiCoord(0, 300, 0, 200),
+	heading = "Properties",
+	content = properties.construct(base)
+}
+]]--
+
 -- IO List Test
 --  core.io:list()
 
-require("./windows/sceneExplorer.lua")({ 
+-- Scene Explorer Test
+--[[require("./windows/sceneExplorer.lua")({ 
 	parent = core.construct("guiFrame", {
 		parent = core.interface,
 		size = guiCoord(1,0,1,0),
@@ -95,7 +111,8 @@ require("./windows/sceneExplorer.lua")({
 	}),
 	size = guiCoord(0, 200, 0, 400),
 	position = guiCoord(0, 50, 0, 20),
-})
+})]]--
+
 -- Hierarchy Test
 --require("./windows/hierarchyTest.lua")
 

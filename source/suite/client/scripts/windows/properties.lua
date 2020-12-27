@@ -8,37 +8,22 @@ local textInput = require("devgit:source/libraries/UI/components/inputs/textInpu
 local checkbox = require("devgit:source/libraries/UI/components/checkbox.lua")
 
 return {
-    construct = function(parent, object)
+    construct = function(object)
         local container = core.construct("guiFrame", {
-            parent = parent,
-            position = guiCoord(0, 100, 0, 100),
-            size = guiCoord(0, 510, 0, 556),
             backgroundColour = colour.rgb(255, 255, 255),
             zIndex = 10
         })
 
-        local header = core.construct("guiTextBox", {
-			parent = container,
-			text = "PROPERTIES",
-			position = guiCoord(0, 11, 0, 4),
-			size = guiCoord(1, 0, 0, 78),
-            textSize = 36,
-            textFont = "deviap:fonts/openSansExtraBold.ttf",
-            textColour = colour.hex("707070"),
-			backgroundAlpha = 0
-        })
-
         local scrollContainer = core.construct("guiScrollView", {
 			parent = container,
-			position = guiCoord(0, 4, 0, 40),
-            size = guiCoord(0, 500, 0, 490),
+            size = guiCoord(1, 0, 1, 0),
             canvasSize = guiCoord(1, 0, 2, 0),
             backgroundColour = colour.rgb(255, 0, 0),
             backgroundAlpha = 0,
 			scrollbarColour = colour.hex("#212121"),
 			scrollbarRadius = 0,
 			scrollbarWidth = 2,
-			scrollbarAlpha = 1
+			scrollbarAlpha = 0.3
 		})
 
 
@@ -75,7 +60,7 @@ return {
                     for i=0, 2, 1 do
                         local input = textInput {
                             parent = subcontainer,
-							position = guiCoord(1, -20-((2-i)*25), 0, 15),
+							position = guiCoord(1, -20-((2-i)*25), 0, 7),
                             size = guiCoord(0, 20, 0, 23),
                             placeholder = (i == 0 and tostring(object[property].x)) or (i == 1 and tostring(object[property].y)) or (i == 2 and tostring(object[property].x)),
                             textSize = 18,
@@ -93,7 +78,7 @@ return {
                     for i=0, 2, 1 do
                         local input = textInput {
                             parent = subcontainer,
-                            position = guiCoord(1, -20-((2-i)*25), 0, 15),
+                            position = guiCoord(1, -20-((2-i)*25), 0, 7),
                             size = guiCoord(0, 20, 0, 23),
                             placeholder = (i == 0 and tostring(object[property].r)) or (i == 1 and tostring(object[property].g)) or (i == 2 and tostring(object[property].b)),
                             textSize = 18,
@@ -110,7 +95,7 @@ return {
                 elseif propertyType == "number" or propertyType == "uint8_t" then
                     local input = textInput {
                         parent = subcontainer,
-                        position = guiCoord(1, -20, 0, 15),
+                        position = guiCoord(1, -20, 0, 7),
                         size = guiCoord(0, 20, 0, 23),
                         placeholder = tostring(object[property]),
                         textSize = 18,
@@ -126,7 +111,7 @@ return {
                 elseif propertyType == "string" then
                     local input = textInput {
                         parent = subcontainer,
-                        position = guiCoord(1, -130, 0, 15),
+                        position = guiCoord(1, -130, 0, 7),
                         size = guiCoord(0, 130, 0, 23),
                         placeholder = object[property],
                         textSize = 18,
@@ -141,7 +126,7 @@ return {
                 elseif propertyType == "boolean" then
                     local _checkbox = checkbox {
                         parent = subcontainer,
-                        position = guiCoord(1, -20, 0, 18),
+                        position = guiCoord(1, -20, 0, 13),
                         size = guiCoord(0, 20, 0, 16)
                     }
 
@@ -156,6 +141,8 @@ return {
             end
 		end
 
-		scrollContainer.canvasSize = guiCoord(0, longestWidth + 10, 0, count*40)
+        scrollContainer.canvasSize = guiCoord(0, longestWidth + 10, 0, count*40)
+        
+        return container
     end
 }

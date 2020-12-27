@@ -4,6 +4,18 @@
 -- Made available under the MIT License:                     --
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
+
+--[[
+    WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP 
+    WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP 
+    WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP 
+    WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP 
+    
+    TODO:
+        - Handle Input with the handles in this controller
+        - Allow calling scripts to provide a callback
+]]
+
 --[[
     Manages the object's translation in Suite
 
@@ -22,6 +34,18 @@ local map = {
     ["bottom"] = {vector3(0, -1, 0), colour.hex("4CAF50")} -- y -, handle colour (blue)
 }
 
+local toolTip = core.construct("guiTextBox", {
+    backgroundAlpha = 0,
+    text = "test",
+    textSize = 18,
+    textAlign = "middleLeft",
+    size = guiCoord(1, 0, 0, 20),
+    position = guiCoord(0,100, 0, 20),
+    parent = core.interface,
+    name = "__translation",
+    visible = false
+})
+
 -- Move to separate module in library
 local function attachHandles(obj, props)
     if not props then 
@@ -30,8 +54,9 @@ local function attachHandles(obj, props)
 
     props.arms = props.arms == nil and true or props.arms
     props.shape = props.shape or "deviap:3d/cube.glb"
-    props.handleSize = props.handleSize or vector3(0.3, 0.3, 0.3)
+    props.handleSize = props.handleSize or vector3(0.2, 0.3, 0.2)
 
+    local handles = {}
     for direction, data in pairs(map) do
 
         --[[
@@ -54,7 +79,7 @@ local function attachHandles(obj, props)
             inheritsScale = false,
             visible = props.arms,
         })
-        core.graphics.clearColour = colour.random()
+
         --[[
             Now we create the actual handle and nest it in root, which sits
             on the face.
@@ -62,7 +87,7 @@ local function attachHandles(obj, props)
             Any position we set here can always give us a fixed distance
             from the face, even if the scale of the object changes.
         ]]
-        core.construct("block", {
+        local handle = core.construct("block", {
             parent = root,
             name = "handle",
             position = vector3(0, 0.65, 0),
@@ -71,13 +96,35 @@ local function attachHandles(obj, props)
             emissiveColour = data[2],
             renderQueue = 200,
             mesh = props.shape,
-            inheritsScale = false,
+            inheritsScale = false
         })
+
+        handles[handle] = true
     end
+
+    return handles
 end
 -- Create Handles.
 function controller.attach(obj)
-    attachHandles(obj)
+    local handles = attachHandles(obj)
+    local camera = core.scene.camera
+    spawn(function()
+        while sleep() do
+            -- Calculate the camera's position and the cursor's direction
+            local camPos = camera.position
+            local mousePos = camera:screenToWorld(core.input.mousePosition) * 500
+
+            -- Perform the raycast, exclude our selection highlighter
+            local hits = core.scene:raycast(camPos, camPos + mousePos)
+
+
+            for _,v in pairs(hits) do
+                if handles[v.object] then
+                    print("test")
+                end
+            end
+        end
+    end)
 end
 
 -- Remove Handles.
