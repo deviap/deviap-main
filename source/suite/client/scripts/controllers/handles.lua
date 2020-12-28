@@ -23,31 +23,29 @@
     translation.attach()
     translation.detach()
 ]]
+
 local controller = {}
+local inlineNotification = require("devgit:source/libraries/UI/components/notifications/inlineNotification.lua")
+local map = require("./handles/directions.lua")
 
-local map = {
-    ["front"] = {vector3(1, 0, 0), colour.hex("f44336")}, -- x +, handle colour (red)
-    ["back"] = {vector3(-1, 0, 0), colour.hex("f44336")}, -- x -, handle colour (red)
-    ["right"] = {vector3(0, 0, 1), colour.hex("3F51B5")}, -- z +, handle colour (green)
-    ["left"] = {vector3(0, 0, -1), colour.hex("3F51B5")}, -- z -, handle colour (green)
-    ["top"] = {vector3(0, 1, 0), colour.hex("4CAF50")}, -- y +, handle colour (blue)
-    ["bottom"] = {vector3(0, -1, 0), colour.hex("4CAF50")} -- y -, handle colour (blue)
-}
-
-local toolTip = core.construct("guiTextBox", {
-    backgroundAlpha = 0,
-    text = "test",
-    textSize = 18,
-    textAlign = "middleLeft",
-    size = guiCoord(1, 0, 0, 20),
-    position = guiCoord(0,100, 0, 20),
-    parent = core.interface,
-    name = "__translation",
-    visible = false
-})
+-- TODO: REMOVE THIS
+local shownDisclaimer = false
 
 -- Move to separate module in library
 local function attachHandles(obj, props)
+
+    -- TODO: REMOVE THIS
+    if not shownDisclaimer then
+        inlineNotification {
+            parent = core.interface,
+            position = guiCoord(1, -306, 0, 8),
+            type = "warning",
+            iconEnabled = false,
+            text = "handles are a proto, doesnt look OK yet. Consult jay"
+        }
+        shownDisclaimer = true
+    end
+
     if not props then 
         props = {}
     end
@@ -60,6 +58,8 @@ local function attachHandles(obj, props)
     for direction, data in pairs(map) do
 
         --[[
+            ROOT HAS BEEN COMMENTED DUE TO AN ENGINE BUG
+
             Why do we create the 'root' object?
 
             Well, we want to have the handles always located just off the edge
@@ -67,18 +67,20 @@ local function attachHandles(obj, props)
 
             The root object is positioned as such so that it is stuck directly
             onto an object's outer face. (Position is relative to the parent's position AND scale).
+
+            local root = core.construct("block", {
+                parent = obj,
+                name = "__" .. direction .. "Root",
+                position = data[1]/2,
+                scale = vector3(0.025, 1.0, 0.025),
+                rotation = quaternion.lookRotation(data[1]) * quaternion.euler(0, math.rad(90), math.rad(90)),
+                colour = data[2],
+                emissiveColour = data[2] * 0.75,
+                inheritsScale = false,
+                visible = props.arms,
+            })
+
         ]]
-        local root = core.construct("block", {
-            parent = obj,
-            name = "__" .. direction .. "Root",
-            position = data[1]/2,
-            scale = vector3(0.025, 1.0, 0.025),
-            rotation = quaternion.lookRotation(data[1]) * quaternion.euler(0, math.rad(90), math.rad(90)),
-            colour = data[2],
-            emissiveColour = data[2] * 0.75,
-            inheritsScale = false,
-            visible = props.arms,
-        })
 
         --[[
             Now we create the actual handle and nest it in root, which sits
@@ -86,45 +88,44 @@ local function attachHandles(obj, props)
 
             Any position we set here can always give us a fixed distance
             from the face, even if the scale of the object changes.
+
+            local handle = core.construct("block", {
+                parent = root,
+                name = "handle",
+                position = vector3(0, 0.65, 0),
+                scale = props.handleSize,
+                colour = data[2],
+                emissiveColour = data[2],
+                renderQueue = 200,
+                mesh = props.shape,
+                inheritsScale = false
+            })
         ]]
+
         local handle = core.construct("block", {
-            parent = root,
-            name = "handle",
-            position = vector3(0, 0.65, 0),
+            parent = obj,
+            name = "__" .. direction .. "Root",
+            position = data[1]/1.75,
             scale = props.handleSize,
             colour = data[2],
-            emissiveColour = data[2],
+            emissiveColour = data[2] * 0.75,
+            --inheritsScale = false,
+            visible = props.arms,
             renderQueue = 200,
             mesh = props.shape,
-            inheritsScale = false
+            rotation = quaternion.lookRotation(data[1]) * quaternion.euler(0, math.rad(90), math.rad(90)),
         })
 
-        handles[handle] = true
+        handles[handle] = direction
     end
 
     return handles
 end
 -- Create Handles.
-function controller.attach(obj)
-    local handles = attachHandles(obj)
-    local camera = core.scene.camera
-    spawn(function()
-        while sleep() do
-            -- Calculate the camera's position and the cursor's direction
-            local camPos = camera.position
-            local mousePos = camera:screenToWorld(core.input.mousePosition) * 500
-
-            -- Perform the raycast, exclude our selection highlighter
-            local hits = core.scene:raycast(camPos, camPos + mousePos)
-
-
-            for _,v in pairs(hits) do
-                if handles[v.object] then
-                    print("test")
-                end
-            end
-        end
-    end)
+function controller.attach(obj, properties)
+    local handles = attachHandles(obj, properties)
+   
+    local mouseEvent = core.input:on("mouseLeftDown", require("./handles/mouseDown.lua")(handles))
 end
 
 -- Remove Handles.

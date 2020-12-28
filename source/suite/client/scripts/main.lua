@@ -31,8 +31,11 @@ local block = core.construct("block", {
 	colour = colour.hex("#ffff00")
 })
 
-local translation = require("client/scripts/controllers/translation.lua")
---translation.attach(block)
+local handles = require("client/scripts/controllers/handles.lua")
+handles.attach(block, {
+	shape = "deviap:3d/cone.glb",
+	handleSize = vector3(0.2, 0.6, 0.2)
+})
 
 core.scene.camera:lookAt(base.position)
 

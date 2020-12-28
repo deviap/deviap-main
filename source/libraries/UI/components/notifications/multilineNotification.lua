@@ -64,7 +64,7 @@ return function(props)
         backgroundAlpha = 0,
         size = guiCoord(0, 80, 0, 30),
         position = guiCoord(0, 10, 0, 0),
-		text = "Info notification",
+		text = "Info",
 		textAlign = "middleLeft",
 		textFont = "deviap:fonts/openSansBold.ttf",
 		textSize = 12,
@@ -112,7 +112,7 @@ return function(props)
 
 		if props.type == "success" then
 			colourBorder.backgroundColour = colour.hex("#3DBA61")
-			headerText.text = "Success notification"
+			headerText.text = "Success"
 			headerText.size = guiCoord(0, headerText.textDimensions.x, 0, 30)
 
 			if props.iconEnabled then
@@ -124,7 +124,7 @@ return function(props)
 			end
 		elseif props.type == "warning" then
 			colourBorder.backgroundColour = colour.hex("#FDD03A")
-			headerText.text = "Warning notification"
+			headerText.text = "Warning"
 			headerText.size = guiCoord(0, headerText.textDimensions.x, 0, 30)
 
 			if props.iconEnabled then
@@ -136,7 +136,7 @@ return function(props)
 			end
 		elseif props.type == "error" then
 			colourBorder.backgroundColour = colour.hex("#F44336")
-			headerText.text = "Error notification"
+			headerText.text = "Error"
 			headerText.size = guiCoord(0, headerText.textDimensions.x, 0, 30)
 
 			if props.iconEnabled then

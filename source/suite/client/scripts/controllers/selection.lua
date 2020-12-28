@@ -16,11 +16,25 @@
     selection.isSelected(obj)
 ]]
 local outliner = require("client/scripts/controllers/outliner.lua")
+local multilineNotification = require("devgit:source/libraries/UI/components/notifications/multilineNotification.lua")
 
 local controller = {}
 local _selection = {}
 
 local function selectable(object)
+	if type(object.name) == "string" and object.name:sub(0, 2) == "__" then
+		warn("Attempted to select an object with the __ name prefix! Fix this.")
+
+		multilineNotification {
+			parent = core.interface,
+			position = guiCoord(1, -306, 1, -88),
+			iconEnabled = false,
+			type = "error",
+			text = "REPORT THIS - Code tried to select something with the '__' name prefix. This shouldn't happen and needs to be fixed!"
+		}
+
+		return false
+	end
 	return true -- placeholder
 end
 

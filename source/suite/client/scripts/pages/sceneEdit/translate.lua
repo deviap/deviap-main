@@ -6,7 +6,7 @@
 ---------------------------------------------------------------
 local camera = core.scene.camera
 local selection = require("client/scripts/controllers/selection.lua")
-local translation = require("client/scripts/controllers/translation.lua")
+local handles = require("client/scripts/controllers/handles.lua")
 local outliner = require("client/scripts/controllers/outliner.lua")
 
 local step = 1 -- make gui input
@@ -27,14 +27,14 @@ return {
                 -- Handle selections that are not handles.
                 if self.hover and not string.find(self.hover.name, "Handle") then
                     if selection.get() then
-                        translation.detach(selection.get())
+                        handles.detach(selection.get())
                     end
                     selection.set {self.hover}
-                    translation.attach(self.hover)
+                    handles.attach(self.hover)
                 -- Handle selections that are handles.
                 elseif self.hover and string.find(self.hover.name, "Handle") then
                     local face = string.sub(self.hover.name, 1, (string.find(self.hover.name, "H"))-1)
-                    local shift = translation.getFaceMapping(face)[1]
+                    local shift = handles.getFaceMapping(face)[1]
                     -- Apply action / trigger on each handle based on face.
 
                     -- Remove axis if draw is valid.
@@ -76,7 +76,7 @@ return {
                     draw:destroy()
                     draw = nil
                 end
-                translation.detach(self.hover)
+                handles.detach(self.hover)
                 selection.deselect(self.hover)
 			end
 		end)
