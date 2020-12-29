@@ -125,7 +125,7 @@ end
 function controller.attach(obj, properties)
     local handles = attachHandles(obj, properties)
    
-    local mouseEvent = core.input:on("mouseLeftDown", require("./handles/mouseDown.lua")(handles))
+    local mouseEvent = core.input:on("mouseLeftDown", require("./handles/mouseDown.lua")(handles, properties.callback))
 end
 
 -- Remove Handles.

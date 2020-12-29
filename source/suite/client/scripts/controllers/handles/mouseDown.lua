@@ -20,7 +20,7 @@ local toolTip = core.construct("guiTextBox", {
     visible = false
 })
 
-return function(handles)
+return function(handles, cb)
     return function()
         local camera = core.scene.camera
 
@@ -36,13 +36,50 @@ return function(handles)
                 local direction = handles[v.hit]
                 local data = map[direction]
 
-                toolTip.visible = true
-                toolTip.text = direction
-                toolTip.position = guiCoord(0, core.input.mousePosition.x + 12, 0, core.input.mousePosition.y)
+                -- Here we attempt to convert the 3D look vector
+                -- of the axe, to a 2D look vector for mouse movements.
+                local lookVector3d = v.hit.parent.rotation * (data[1] * 4)
+                local point3dA = v.hit.parent.position
+                local point3dB = point3dA + lookVector3d
+            
+                local point2dA = camera:worldToScreen(point3dA)
+                local point2dB = camera:worldToScreen(point3dB)
+                local lookVector2d = (point2dA - point2dB):normal()
+                
+                -- Store the mouse position before the drag
+                local startMousePosition = core.input.mousePosition
 
                 -- While the user is dragging we stay in this loop
                 while sleep() and core.input:isMouseButtonDown(1) do
-                    toolTip.position = guiCoord(0, core.input.mousePosition.x + 12, 0, core.input.mousePosition.y)
+                    -- Calculate the offset from the start mouse pos
+                    local mousePosition = core.input.mousePosition
+                    local offsetMousePosition = startMousePosition - mousePosition
+
+                    if offsetMousePosition:length() ~= 0 then
+                        -- Some arbitrary code to try and map the mouse's
+                        -- movement, to units of the approximate 2d lv we made
+                        local test = offsetMousePosition / lookVector2d
+                        local dist = 0
+                        if lookVector2d.x ~= 0 and lookVector2d.y ~= 0 then
+                            dist = (test.x + test.y) / 2
+                        elseif lookVector2d.x ~= 0 then
+                            dist = test.x
+                        elseif lookVector2d.y ~= 0 then
+                            dist = test.y
+                        end
+
+                        -- Display the movement to the user
+                        toolTip.visible = true
+                        toolTip.position = guiCoord(0, mousePosition.x + 12, 0, mousePosition.y)
+                        toolTip.text = tostring(dist)
+
+                        -- smack the callback
+                        if cb then
+                            cb(direction, dist)
+                        end
+                    else
+                        toolTip.visible = false
+                    end
                 end
 
                 toolTip.visible = false
