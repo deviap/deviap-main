@@ -20,7 +20,7 @@ local toolTip = core.construct("guiTextBox", {
     visible = false
 })
 
-return function(handles, cb)
+return function(handles, dragging, dragEnd)
     return function()
         local camera = core.scene.camera
 
@@ -48,6 +48,7 @@ return function(handles, cb)
                 
                 -- Store the mouse position before the drag
                 local startMousePosition = core.input.mousePosition
+                local lastMousePosition = startMousePosition
 
                 -- While the user is dragging we stay in this loop
                 while sleep() and core.input:isMouseButtonDown(1) do
@@ -55,33 +56,40 @@ return function(handles, cb)
                     local mousePosition = core.input.mousePosition
                     local offsetMousePosition = startMousePosition - mousePosition
 
-                    if offsetMousePosition:length() ~= 0 then
-                        -- Some arbitrary code to try and map the mouse's
-                        -- movement, to units of the approximate 2d lv we made
-                        local test = offsetMousePosition / lookVector2d
-                        local dist = 0
-                        if lookVector2d.x ~= 0 and lookVector2d.y ~= 0 then
-                            dist = (test.x + test.y) / 2
-                        elseif lookVector2d.x ~= 0 then
-                            dist = test.x
-                        elseif lookVector2d.y ~= 0 then
-                            dist = test.y
+                    if lastMousePosition ~= mousePosition then
+                        if offsetMousePosition:length() ~= 0 then
+                            -- Some arbitrary code to try and map the mouse's
+                            -- movement, to units of the approximate 2d lv we made
+                            local test = offsetMousePosition / lookVector2d
+                            local dist = 0
+                            if lookVector2d.x ~= 0 and lookVector2d.y ~= 0 then
+                                dist = (test.x + test.y) / 2
+                            elseif lookVector2d.x ~= 0 then
+                                dist = test.x
+                            elseif lookVector2d.y ~= 0 then
+                                dist = test.y
+                            end
+
+                            -- Display the movement to the user
+                            toolTip.visible = true
+                            toolTip.position = guiCoord(0, mousePosition.x + 12, 0, mousePosition.y)
+                            toolTip.text = tostring(dist)
+
+                            -- smack the callback
+                            if dragging then
+                                dragging(direction, dist, lookVector3d:normal())
+                            end
+                        else
+                            toolTip.visible = false
                         end
 
-                        -- Display the movement to the user
-                        toolTip.visible = true
-                        toolTip.position = guiCoord(0, mousePosition.x + 12, 0, mousePosition.y)
-                        toolTip.text = tostring(dist)
-
-                        -- smack the callback
-                        if cb then
-                            cb(direction, dist)
-                        end
-                    else
-                        toolTip.visible = false
+                        lastMousePosition = mousePosition
                     end
                 end
 
+                if dragEnd then
+                    dragEnd()
+                end
                 toolTip.visible = false
                 break
             end

@@ -32,7 +32,7 @@ local map = require("./handles/directions.lua")
 local shownDisclaimer = false
 
 -- Move to separate module in library
-local function attachHandles(obj, props)
+local function attachHandles(obj, props, lookVector3d)
 
     -- TODO: REMOVE THIS
     if not shownDisclaimer then
@@ -125,21 +125,28 @@ end
 function controller.attach(obj, properties)
     local handles = attachHandles(obj, properties)
    
-    local mouseEvent = core.input:on("mouseLeftDown", require("./handles/mouseDown.lua")(handles, properties.callback))
+    handles["__object"] = obj
+    handles["__mouseEvent"] = core.input:on("mouseLeftDown", require("./handles/mouseDown.lua")(handles, properties.dragging, properties.dragEnd))
+
+    return handles
 end
 
 -- Remove Handles.
-function controller.detach(obj)
-    if not obj.children then return end
-    for i,v in pairs(obj.children) do
-        if string.find(v.name, "Handle") then
-            v:destroy()
+-- Pass the object returned by handles.attach(obj, props)
+function controller.detach(handles)
+    if not handles["__object"] or not handles["__mouseEvent"] then
+        return error("Invalid object passed to handles.detach", 2)
+    end
+
+    core.disconnect(handles["__mouseEvent"])
+    for k,v in pairs(handles) do
+        if type(k) ~= "string" then
+            k:destroy()
         end
     end
-end
 
-function controller.getFaceMapping(face)
-    return map[face]
+    handles["__object"] = nil
+    handles["__mouseEvent"] = nil
 end
 
 return controller
