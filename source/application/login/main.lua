@@ -104,8 +104,8 @@ end)
 
 button:on("mouseLeftUp", function()
 	if _DEVICE:sub(0, 6) == "iPhone" or _DEVICE:sub(0, 4) == "iPad" then
-		core.engine:openUrl("https://deviap.com/dashboard?client=2")
+		core.process:openUrl("https://deviap.com/dashboard?client=2")
 	else
-		core.engine:openUrl("https://deviap.com/dashboard?client=1")
+		core.process:openUrl("https://deviap.com/dashboard?client=1")
 	end
 end)
