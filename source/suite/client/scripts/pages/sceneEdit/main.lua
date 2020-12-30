@@ -10,6 +10,7 @@ return {
     tools = {
         require("./select.lua"),
         require("./translate.lua"),
-        require("./rotate.lua")
+        require("./scale.lua"),
+        --require("./rotate.lua")
     }
 }

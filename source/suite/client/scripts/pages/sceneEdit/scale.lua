@@ -26,13 +26,16 @@ local function onSelectionChange()
     if #items > 0 then
         local lastDist = 0
         currentHandles = handles.attach(items[1], {
-            shape = "deviap:3d/cone.glb",
-            handleSize = vector3(0.2, 0.6, 0.2),
+            shape = "deviap:3d/cube.glb",
+            handleSize = vector3(0.2, 0.2, 0.2),
             dragging = function(direction, distance, lookVector3d)
                 local dist = distance - lastDist
                 local lv = (lookVector3d/20) * dist
+                if direction == "back" or direction == "left" or direction == "bottom" then
+                    lv = -lv
+                end
                 for _,v in pairs(items) do
-                    v.position = v.position + lv
+                    v.scale = v.scale + lv
                 end
 
                 lastDist = distance
@@ -45,9 +48,9 @@ local function onSelectionChange()
 end
 
 return {
-    name = "translate",
+    name = "scale",
     description = "Desc",
-    iconId = "open_with",
+    iconId = "fullscreen_exit",
     
     activate = function(self)
         -- HACK ALERT!

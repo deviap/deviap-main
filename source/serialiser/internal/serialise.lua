@@ -8,7 +8,11 @@
 local shared = require("devgit:source/serialiser/internal/shared.lua")
 local function serialiseObject(object)
 	if type(object) ~= "tevObj" then
-		return warn("Can only serialise tevObjs")
+		warn("Can only serialise tevObjs")
+		return nil
+	elseif object.name and object.name:sub(0, 2) == "__" then
+		warn("Skipping object with __ prefix")
+		return nil
 	end
 
     local serialised = {}

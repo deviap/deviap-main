@@ -21,12 +21,16 @@ return {
 			simulated = false
 		})
 
-		self.mouseLeftUp = core.input:on("mouseLeftUp", function(pos, systemHandled)
+		self.mouseLeftDown = core.input:on("mouseLeftDown", function(pos, systemHandled)
 			if systemHandled then return end
+
+			if self.hover and self.hover.name:sub(0, 2) == "__" then
+				return false
+			end
 
 			if core.input:isKeyDown(enums.keys.KEY_LSHIFT) then
 				if self.hover then
-					if  selection.isSelected(self.hover) then
+					if selection.isSelected(self.hover) then
 						selection.deselect(self.hover)
 					else
 						selection.select(self.hover)
@@ -34,7 +38,9 @@ return {
 				end
 			else
 				if self.hover then
-					selection.set {self.hover}
+					if not selection.isSelected(self.hover) then
+						selection.set {self.hover}
+					end
 				else
 					selection.clear()
 				end
@@ -70,7 +76,7 @@ return {
 	end,
 
 	deactivate = function(self)
-		core.disconnect(self.mouseLeftUp)
+		core.disconnect(self.mouseLeftDown)
 		
 		self.cursorHighlighter:destroy()
 		self.cursorHighlighter = nil
