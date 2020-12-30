@@ -11,6 +11,6 @@ return {
         require("./select.lua"),
         require("./translate.lua"),
         require("./scale.lua"),
-        require("./rotate.lua")
+        --require("./rotate.lua")
     }
 }
