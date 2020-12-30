@@ -105,7 +105,7 @@ function controller.open(fileType, title, allowNew)
     
     local y = 0
     for _,v in pairs(core.io:list()) do
-        if v:sub((v:len() - fileType:len()) + 1) == fileType then
+        if v ~= "manifest.json" and v:sub((v:len() - fileType:len()) + 1) == fileType then
             local btn = core.construct("guiTextBox", {
                 parent = innerContainer,
                 size = guiCoord(1, 0, 0, 18),
