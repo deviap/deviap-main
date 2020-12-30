@@ -212,12 +212,13 @@ return function(props)
 					end
 				end
 			end
-			print(offset)
+
 			container.canvasSize = guiCoord(1, 0, 0, offset * buttonHeight)
 		end,
 		getButtonFromSignature = function(signature)
 			return __id[signature]
-		end
+		end,
+		container = container; -- THIS IS A HACK!!!
 	}
 
 	self.render()

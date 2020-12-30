@@ -40,9 +40,9 @@ return {
 	construct = function(parent)
 		local hierarchyMenu
 		hierarchyMenu = require("./hierarchy.lua"){
-			parent = parent,
-			size = guiCoord(0, 400, 0, 400),
-			position = guiCoord(0, 50, 0, 0),
+			parent = core.interface,
+			size = guiCoord(1, 0, 1, 0),
+			position = guiCoord(0, 0, 0, 0),
 		
 			defaultBackgroundColour = colour(0.0, 0.0, 0.0),
 			defaultTextColour = colour(0.9, 0.9, 0.9),
@@ -63,7 +63,28 @@ return {
 				hierarchyMenu.render()
 			end,
 
+			onButtonEnter = function(child, button)
+				child.backgroundColour = colour(0.2, 0.2, 0.2)
+				button.propsThenRender {
+					backgroundColour = child.backgroundColour
+				}
+			end,
+		
+			onButtonExit = function(child, button)
+				child.backgroundColour = nil
+				button.propsThenRender {
+					backgroundColour = hierarchyMenu.props.backgroundColour
+				}
+			end,
+
 			hierarchy = fileHierarchy
 		}
+
+		-- This is extremely hacky. We need widgets that can support components.
+		hierarchyMenu.container:on("changed", function(propName)
+			hierarchyMenu.props[propName] = hierarchyMenu.container[propName]
+		end)
+
+		return hierarchyMenu.container
 	end
 }
