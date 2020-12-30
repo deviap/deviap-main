@@ -98,15 +98,15 @@ window {
 ]]--
 
 -- IO List Test
--- local window = require("devgit:source/libraries/UI/components/widgets/window.lua")
+local window = require("devgit:source/libraries/UI/components/widgets/window.lua")
 
--- window {
--- 	parent = core.interface,
--- 	position = guiCoord(0, 200, 0, 100),
--- 	size = guiCoord(0, 300, 0, 200),
--- 	heading = "Properties",
--- 	content = require("./windows/fileExplorer.lua").construct()
--- }
+window {
+	parent = core.interface,
+	position = guiCoord(0, 200, 0, 100),
+	size = guiCoord(0, 300, 0, 200),
+	heading = "File Explorer",
+	content = require("./windows/fileExplorer.lua").construct()
+}
 
 -- Scene Explorer Test
 --[[require("./windows/sceneExplorer.lua")({ 

@@ -44,11 +44,11 @@ return {
 			size = guiCoord(1, 0, 1, 0),
 			position = guiCoord(0, 0, 0, 0),
 		
-			defaultBackgroundColour = colour(0.0, 0.0, 0.0),
-			defaultTextColour = colour(0.9, 0.9, 0.9),
-			defaultIconColour = colour(1, 1, 1),
-			backgroundColour = colour(0, 0, 0),
-			scrollbarColour = colour(1,1,1),
+			defaultBackgroundColour = colour.hex("FFFFFF"),
+			defaultTextColour = colour(0, 0, 0),
+			defaultIconColour = colour(0, 0, 0),
+			backgroundColour = colour.hex("FFFFFF"),
+			scrollbarColour = colour(0.5, 0.5, 0.5),
 		
 			buttonHeight = 25,
 			insetBy = 10,
@@ -64,7 +64,7 @@ return {
 			end,
 
 			onButtonEnter = function(child, button)
-				child.backgroundColour = colour(0.2, 0.2, 0.2)
+				child.backgroundColour = colour.hex("F0F0F0")
 				button.propsThenRender {
 					backgroundColour = child.backgroundColour
 				}
@@ -73,7 +73,7 @@ return {
 			onButtonExit = function(child, button)
 				child.backgroundColour = nil
 				button.propsThenRender {
-					backgroundColour = hierarchyMenu.props.backgroundColour
+					backgroundColour = hierarchyMenu.props.defaultBackgroundColour
 				}
 			end,
 
