@@ -98,7 +98,7 @@ window {
 ]]--
 
 -- IO List Test
---  core.io:list()
+require("./windows/fileExplorer.lua")()
 
 -- Scene Explorer Test
 --[[require("./windows/sceneExplorer.lua")({ 
