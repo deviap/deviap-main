@@ -72,6 +72,7 @@ local horizontalNav = navbar {
 	zIndex = 3
 }
 
+--[[
 horizontalNav.addNavTextItem({
 	defaultPage = false,
 	relativeLocation = "top",
@@ -80,6 +81,7 @@ horizontalNav.addNavTextItem({
 	text = "EXPLORER",
 	redirect = nil
 })
+--]]
 
 -- Window / Widget Test
 --[[
