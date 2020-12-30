@@ -20,7 +20,9 @@ local rotateStep = 0.01
 local cam = core.scene.camera
 local db = false
 
-core.input:on("keyDown", function(key)
+core.input:on("keyDown", function(key, systemHandled)
+	if systemHandled then return end
+
 	local mapped = keyMap[tonumber(key)]
 	if mapped then
 		while sleep() and core.input:isKeyDown(key) and not globals.ignoreCameraInput do
@@ -29,7 +31,9 @@ core.input:on("keyDown", function(key)
 	end
 end)
 
-core.input:on("mouseMoved", function(movement)
+core.input:on("mouseMoved", function(movement, systemHandled)
+	if systemHandled then return end
+	
 	if core.input:isMouseButtonDown(3) and not globals.ignoreCameraInput then
 		local pitch = quaternion.euler(-movement.y * rotateStep, 0, 0)
 		local yaw = quaternion.euler(0, -movement.x * rotateStep, 0)

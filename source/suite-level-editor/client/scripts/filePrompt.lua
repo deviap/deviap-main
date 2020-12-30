@@ -7,9 +7,10 @@
 --
 local controller = {}
 
-function controller.open(fileType)
+function controller.open(fileType, title, allowNew)
     local result = ""
     if not fileType then fileType = "" end
+    title = title or "Open"
 
 	local backdrop = core.construct("guiFrame", {
 		parent = core.interface,
@@ -45,7 +46,7 @@ function controller.open(fileType)
 		parent = container,
 		size = guiCoord(1, -20, 0, 24),
         position = guiCoord(0, 10, 0, 9),
-        text = "Open",
+        text = title,
         textFont = "deviap:fonts/openSansBold.ttf",
         textSize = 24
     })
@@ -63,14 +64,47 @@ function controller.open(fileType)
 
     local innerContainer = core.construct("guiFrame", {
 		parent = container,
-		size = guiCoord(1, -20, 1, -20),
+		size = guiCoord(1, -20, 1, -45),
         position = guiCoord(0, 10, 0, 40),
         backgroundAlpha = 0
-	})
+    })
+
+    allowNew = true
+    if allowNew then
+        innerContainer.size = guiCoord(1, -20, 1, -70)
+
+        local input = core.construct("guiTextBox", {
+            parent = container,
+            size = guiCoord(1, -70, 0, 18),
+            position = guiCoord(0, 10, 1, -28),
+            text = "newfilename",
+            textSize = 16,
+            strokeAlpha = 0.2,
+            strokeRadius = 4,
+            textEditable = true
+        })
+
+        local btn = core.construct("guiTextBox", {
+            parent = container,
+            size = guiCoord(0, 40, 0, 18),
+            position = guiCoord(1, -50, 1, -28),
+            text = "",
+            textSize = 16,
+            strokeAlpha = 0.2,
+            strokeRadius = 4,
+            text = "NEW",
+            textAlign = "middle",
+            backgroundColour = colour.hex("#e57373"),
+            textColour = colour.white()
+        })
+
+        btn:on("mouseLeftUp", function()
+            result = "client/assets/" .. input.text .. ".json"
+        end)
+    end
     
     local y = 0
     for _,v in pairs(core.io:list()) do
-
         if v:sub((v:len() - fileType:len()) + 1) == fileType then
             local btn = core.construct("guiTextBox", {
                 parent = innerContainer,

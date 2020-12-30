@@ -163,3 +163,16 @@ history.redo()
 sleep(1)
 history.redo()
 ]]
+
+
+-- for dev purposes only:
+core.construct("guiTextBox", {
+	parent = core.interface,
+	text = "[test] Save Scene",
+	textSize = 14,
+	textAlign = "middle",
+	size = guiCoord(0, 100, 0, 20),
+	position = guiCoord(1, -110, 1, -100)
+}):on("mouseLeftDown", function()
+	require("./controllers/save.lua").saveScene()
+end)

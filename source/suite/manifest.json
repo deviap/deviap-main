@@ -13,7 +13,8 @@
             "input": true,
             "scene": true,
             "graphics": true,
-            "reflection": true
+            "reflection": true,
+            "io": true
         }
     }
 }
