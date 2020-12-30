@@ -100,7 +100,7 @@ return function(props)
 			local scrollbarAlpha = props.scrollbarAlpha or 1
 			local scrollbarColour = props.scrollbarColour or colour(0, 0, 0)
 			local scrollbarRadius = props.scrollbarRadius or 0
-			local scrollbarWidth = props.scrollbarWidth or 3
+			local scrollbarWidth = props.scrollbarWidth or 2
 
 			local buttonHeight = props.buttonHeight or 25
 			local insetBy = props.insetBy or 25
@@ -144,7 +144,7 @@ return function(props)
 
 				button.propsThenRender {
 					position = guiCoord(0, insetBy * inset, 0, buttonHeight * offset),
-					size = guiCoord(1, -insetBy * inset, 0, buttonHeight),
+					size = guiCoord(1, -insetBy * inset - scrollbarWidth, 0, buttonHeight),
 					backgroundColour = child.backgroundColour or defaultBackgroundColour,
 					backgroundAlpha = child.backgroundAlpha or defaultBackgroundAlpha,
 					
@@ -212,7 +212,7 @@ return function(props)
 					end
 				end
 			end
-
+			print(offset)
 			container.canvasSize = guiCoord(1, 0, 0, offset * buttonHeight)
 		end,
 		getButtonFromSignature = function(signature)

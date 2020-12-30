@@ -17,7 +17,7 @@ local parseFileToHierarchy = function(list)
 			if node == nil then
 				node = {
 					text = subDirectory;
-					iconId = "folder";
+					iconId = subDirectory:match("%.") and "insert_drive_file" or "folder";
 					children = {}
 				}
 				tags[subDirectory] = node
@@ -38,13 +38,14 @@ hierarchyMenu = require("./hierarchy.lua"){
 		zIndex = 10,
 		size = guiCoord(1, 0, 1, 0)
 	}),
-	size = guiCoord(0, 400, 0, 800),
+	size = guiCoord(0, 400, 0, 400),
 	position = guiCoord(0, 50, 0, 0),
 
 	defaultBackgroundColour = colour(0.0, 0.0, 0.0),
 	defaultTextColour = colour(0.9, 0.9, 0.9),
 	defaultIconColour = colour(1, 1, 1),
 	backgroundColour = colour(0, 0, 0),
+	scrollbarColour = colour(1,1,1),
 
 	buttonHeight = 25,
 	insetBy = 10,
