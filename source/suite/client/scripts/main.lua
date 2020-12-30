@@ -92,7 +92,7 @@ window {
 	parent = core.interface,
 	position = guiCoord(0, 200, 0, 100),
 	size = guiCoord(0, 300, 0, 200),
-	heading = "Properties",
+	title = "Properties",
 	content = properties.construct(base)
 }
 ]]--
@@ -104,7 +104,7 @@ window {
 	parent = core.interface,
 	position = guiCoord(0, 200, 0, 100),
 	size = guiCoord(0, 300, 0, 200),
-	heading = "File Explorer",
+	title = "File Explorer",
 	content = require("./windows/fileExplorer.lua").construct()
 }
 

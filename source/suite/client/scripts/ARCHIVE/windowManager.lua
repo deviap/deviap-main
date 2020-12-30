@@ -9,7 +9,7 @@ local self = {}
 self.applyDraggable = function(window, dragBy)
 	return dragBy:on("mouseLeftDown", function()
 		local offset = core.input.mousePosition - dragBy.absolutePosition
-		move = core.input:on("mouseMoved", function()
+		local move = core.input:on("mouseMoved", function()
 			local newPosition = core.input.mousePosition
 			window.props.position = guiCoord(0, newPosition.x - offset.x, 0, newPosition.y - offset.y)
 			window.render()
