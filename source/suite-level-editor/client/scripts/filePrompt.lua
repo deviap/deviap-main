@@ -88,7 +88,6 @@ function controller.open(fileType, title, allowNew)
             parent = container,
             size = guiCoord(0, 40, 0, 18),
             position = guiCoord(1, -50, 1, -28),
-            text = "",
             textSize = 16,
             strokeAlpha = 0.2,
             strokeRadius = 4,
