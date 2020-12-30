@@ -142,26 +142,6 @@ return function(props)
 					rendered[child] = button
 				end
 
-				local update 
-				update = function()
-					button.propsThenRender {
-						backgroundColour = child.backgroundColour or defaultBackgroundColour,
-						backgroundAlpha = child.backgroundAlpha or defaultBackgroundAlpha,
-						
-						text = child.text or "",
-						textSize = buttonHeight - 10,
-						textColour = child.textColour or defaultTextColour,
-						textAlpha = child.textAlpha or defaultTextAlpha,
-						
-						iconId = child.iconId,
-						iconType = child.iconType or defaultIconType,
-						iconColour = child.iconColour or defaultIconColour,
-						
-						hasDescendants = child.hasDescendants == nil and child.children ~= nil or child.hasDescendants,
-						isExpanded = child.isExpanded,
-					}
-				end
-
 				button.propsThenRender {
 					position = guiCoord(0, insetBy * inset, 0, buttonHeight * offset),
 					size = guiCoord(1, -insetBy * inset, 0, buttonHeight),
@@ -177,30 +157,28 @@ return function(props)
 					iconType = child.iconType or defaultIconType,
 					iconColour = child.iconColour or defaultIconColour,
 					
-					hasDescendants = child.hasDescendants == nil and child.children ~= nil or child.hasDescendants,
+					hasDescendants = child.hasDescendants or (child.children and #child.children > 0),
 					isExpanded = child.isExpanded,
 		
 					onDown1 = onButtonDown1 and function()
-						onButtonDown1(child, button, update)
+						onButtonDown1(child, button)
 					end,
 					onDown2 = onButtonDown2 and function()
-						onButtonDown2(child, button, update)
+						onButtonDown2(child, button)
 					end,
 					onUp1 = onButtonUp1 and function()
-						onButtonUp2(child, button, update)
+						onButtonUp2(child, button)
 					end,
 					onUp2 = onButtonUp2 and function()
-						onButtonDown2(child, button, update)
+						onButtonDown2(child, button)
 					end,
 					onEnter = onButtonEnter and function()
-						onButtonEnter(child, button, update)
+						onButtonEnter(child, button)
 					end,
 					onExit = onButtonExit and function()
-						onButtonExit(child, update, button, update)
+						onButtonExit(child, button)
 					end,
 				}
-
-				update()
 
 				offset = offset + 1
 
