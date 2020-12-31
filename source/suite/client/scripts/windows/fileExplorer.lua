@@ -18,8 +18,13 @@ local parseFileToHierarchy = function()
 			if node == nil then
 				node = {
 					text = subDirectory;
-					iconId = subDirectory:match("%.") 
-						and "insert_drive_file" 
+					type = 
+						(subDirectory:match("%.lua") and "lua_file") 
+						or (subDirectory:match("%.json") and "json_file" )
+						or (subDirectory:match("%.DS_Store") and "dsstore_file" ) -- Whitelist should catch this (won't be seen; temp)
+						or "folder";
+					iconId = 
+						subDirectory:match("%.") and "insert_drive_file" 
 						or "folder";
 					children = {}
 				}
