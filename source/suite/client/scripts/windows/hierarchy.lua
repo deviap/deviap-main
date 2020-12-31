@@ -45,7 +45,9 @@
 		text = string,
 		textColour = colour,
 		font = string or enum.fonts,
-		icon = string,
+		iconId = string,
+		iconColour = colour,
+		iconType = string or enum.iconType,
 		isExpanded = boolean,
 		backgroundColour = colour,
 		backgroundAlpha = number,
@@ -157,7 +159,8 @@ return function(props)
 					iconType = child.iconType or defaultIconType,
 					iconColour = child.iconColour or defaultIconColour,
 					
-					hasDescendants = child.hasDescendants or (child.children and #child.children > 0),
+					hasDescendants = child.hasDescendants 
+						or (child.children and #child.children > 0),
 					isExpanded = child.isExpanded,
 		
 					onDown1 = onButtonDown1 and function()
@@ -218,7 +221,7 @@ return function(props)
 		getButtonFromSignature = function(signature)
 			return __id[signature]
 		end,
-		container = container; -- THIS IS A HACK!!!
+		container = container -- THIS IS A HACK!!!
 	}
 
 	self.render()
