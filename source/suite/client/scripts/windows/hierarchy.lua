@@ -45,7 +45,9 @@
 		text = string,
 		textColour = colour,
 		font = string or enum.fonts,
-		icon = string,
+		iconId = string,
+		iconColour = colour,
+		iconType = string or enum.iconType,
 		isExpanded = boolean,
 		backgroundColour = colour,
 		backgroundAlpha = number,
@@ -64,19 +66,6 @@
 --]]
 
 local newButton = require("./hierarchyButton.lua")
-
--- Move to settings eventually; temp placement.
--- Contains the colours that each element is coloured as.
--- Format: 
--- For files: extension_file
--- For folders/directories: folder
--- Entry: child.type on line 21 in fileExplorer.lua
-local colourMap = {
-	["folder"] = colour.hex("FFECB3"),
-	["json_file"] = colour.hex("CFD8DC"),
-	["lua_file"] = colour.hex("B3E5FC"),
-	["dsstore_file"] = colour.hex("F5F5F5")
-}
 
 local bindAll = function(object, events)
 	for eventName, callback in next, events do
@@ -168,9 +157,10 @@ return function(props)
 					
 					iconId = child.iconId,
 					iconType = child.iconType or defaultIconType,
-					iconColour = colourMap[child.type] or defaultIconColour, -- colourMap table above.
+					iconColour = child.iconColour or defaultIconColour,
 					
-					hasDescendants = child.hasDescendants or (child.children and #child.children > 0),
+					hasDescendants = child.hasDescendants 
+						or (child.children and #child.children > 0),
 					isExpanded = child.isExpanded,
 		
 					onDown1 = onButtonDown1 and function()

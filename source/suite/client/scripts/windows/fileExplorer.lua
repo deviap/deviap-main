@@ -5,6 +5,20 @@
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
 
+local extensionWhitelist =
+{
+	["lua"] = true;
+	["json"] = true;
+	["DS_Store"] = true;
+}
+
+local extensionColours = {
+	["folder"] = colour.hex("FFECB3"),
+	["json"] = colour.hex("CFD8DC"),
+	["lua"] = colour.hex("B3E5FC"),
+	["DS_Store"] = colour.hex("F5F5F5")
+}
+
 local parseFileToHierarchy = function()
 	local fileHierarchy = {}
 	local tags = {}
@@ -13,26 +27,28 @@ local parseFileToHierarchy = function()
 		directory = "/"..directory -- Pattern-Matching
 
 		local rootChildren = fileHierarchy
-		for subDirectory in directory:gmatch("/([^/]+)") do
-			local node = tags[subDirectory]
-			if node == nil then
-				node = {
-					text = subDirectory;
-					type = 
-						(subDirectory:match("%.lua") and "lua_file") 
-						or (subDirectory:match("%.json") and "json_file" )
-						or (subDirectory:match("%.DS_Store") and "dsstore_file" ) -- Whitelist should catch this (won't be seen; temp)
-						or "folder";
-					iconId = 
-						subDirectory:match("%.") and "insert_drive_file" 
-						or "folder";
-					children = {}
-				}
-				tags[subDirectory] = node
-				rootChildren[#rootChildren + 1] = node
-			end
+		for subDirectory, isFolder in directory:gmatch("/([^/]+)(/?)") do
+			local extension = subDirectory:match("%.(.+)$")
 
-			rootChildren = node.children
+			if extension == nil or extensionWhitelist[extension] then
+				extension = extension or (isFolder and "folder")
+
+				local node = tags[subDirectory]
+				if node == nil then
+					node = {
+						text = subDirectory;
+						iconId = extension ~= "folder" 
+							and "insert_drive_file" or "folder";
+						iconColour = extensionColours[extension];
+						_extension = extension;
+						children = {}
+					}
+					tags[subDirectory] = node
+					rootChildren[#rootChildren + 1] = node
+				end
+
+				rootChildren = node.children
+			end
 		end
 	end
 
