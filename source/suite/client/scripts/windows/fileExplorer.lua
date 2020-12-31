@@ -81,7 +81,11 @@ return {
 				else
 					child.isExpanded = true
 				end
-		
+				
+				if child._extension == false then
+					child.iconId = child.isExpanded and "folder_open" or "folder"
+				end
+
 				hierarchyMenu.render()
 			end,
 

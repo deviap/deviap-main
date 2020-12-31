@@ -187,7 +187,7 @@ return function(props)
 				end
 			end
 
-			icon.iconId = isExpanded and "folder_open" or iconId
+			icon.iconId = iconId
 			icon.iconColour = iconColour
 			icon.iconType = iconType
 			icon.size = guiCoord(0, textSize, 0, textSize)
