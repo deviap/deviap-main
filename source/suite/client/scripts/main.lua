@@ -98,17 +98,18 @@ window {
 ]]--
 
 -- IO List Test
--- local window = require("devgit:source/libraries/UI/components/widgets/window.lua")
+local window = require("devgit:source/libraries/UI/components/widgets/window.lua")
 
--- window {
--- 	parent = core.interface,
--- 	position = guiCoord(0, 200, 0, 100),
--- 	size = guiCoord(0, 300, 0, 200),
--- 	title = "File Explorer",
--- 	content = require("./windows/fileExplorer.lua").construct()
--- }
+window {
+	parent = core.interface,
+	position = guiCoord(0, 200, 0, 100),
+	size = guiCoord(0, 300, 0, 200),
+	title = "File Explorer",
+	content = require("./windows/fileExplorer.lua").construct()
+}
 
 -- Scene Explorer Test
+--[[
 require("./windows/sceneExplorer.lua").construct({ 
 	parent = core.construct("guiFrame", {
 		parent = core.interface,
@@ -119,6 +120,7 @@ require("./windows/sceneExplorer.lua").construct({
 	size = guiCoord(0, 200, 0, 400),
 	position = guiCoord(0, 50, 0, 20),
 })
+]]--
 
 -- Hierarchy Test
 --require("./windows/hierarchyTest.lua")
