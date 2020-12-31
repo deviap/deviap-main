@@ -31,9 +31,6 @@ local block = core.construct("block", {
 	colour = colour.hex("#ffff00")
 })
 
-local translation = require("client/scripts/controllers/translation.lua")
---translation.attach(block)
-
 core.scene.camera:lookAt(base.position)
 
 -- MAIN INTERFACE IGNORE ABOVE
@@ -75,6 +72,7 @@ local horizontalNav = navbar {
 	zIndex = 3
 }
 
+--[[
 horizontalNav.addNavTextItem({
 	defaultPage = false,
 	relativeLocation = "top",
@@ -83,6 +81,7 @@ horizontalNav.addNavTextItem({
 	text = "EXPLORER",
 	redirect = nil
 })
+--]]
 
 -- Window / Widget Test
 local window = require("devgit:source/libraries/UI/components/widgets/window.lua")
@@ -92,12 +91,20 @@ window {
 	parent = core.interface,
 	position = guiCoord(0, 200, 0, 100),
 	size = guiCoord(0, 300, 0, 200),
-	heading = "Properties",
+	title = "Properties",
 	content = properties.construct(base)
 }
 
 -- IO List Test
---  core.io:list()
+local window = require("devgit:source/libraries/UI/components/widgets/window.lua")
+
+window {
+	parent = core.interface,
+	position = guiCoord(0, 200, 0, 100),
+	size = guiCoord(0, 300, 0, 200),
+	title = "File Explorer",
+	content = require("./windows/fileExplorer.lua").construct()
+}
 
 -- Scene Explorer Test
 --[[require("./windows/sceneExplorer.lua")({ 
@@ -162,3 +169,16 @@ history.redo()
 sleep(1)
 history.redo()
 ]]
+
+
+-- for dev purposes only:
+core.construct("guiTextBox", {
+	parent = core.interface,
+	text = "[test] Save Scene",
+	textSize = 14,
+	textAlign = "middle",
+	size = guiCoord(0, 100, 0, 20),
+	position = guiCoord(1, -110, 1, -100)
+}):on("mouseLeftDown", function()
+	require("./controllers/save.lua").saveScene()
+end)
