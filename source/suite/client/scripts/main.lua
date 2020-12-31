@@ -85,7 +85,6 @@ horizontalNav.addNavTextItem({
 })
 
 -- Window / Widget Test
---[[
 local window = require("devgit:source/libraries/UI/components/widgets/window.lua")
 local properties = require("./windows/properties.lua")
 
@@ -96,7 +95,6 @@ window {
 	heading = "Properties",
 	content = properties.construct(base)
 }
-]]--
 
 -- IO List Test
 --  core.io:list()
