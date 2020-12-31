@@ -5,6 +5,12 @@
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
 
+local extensionWhitelist =
+{
+	["lua"] = true;
+	["json"] = true;
+}
+
 local parseFileToHierarchy = function()
 	local fileHierarchy = {}
 	local tags = {}
@@ -14,20 +20,23 @@ local parseFileToHierarchy = function()
 
 		local rootChildren = fileHierarchy
 		for subDirectory in directory:gmatch("/([^/]+)") do
-			local node = tags[subDirectory]
-			if node == nil then
-				node = {
-					text = subDirectory;
-					iconId = subDirectory:match("%.") 
-						and "insert_drive_file" 
-						or "folder";
-					children = {}
-				}
-				tags[subDirectory] = node
-				rootChildren[#rootChildren + 1] = node
-			end
+			local extension = subDirectory:match("%.(.+)$")
 
-			rootChildren = node.children
+			-- nil means it's a binary file or a folder.
+			if extension == nil or extensionWhitelist[extension] then
+				local node = tags[subDirectory]
+				if node == nil then
+					node = {
+						text = subDirectory;
+						iconId = extension and "insert_drive_file" or "folder";
+						children = {}
+					}
+					tags[subDirectory] = node
+					rootChildren[#rootChildren + 1] = node
+				end
+
+				rootChildren = node.children
+			end
 		end
 	end
 
