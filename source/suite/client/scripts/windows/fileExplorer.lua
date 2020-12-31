@@ -13,11 +13,13 @@ local extensionWhitelist =
 }
 
 local extensionColours = {
-	["folder"] = colour.hex("FFECB3"),
-	["json"] = colour.hex("CFD8DC"),
-	["lua"] = colour.hex("B3E5FC"),
-	["DS_Store"] = colour.hex("F5F5F5")
+	["json"] = colour.hex("6c97ab"),
+	["lua"] = colour.hex("6fb7d9"),
+	["DS_Store"] = colour.hex("636161"),
+	[""] = colour.hex("636161"), -- Binary
 }
+
+local folderColour =colour.hex("ebc860")
 
 local parseFileToHierarchy = function()
 	local fileHierarchy = {}
@@ -31,15 +33,15 @@ local parseFileToHierarchy = function()
 			local extension = subDirectory:match("%.(.+)$")
 
 			if extension == nil or extensionWhitelist[extension] then
-				extension = extension or (isFolder and "folder")
+				extension = extension or (not isFolder and "")
 
 				local node = tags[subDirectory]
 				if node == nil then
 					node = {
 						text = subDirectory;
-						iconId = extension ~= "folder" 
-							and "insert_drive_file" or "folder";
-						iconColour = extensionColours[extension];
+						iconId = extension and "insert_drive_file" or "folder";
+						iconColour = extensionColours[extension] 
+							or folderColour;
 						_extension = extension;
 						children = {}
 					}
