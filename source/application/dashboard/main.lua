@@ -2,7 +2,9 @@
 -- Author(s): Sanjay-B(Sanjay)
 -- Dashboard Entry file. 
 local devMode = core.dev.localDevGitEnabled
-
+do 
+	return 
+end
 local navbar = require("devgit:source/libraries/UI/components/navigation/navbar.lua")
 
 -- Temporary loading screen until we find a better way to do this..?
