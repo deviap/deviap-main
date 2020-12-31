@@ -163,7 +163,7 @@ return function(props)
 			if hasDescendants then
 				if dropDown then
 					dropDown.parent = container
-					dropDown.iconId = isExpanded and "expand_less" or ""
+					dropDown.iconId = isExpanded and "expand_less" or "expand_more"
 					dropDown.iconColour = dropDownColour or colour(1, 1, 1)
 					dropDown.size = guiCoord(0, textSize, 0, textSize)
 					dropDown.position = guiCoord(0, 2, 0.5, -textSize / 2)
@@ -172,7 +172,7 @@ return function(props)
 				else
 					dropDown = core.construct("guiIcon", {
 						parent = container,
-						iconId = isExpanded and "expand_less" or "",
+						iconId = isExpanded and "expand_less" or "expand_more",
 						iconColour = dropDownColour or colour(1, 1, 1),
 						size = guiCoord(0, textSize, 0, textSize),
 						position = guiCoord(0, 2, 0.5, -textSize / 2),
@@ -187,7 +187,7 @@ return function(props)
 				end
 			end
 
-			icon.iconId = iconId
+			icon.iconId = isExpanded and "folder_open" or iconId
 			icon.iconColour = iconColour
 			icon.iconType = iconType
 			icon.size = guiCoord(0, textSize, 0, textSize)
