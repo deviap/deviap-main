@@ -5,11 +5,10 @@
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
 
-local extensionWhitelist =
-{
-	["lua"] = true;
-	["json"] = true;
-	["DS_Store"] = true;
+local extensionWhitelist = {
+	["lua"] = true,
+	["json"] = true,
+	--["DS_Store"] = true,
 }
 
 local extensionColours = {
