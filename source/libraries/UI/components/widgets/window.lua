@@ -62,7 +62,7 @@ return function(props)
 			backgroundColour = colour.hex("ef5350"),
 			backgroundAlpha = 1,
 			iconId = "close",
-			iconMax = 10,
+			iconMax = 9,
 			iconAlpha = 0.5,
 		})	
 	}
