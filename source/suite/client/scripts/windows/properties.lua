@@ -110,6 +110,7 @@ local inputsGivenType =
 		local textBox = core.construct("guiTextBox", {
 			parent = parent,
 			text = "Property '"..orignalValue.."' does not have an implementation. Report to Deviap as a bug!",
+			textSize = 14;
 			position = guiCoord(1, 0, 0, 0),
 			size = guiCoord(0, 20, 0, 23),
 		})
@@ -124,23 +125,23 @@ inputsGivenType["uint8_t"] = inputsGivenType["number"]
 
 return {
     construct = function(object)
-        local container = core.construct("guiFrame", {
-            backgroundColour = colour.rgb(255, 255, 255),
-            zIndex = 10
-        })
-
-        local scrollContainer = core.construct("guiScrollView", {
-			parent = container,
+        local container = core.construct("guiScrollView", {
             size = guiCoord(1, 0, 1, 0),
             canvasSize = guiCoord(1, 0, 2, 0),
-            backgroundColour = colour.rgb(255, 0, 0),
-            backgroundAlpha = 0,
+            backgroundColour = colour.rgb(255, 255, 255),
+            backgroundAlpha = 1,
 			scrollbarColour = colour.hex("#212121"),
 			scrollbarRadius = 0,
 			scrollbarWidth = 2,
 			scrollbarAlpha = 0.3
 		})
 
+		-- Since 1 unit on scale is equal to the viewport, not canvas, a holder
+		-- has to be used that will grow to the canvas size.
+		local holder = core.construct("guiFrame", {
+			parent = container,
+			size = guiCoord(1, 0, 1, 0),
+		})
 
         -- Generate Properties (might split into seperate method)
         local properties = core.reflection:getClassReflection(object.className)["properties"]
@@ -150,10 +151,11 @@ return {
         if properties then
 			for property, data in pairs(properties) do
                 local subcontainer = core.construct("guiFrame", {
-                    parent = scrollContainer,
+                    parent = holder,
                     position = guiCoord(0, 10, 0, (40*count)+0),
                     size = guiCoord(1, -20, 0, 40),
-                    backgroundAlpha = 0
+					backgroundAlpha = 1,
+					backgroundColour = colour.random()
                 })
         
                 local label = core.construct("guiTextBox", {
@@ -174,7 +176,6 @@ return {
 				if inputsGivenType[propertyType] then
 					neededWidth = neededWidth + inputsGivenType[propertyType](subcontainer, object[property])
 				else
-					print(property, propertyType)
 					neededWidth = neededWidth + inputsGivenType.undefined(subcontainer, propertyType)
 				end
 
@@ -183,8 +184,9 @@ return {
             end
 		end
 
-        scrollContainer.canvasSize = guiCoord(0, longestWidth + 10, 0, count*40)
-        
-        return container
+		container.canvasSize = guiCoord(0, longestWidth + 20, 0, count*40)
+		holder.size = container.canvasSize
+
+		return container
     end
 }

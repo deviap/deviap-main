@@ -78,7 +78,6 @@ local createTooltip = function(parent)
 		local update = function()
 			local pos = core.input.mousePosition - core.interface.absolutePosition
 			tooltip.container.position = guiCoord(0, pos.x, 0, pos.y - tooltip.container.absoluteSize.y)
-			tooltip.render()
 			tooltip.correctSize()
 		end
 

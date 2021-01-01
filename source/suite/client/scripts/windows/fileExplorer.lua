@@ -18,7 +18,7 @@ local extensionColours = {
 	[""] = colour.hex("636161"), -- Binary
 }
 
-local folderColour =colour.hex("ebc860")
+local folderColour = colour.hex("ebc860")
 
 local parseFileToHierarchy = function()
 	local fileHierarchy = {}
