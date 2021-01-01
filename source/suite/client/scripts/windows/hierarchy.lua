@@ -45,7 +45,9 @@
 		text = string,
 		textColour = colour,
 		font = string or enum.fonts,
-		icon = string,
+		iconId = string,
+		iconColour = colour,
+		iconType = string or enum.iconType,
 		isExpanded = boolean,
 		backgroundColour = colour,
 		backgroundAlpha = number,
@@ -100,7 +102,7 @@ return function(props)
 			local scrollbarAlpha = props.scrollbarAlpha or 1
 			local scrollbarColour = props.scrollbarColour or colour(0, 0, 0)
 			local scrollbarRadius = props.scrollbarRadius or 0
-			local scrollbarWidth = props.scrollbarWidth or 3
+			local scrollbarWidth = props.scrollbarWidth or 2
 
 			local buttonHeight = props.buttonHeight or 25
 			local insetBy = props.insetBy or 25
@@ -121,6 +123,7 @@ return function(props)
 			local onButtonExit = props.onButtonExit
 
 			container.parent = parent
+			container.name = name
 			container.size = size
 			container.position = position
 			container.backgroundColour = backgroundColour
@@ -141,29 +144,9 @@ return function(props)
 					rendered[child] = button
 				end
 
-				local update 
-				update = function()
-					button.propsThenRender {
-						backgroundColour = child.backgroundColour or defaultBackgroundColour,
-						backgroundAlpha = child.backgroundAlpha or defaultBackgroundAlpha,
-						
-						text = child.text or "",
-						textSize = buttonHeight - 10,
-						textColour = child.textColour or defaultTextColour,
-						textAlpha = child.textAlpha or defaultTextAlpha,
-						
-						iconId = child.iconId,
-						iconType = child.iconType or defaultIconType,
-						iconColour = child.iconColour or defaultIconColour,
-						
-						hasDescendants = child.hasDescendants == nil and child.children ~= nil or child.hasDescendants,
-						isExpanded = child.isExpanded,
-					}
-				end
-
 				button.propsThenRender {
 					position = guiCoord(0, insetBy * inset, 0, buttonHeight * offset),
-					size = guiCoord(1, -insetBy * inset, 0, buttonHeight),
+					size = guiCoord(1, -insetBy * inset - scrollbarWidth, 0, buttonHeight),
 					backgroundColour = child.backgroundColour or defaultBackgroundColour,
 					backgroundAlpha = child.backgroundAlpha or defaultBackgroundAlpha,
 					
@@ -176,30 +159,29 @@ return function(props)
 					iconType = child.iconType or defaultIconType,
 					iconColour = child.iconColour or defaultIconColour,
 					
-					hasDescendants = child.hasDescendants == nil and child.children ~= nil or child.hasDescendants,
+					hasDescendants = child.hasDescendants 
+						or (child.children and #child.children > 0),
 					isExpanded = child.isExpanded,
 		
 					onDown1 = onButtonDown1 and function()
-						onButtonDown1(child, button, update)
+						onButtonDown1(child, button)
 					end,
 					onDown2 = onButtonDown2 and function()
-						onButtonDown2(child, button, update)
+						onButtonDown2(child, button)
 					end,
 					onUp1 = onButtonUp1 and function()
-						onButtonUp2(child, button, update)
+						onButtonUp2(child, button)
 					end,
 					onUp2 = onButtonUp2 and function()
-						onButtonDown2(child, button, update)
+						onButtonDown2(child, button)
 					end,
 					onEnter = onButtonEnter and function()
-						onButtonEnter(child, button, update)
+						onButtonEnter(child, button)
 					end,
 					onExit = onButtonExit and function()
-						onButtonExit(child, update, button, update)
+						onButtonExit(child, button)
 					end,
 				}
-
-				update()
 
 				offset = offset + 1
 
@@ -238,7 +220,8 @@ return function(props)
 		end,
 		getButtonFromSignature = function(signature)
 			return __id[signature]
-		end
+		end,
+		container = container -- THIS IS A HACK!!!
 	}
 
 	self.render()

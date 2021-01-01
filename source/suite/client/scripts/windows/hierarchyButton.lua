@@ -60,11 +60,11 @@ end
 
 local createTooltip = function(parent)
 	local tooltip = require("devgit:source/libraries/UI/components/tooltip.lua") {
-		parent = parent.parent,
+		parent = core.interface,
 	}
 
 	tooltip.state.dispatch { type = "disable" }
-	tooltip.container.zIndex = 2
+	tooltip.container.zIndex = 500
 
 	local inside = false
 	parent:on("mouseEnter", function()
@@ -76,9 +76,10 @@ local createTooltip = function(parent)
 		end
 
 		local update = function()
-			local pos = core.input.mousePosition - parent.parent.absolutePosition
+			local pos = core.input.mousePosition - core.interface.absolutePosition
 			tooltip.container.position = guiCoord(0, pos.x, 0, pos.y - tooltip.container.absoluteSize.y)
 			tooltip.render()
+			tooltip.correctSize()
 		end
 
 		local moved

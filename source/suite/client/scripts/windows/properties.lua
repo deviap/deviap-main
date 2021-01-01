@@ -7,6 +7,121 @@
 local textInput = require("devgit:source/libraries/UI/components/inputs/textInput.lua")
 local checkbox = require("devgit:source/libraries/UI/components/checkbox.lua")
 
+local inputsGivenType =
+{
+	["string"] = function(parent, orignalValue)
+		local input = textInput {
+			parent = parent,
+			position = guiCoord(1, -130, 0, 7),
+			size = guiCoord(0, 130, 0, 23),
+			placeholder = orignalValue,
+			textSize = 18,
+			textAlpha = 0.95,
+			textColour = colour.hex("707070"),
+			activeBorder = 0,
+			borderBottom = true,
+			borderBottomColour = colour.hex("0f62fe"),
+			backgroundAlpha = 0
+		}
+		return 135
+	end;
+	["boolean"] = function(parent, orignalValue)
+		local _checkbox = checkbox {
+			parent = parent,
+			position = guiCoord(1, -20, 0, 13),
+			size = guiCoord(0, 20, 0, 16)
+		}
+
+		if orignalValue then
+			_checkbox.state.dispatch({type = "setMode", mode = "active"})
+		end
+		
+		return 25
+	end;
+	["number"] = function(parent, orignalValue)
+		local input = textInput {
+			parent = parent,
+			position = guiCoord(1, -20, 0, 7),
+			size = guiCoord(0, 20, 0, 23),
+			placeholder = tostring(orignalValue),
+			textSize = 18,
+			textAlpha = 0.95,
+			textAlign = "middle",
+			textColour = colour.hex("707070"),
+			activeBorder = 0,
+			borderBottom = true,
+			borderBottomColour = colour.hex("0f62fe"),
+			backgroundAlpha = 0
+		}
+		return 25
+	end;
+	["vector2"] = nil; -- TODO: IMPLEMENT
+	["vector3"] = function(parent, orignalValue)
+		for i=0, 2, 1 do
+			local input = textInput {
+				parent = parent,
+				position = guiCoord(1, -20-((2-i)*25), 0, 7),
+				size = guiCoord(0, 20, 0, 23),
+				placeholder = (i == 0 and tostring(orignalValue.x)) or (i == 1 and tostring(orignalValue.y)) or (i == 2 and tostring(orignalValue.x)),
+				textSize = 18,
+				textAlpha = 0.95,
+				textAlign = "middle",
+				textColour = colour.hex("707070"),
+				activeBorder = 0,
+				borderBottom = true,
+				borderBottomColour = colour.hex("0f62fe"),
+				backgroundAlpha = 0
+			}
+		end
+
+		return 75
+	end;
+	["colour"] = function(parent, orignalValue)
+		for i=0, 2, 1 do
+			local input = textInput {
+				parent = parent,
+				position = guiCoord(1, -20-((2-i)*25), 0, 7),
+				size = guiCoord(0, 20, 0, 23),
+				placeholder = (i == 0 and tostring(orignalValue.r)) or (i == 1 and tostring(orignalValue.g)) or (i == 2 and tostring(orignalValue.b)),
+				textSize = 18,
+				textAlpha = 0.95,
+				textAlign = "middle",
+				textColour = colour.hex("707070"),
+				activeBorder = 0,
+				borderBottom = true,
+				borderBottomColour = colour.hex("0f62fe"),
+				backgroundAlpha = 0
+			}
+		end
+		return 75
+	end;
+	["quaternion"] = nil; -- TODO: IMPLEMENT
+	["guiCoord"] = nil; -- TODO: IMPLEMENT
+	["enums.align"] = nil; -- TODO: IMPLEMENT
+	["enums.fogType"] = nil; -- TODO: IMPLEMENT
+	["enums.iconType"] = nil; -- TODO: IMPLEMENT
+	["enums.keys"] = nil; -- TODO: IMPLEMENT
+	["enums.lightType"] = nil; -- TODO: IMPLEMENT
+	["enums.lineCap"] = nil; -- TODO: IMPLEMENT
+	["enums.membershipType"] = nil; -- TODO: IMPLEMENT
+	["guiBase"] = nil; -- TODO: IMPLEMENT
+	["sceneObject"] = nil; -- TODO: IMPLEMENT
+	["undefined"] = function(parent, orignalValue)
+		local textBox = core.construct("guiTextBox", {
+			parent = parent,
+			text = "Property '"..orignalValue.."' does not have an implementation. Report to Deviap as a bug!",
+			position = guiCoord(1, 0, 0, 0),
+			size = guiCoord(0, 20, 0, 23),
+		})
+		textBox.position = textBox.position - guiCoord(0, textBox.textDimensions.x, 0, 0)
+		return textBox.textDimensions.x
+	end;
+}
+
+-- Aliases
+inputsGivenType["bool"] = inputsGivenType["boolean"]
+inputsGivenType["uint8_t"] = inputsGivenType["number"]
+
 return {
     construct = function(object)
         local container = core.construct("guiFrame", {
@@ -56,86 +171,13 @@ return {
                 -- Clear inputs based on parameter type.
                 local propertyType = data.type
 				local neededWidth = label.textDimensions.x
-				if propertyType == "vector3" then
-                    for i=0, 2, 1 do
-                        local input = textInput {
-                            parent = subcontainer,
-							position = guiCoord(1, -20-((2-i)*25), 0, 7),
-                            size = guiCoord(0, 20, 0, 23),
-                            placeholder = (i == 0 and tostring(object[property].x)) or (i == 1 and tostring(object[property].y)) or (i == 2 and tostring(object[property].x)),
-                            textSize = 18,
-                            textAlpha = 0.95,
-                            textAlign = "middle",
-                            textColour = colour.hex("707070"),
-                            activeBorder = 0,
-                            borderBottom = true,
-                            borderBottomColour = colour.hex("0f62fe"),
-                            backgroundAlpha = 0
-                        }
-					end
-					neededWidth = neededWidth + 75
-                elseif propertyType == "colour" then
-                    for i=0, 2, 1 do
-                        local input = textInput {
-                            parent = subcontainer,
-                            position = guiCoord(1, -20-((2-i)*25), 0, 7),
-                            size = guiCoord(0, 20, 0, 23),
-                            placeholder = (i == 0 and tostring(object[property].r)) or (i == 1 and tostring(object[property].g)) or (i == 2 and tostring(object[property].b)),
-                            textSize = 18,
-                            textAlpha = 0.95,
-                            textAlign = "middle",
-                            textColour = colour.hex("707070"),
-                            activeBorder = 0,
-                            borderBottom = true,
-                            borderBottomColour = colour.hex("0f62fe"),
-                            backgroundAlpha = 0
-                        }
-					end
-					neededWidth = neededWidth + 75
-                elseif propertyType == "number" or propertyType == "uint8_t" then
-                    local input = textInput {
-                        parent = subcontainer,
-                        position = guiCoord(1, -20, 0, 7),
-                        size = guiCoord(0, 20, 0, 23),
-                        placeholder = tostring(object[property]),
-                        textSize = 18,
-                        textAlpha = 0.95,
-                        textAlign = "middle",
-                        textColour = colour.hex("707070"),
-                        activeBorder = 0,
-                        borderBottom = true,
-                        borderBottomColour = colour.hex("0f62fe"),
-                        backgroundAlpha = 0
-					}
-					neededWidth = 25 + neededWidth
-                elseif propertyType == "string" then
-                    local input = textInput {
-                        parent = subcontainer,
-                        position = guiCoord(1, -130, 0, 7),
-                        size = guiCoord(0, 130, 0, 23),
-                        placeholder = object[property],
-                        textSize = 18,
-                        textAlpha = 0.95,
-                        textColour = colour.hex("707070"),
-                        activeBorder = 0,
-                        borderBottom = true,
-                        borderBottomColour = colour.hex("0f62fe"),
-                        backgroundAlpha = 0
-					}
-					neededWidth = neededWidth + 135
-                elseif propertyType == "boolean" then
-                    local _checkbox = checkbox {
-                        parent = subcontainer,
-                        position = guiCoord(1, -20, 0, 13),
-                        size = guiCoord(0, 20, 0, 16)
-                    }
-
-                    if object[property] then
-                        _checkbox.state.dispatch({type = "setMode", mode = "active"})
-					end
-					
-					neededWidth = neededWidth + 25
+				if inputsGivenType[propertyType] then
+					neededWidth = neededWidth + inputsGivenType[propertyType](subcontainer, object[property])
+				else
+					print(property, propertyType)
+					neededWidth = neededWidth + inputsGivenType.undefined(subcontainer, propertyType)
 				end
+
 				longestWidth = longestWidth > neededWidth and longestWidth or neededWidth
                 count = count + 1
             end

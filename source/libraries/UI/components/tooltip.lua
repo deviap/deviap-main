@@ -53,14 +53,14 @@ return function(props)
 
 	self.state = newState(reducer)
 
-	local correctSize = function()
+	self.correctSize = function()
 		textBox.textWrap = false
 		local diff = math.max(((self.container.parent.absoluteSize + self.container.parent.absolutePosition) - textBox.absolutePosition).x, 10)
 		if textBox.textDimensions.x > diff then
-			self.container.size = guiCoord(0, diff, 0, (textBox.textDimensions.x / diff) * 20)
+			self.container.size = guiCoord(0, diff + 20, 0, (textBox.textDimensions.x / diff) * 20)
 			textBox.textWrap = true
 		else
-			self.container.size = guiCoord(0, textBox.textDimensions.x, 0, 20)
+			self.container.size = guiCoord(0, textBox.textDimensions.x + 20, 0, 20)
 		end
 	end
 
@@ -85,7 +85,6 @@ return function(props)
 		textBox.strokeRadius = 3
 		textBox.text = props.text
 
-		--correctSize()
 		oldRender()
 		self.container.backgroundAlpha = 0
 	end
