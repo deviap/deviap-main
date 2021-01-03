@@ -62,3 +62,5 @@ core.networking:on("_connected", function()
 
 	interfaceBackdrop:destroy()
 end)
+
+core.networking:start()
