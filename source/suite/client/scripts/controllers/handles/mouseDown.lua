@@ -50,6 +50,7 @@ return function(handles, dragging, dragEnd)
                 local startMousePosition = core.input.mousePosition
                 local lastMousePosition = startMousePosition
 
+                local lastDist = 0
                 -- While the user is dragging we stay in this loop
                 while sleep() and core.input:isMouseButtonDown(1) do
                     -- Calculate the offset from the start mouse pos
@@ -76,8 +77,9 @@ return function(handles, dragging, dragEnd)
                             toolTip.text = tostring(dist)
 
                             -- smack the callback
-                            if dragging then
+                            if dragging and lastDist ~= dist then
                                 dragging(direction, dist, lookVector3d:normal())
+                                lastDist = dist
                             end
                         else
                             toolTip.visible = false

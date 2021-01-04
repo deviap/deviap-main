@@ -78,7 +78,6 @@ local createTooltip = function(parent)
 		local update = function()
 			local pos = core.input.mousePosition - core.interface.absolutePosition
 			tooltip.container.position = guiCoord(0, pos.x, 0, pos.y - tooltip.container.absoluteSize.y)
-			tooltip.render()
 			tooltip.correctSize()
 		end
 
@@ -187,7 +186,7 @@ return function(props)
 				end
 			end
 
-			icon.iconId = isExpanded and "folder_open" or iconId
+			icon.iconId = iconId
 			icon.iconColour = iconColour
 			icon.iconType = iconType
 			icon.size = guiCoord(0, textSize, 0, textSize)

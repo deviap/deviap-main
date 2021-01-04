@@ -83,7 +83,8 @@ horizontalNav.addNavTextItem({
 })
 --]]
 
--- Window / Widget and Properties Test
+-- Window / Widget Test
+
 local window = require("devgit:source/libraries/UI/components/widgets/window.lua")
 local properties = require("./windows/properties.lua")
 
@@ -92,7 +93,7 @@ window {
 	position = guiCoord(0, 200, 0, 100),
 	size = guiCoord(0, 300, 0, 200),
 	title = "Properties",
-	content = properties.construct(base)
+	content = properties.construct(horizontalNav.container)
 }
 
 -- IO List Test
@@ -109,18 +110,16 @@ window {
 ]]--
 
 -- Scene Explorer Test
---[[
-require("./windows/sceneExplorer.lua").construct({ 
-	parent = core.construct("guiFrame", {
-		parent = core.interface,
-		size = guiCoord(1,0,1,0),
-		zIndex = 100,
-		backgroundColour = colour(0, 0, 0)
-	}),
-	size = guiCoord(0, 200, 0, 400),
-	position = guiCoord(0, 50, 0, 20),
-})
-]]--
+-- require("./windows/sceneExplorer.lua").construct({ 
+-- 	parent = core.construct("guiFrame", {
+-- 		parent = core.interface,
+-- 		size = guiCoord(1,0,1,0),
+-- 		zIndex = 100,
+-- 		backgroundColour = colour(0, 0, 0)
+-- 	}),
+-- 	size = guiCoord(0, 200, 0, 400),
+-- 	position = guiCoord(0, 50, 0, 20),
+-- })
 
 -- Hierarchy Test
 --require("./windows/hierarchyTest.lua")
