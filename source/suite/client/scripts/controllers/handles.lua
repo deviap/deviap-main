@@ -58,8 +58,6 @@ local function attachHandles(obj, props, lookVector3d)
     for direction, data in pairs(map) do
 
         --[[
-            ROOT HAS BEEN COMMENTED DUE TO AN ENGINE BUG
-
             Why do we create the 'root' object?
 
             Well, we want to have the handles always located just off the edge
@@ -67,20 +65,19 @@ local function attachHandles(obj, props, lookVector3d)
 
             The root object is positioned as such so that it is stuck directly
             onto an object's outer face. (Position is relative to the parent's position AND scale).
-
-            local root = core.construct("block", {
-                parent = obj,
-                name = "__" .. direction .. "Root",
-                position = data[1]/2,
-                scale = vector3(0.025, 1.0, 0.025),
-                rotation = quaternion.lookRotation(data[1]) * quaternion.euler(0, math.rad(90), math.rad(90)),
-                colour = data[2],
-                emissiveColour = data[2] * 0.75,
-                inheritsScale = false,
-                visible = props.arms,
-            })
-
         ]]
+        local root = core.construct("block", {
+            parent = obj,
+            name = "__" .. direction .. "Root",
+            position = data[1]/2,
+            scale = vector3(0.025, 1.0, 0.025),
+            rotation = quaternion.lookRotation(data[1]) * quaternion.euler(0, math.rad(90), math.rad(90)),
+            colour = data[2],
+            emissiveColour = data[2] * 0.75,
+            inheritsScale = false,
+            visible = props.arms,
+            simulated = false
+        })
 
         --[[
             Now we create the actual handle and nest it in root, which sits
@@ -88,32 +85,18 @@ local function attachHandles(obj, props, lookVector3d)
 
             Any position we set here can always give us a fixed distance
             from the face, even if the scale of the object changes.
-
-            local handle = core.construct("block", {
-                parent = root,
-                name = "handle",
-                position = vector3(0, 0.65, 0),
-                scale = props.handleSize,
-                colour = data[2],
-                emissiveColour = data[2],
-                renderQueue = 200,
-                mesh = props.shape,
-                inheritsScale = false
-            })
         ]]
 
         local handle = core.construct("block", {
-            parent = obj,
-            name = "__" .. direction .. "Root",
-            position = data[1]/1.75,
+            parent = root,
+            name = "__handle",
+            position = vector3(0, 0.65, 0),
             scale = props.handleSize,
             colour = data[2],
-            emissiveColour = data[2] * 0.75,
-            --inheritsScale = false,
-            visible = props.arms,
+            emissiveColour = data[2],
             renderQueue = 200,
             mesh = props.shape,
-            rotation = quaternion.lookRotation(data[1]) * quaternion.euler(0, math.rad(90), math.rad(90)),
+            inheritsScale = false
         })
 
         handles[handle] = direction
@@ -141,7 +124,7 @@ function controller.detach(handles)
     core.disconnect(handles["__mouseEvent"])
     for k,v in pairs(handles) do
         if type(k) ~= "string" then
-            k:destroy()
+            k.parent:destroy()
         end
     end
 
