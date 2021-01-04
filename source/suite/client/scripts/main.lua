@@ -83,8 +83,7 @@ horizontalNav.addNavTextItem({
 })
 --]]
 
--- Window / Widget Test
---[[
+-- Window / Widget and Properties Test
 local window = require("devgit:source/libraries/UI/components/widgets/window.lua")
 local properties = require("./windows/properties.lua")
 
@@ -95,9 +94,9 @@ window {
 	title = "Properties",
 	content = properties.construct(base)
 }
-]]--
 
 -- IO List Test
+--[[
 local window = require("devgit:source/libraries/UI/components/widgets/window.lua")
 
 window {
@@ -107,6 +106,7 @@ window {
 	title = "File Explorer",
 	content = require("./windows/fileExplorer.lua").construct()
 }
+]]--
 
 -- Scene Explorer Test
 --[[
