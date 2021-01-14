@@ -1,5 +1,5 @@
 -- This entrypoint is ALWAYS invoked
-require("devgit:source/application/utilities/debug/output.lua")
+--require("devgit:source/application/utilities/debug/output.lua")
 require("devgit:source/application/utilities/debug/keybinds.lua")
 local menu = require("devgit:source/application/interface/menu.lua")
 
