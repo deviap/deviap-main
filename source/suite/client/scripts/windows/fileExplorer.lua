@@ -4,6 +4,7 @@
 -- Made available under the MIT License:                     --
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
+local newState = require("devgit:source/libraries/state/main.lua")
 
 local extensionWhitelist = {
 	["lua"] = true,
@@ -25,10 +26,10 @@ local parseFileToHierarchy = function()
 	local tags = {}
 
 	for _, directory in next, core.io:list() do
-		directory = "/"..directory -- Pattern-Matching
-
 		local rootChildren = fileHierarchy
-		for subDirectory, isFolder in directory:gmatch("/([^/]+)(/?)") do
+		local currDirectory = ""
+		for subDirectory, isFolder in ("/"..directory):gmatch("/([^/]+)(/?)") do
+			currDirectory = currDirectory.."/"..subDirectory
 			local extension = subDirectory:match("%.(.+)$")
 
 			if extension == nil or extensionWhitelist[extension] then
@@ -39,6 +40,7 @@ local parseFileToHierarchy = function()
 					node = {
 						text = subDirectory;
 						iconId = extension and "insert_drive_file" or "folder";
+						signature = currDirectory;
 						iconColour = extensionColours[extension] 
 							or folderColour;
 						_extension = extension;
@@ -56,10 +58,26 @@ local parseFileToHierarchy = function()
 	return fileHierarchy
 end
 
+local reducer = function(oldState, action)
+	oldState = oldState or {}
+
+	if action.type == "select" then
+		oldState[action.target] = true
+	elseif action.type == "unselect" then
+		oldState[action.target] = nil
+	elseif action.type == "clear" then
+		oldState = {}
+	end
+
+	return oldState
+end
+
 local fileHierarchy = parseFileToHierarchy()
 
 return { 
 	construct = function(parent)
+		local selectedState = newState(reducer, {})
+
 		local hierarchyMenu
 		hierarchyMenu = require("./hierarchy.lua"){
 			parent = core.interface,
@@ -76,6 +94,17 @@ return {
 			insetBy = 10,
 		
 			onButtonDown1 = function(child)
+				if not core.input:isKeyDown(enums.keys.KEY_LSHIFT) then
+					for k,v in next, selectedState.getState() do
+						local node = hierarchyMenu.getButtonFromSignature(k)
+						node.backgroundColour = nil
+					end
+					selectedState.dispatch({ type = "clear" })
+				end
+
+				selectedState.dispatch({ type = "select", target = child.signature })
+				child.backgroundColour = colour.hex("EAEAEA")
+
 				if child.isExpanded then
 					child.isExpanded = false
 				else
@@ -90,6 +119,7 @@ return {
 			end,
 
 			onButtonEnter = function(child, button)
+				if selectedState.getState()[child.signature] then return end
 				child.backgroundColour = colour.hex("F0F0F0")
 				button.propsThenRender {
 					backgroundColour = child.backgroundColour
@@ -97,6 +127,7 @@ return {
 			end,
 		
 			onButtonExit = function(child, button)
+				if selectedState.getState()[child.signature] then return end
 				child.backgroundColour = nil
 				button.propsThenRender {
 					backgroundColour = hierarchyMenu.props.defaultBackgroundColour
@@ -110,7 +141,13 @@ return {
 		hierarchyMenu.container:on("changed", function(propName)
 			hierarchyMenu.props[propName] = hierarchyMenu.container[propName]
 		end)
-
+		selectedState.subscribe(function(newState, oldState, action)
+			print("currentlySelected is... ")
+			for k,v in next, newState do
+				print(k, v)
+			end
+			print("-----------------")
+		end)
 		return hierarchyMenu.container
 	end
 }
