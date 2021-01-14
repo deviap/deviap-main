@@ -105,7 +105,7 @@ window {
 	position = guiCoord(0, 200, 0, 100),
 	size = guiCoord(0, 300, 0, 200),
 	title = "File Explorer",
-	content = require("./windows/fileExplorer.lua").construct()
+	content = require("./windows/fileExplorer.lua").construct({	parent = core.interface }).container
 }
 
 -- Scene Explorer Test

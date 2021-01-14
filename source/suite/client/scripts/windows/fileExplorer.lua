@@ -75,14 +75,14 @@ end
 local fileHierarchy = parseFileToHierarchy()
 
 return { 
-	construct = function(parent)
+	construct = function(props)
 		local selectedState = newState(reducer, {})
 
 		local hierarchyMenu
 		hierarchyMenu = require("./hierarchy.lua"){
-			parent = core.interface,
-			size = guiCoord(1, 0, 1, 0),
-			position = guiCoord(0, 0, 0, 0),
+			parent = props.parent,
+			size = props.size,
+			position = props.position,
 		
 			defaultBackgroundColour = colour.hex("FFFFFF"),
 			defaultTextColour = colour(0, 0, 0),
@@ -90,8 +90,8 @@ return {
 			backgroundColour = colour.hex("FFFFFF"),
 			scrollbarColour = colour(0.5, 0.5, 0.5),
 		
-			buttonHeight = 25,
-			insetBy = 10,
+			buttonHeight = props.buttonHeight,
+			insetBy = props.insetBy,
 		
 			onButtonDown1 = function(child)
 				if not core.input:isKeyDown(enums.keys.KEY_LSHIFT) then
@@ -141,13 +141,25 @@ return {
 		hierarchyMenu.container:on("changed", function(propName)
 			hierarchyMenu.props[propName] = hierarchyMenu.container[propName]
 		end)
-		selectedState.subscribe(function(newState, oldState, action)
-			print("currentlySelected is... ")
-			for k,v in next, newState do
-				print(k, v)
-			end
-			print("-----------------")
-		end)
-		return hierarchyMenu.container
+
+		return {
+			container = hierarchyMenu.container,
+			props = props,
+			subscribeToSelected = selectedState.subscribe,
+			getSelected = function()
+				local clone, state = {}, selectedState.getState()
+				for k,v in next, state do clone[k] = v end return clone
+			end,
+			render = function()
+				local hProps = hierarchyMenu.props
+				hProps.parent = props.parent
+				hProps.size = props.size
+				hProps.position = props.position
+				hProps.buttonHeight = props.buttonHeight
+				hProps.insetBy = props.insetBy
+				hierarchyMenu.render()
+			end,
+			destroy = hierarchyMenu.destroy
+		}
 	end
 }
