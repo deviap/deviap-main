@@ -94,7 +94,7 @@ return {
 			insetBy = props.insetBy,
 		
 			onButtonDown1 = function(child)
-				if not core.input:isKeyDown(enums.keys.KEY_LSHIFT) then
+				if not core.input:isKeyDown(enums.keys.KEY_LSHIFT) or not props.multipleSelections then
 					for k,v in next, selectedState.getState() do
 						local node = hierarchyMenu.getButtonFromSignature(k)
 						node.backgroundColour = nil
