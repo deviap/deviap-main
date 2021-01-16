@@ -96,7 +96,6 @@ horizontalNav.addNavTextItem({
 -- 	content = properties.construct(horizontalNav.container)
 -- }
 
-
 -- IO List Test
 -- local window = require("devgit:source/libraries/UI/components/widgets/window.lua")
 
