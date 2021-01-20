@@ -53,6 +53,7 @@ return function(props)
 	props.borderInset = 1
 	props.borderWidth = 1
 	props.helperText = props.helperText or ""
+	props.size = props.size or guiCoord(0, 288, 0, 40)
 
 	local self = newDropdown(props)
 
@@ -86,7 +87,8 @@ return function(props)
 		end)
 
 		self._buttons[tag] = button
-
+		-- Hack: !!!!
+		self.state.dispatch { type = "unhover" }
 		return button
 	end
 
@@ -124,13 +126,13 @@ return function(props)
 			helper.visible = true
 			helper.size = guiCoord(1, 0, 0, 24)
 			helper.position = guiCoord(0, 0, 0, -24)
-			self.container.size = guiCoord(0, 288, 0, 40)
+			self.container.size = props.size
 			self.container.position = props.position + guiCoord(0, 0, 0, 24)
 		else
 			helper.visible = false
 			helper.size = guiCoord(1, 0, 0, 24)
 			helper.position = guiCoord(0, 0, 0, -24)
-			self.container.size = guiCoord(0, 288, 0, 40)
+			self.container.size = props.size
 			self.container.position = props.position + guiCoord(0, 0, 0, 24)
 		end
 	
@@ -167,19 +169,20 @@ return function(props)
 
 			if state.active then
 				self.menu.visible = true
-				props.containerBackgroundColour = colour(0.9, 0.9, .9)
+				props.containerBackgroundColour = colour(0.9, 0.9, 0.9)
 				props.iconId = "expand_less"
 			elseif state.hovering then
 				self.menu.visible = false
-				props.containerBackgroundColour =  colour(0.95, .95, .95)
+				props.containerBackgroundColour =  colour(0.95, 0.95, 0.95)
 			else
 				props.containerBackgroundColour =  colour(1, 1, 1)
 				self.menu.visible = false
 			end
 		else -- disabled
 			self.menu.visible = false
+			props.text = "Disabled"
 			props.containerBackgroundColour = colour.hex("#E0E0E0")
-			props.secondaryColour = colour.hex("EAEAEA")
+			props.secondaryColour = colour.hex("FFFFFF")
 		end
 
 		self.render()

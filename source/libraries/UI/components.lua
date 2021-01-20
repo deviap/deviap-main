@@ -1,35 +1,33 @@
 -- Copyright 2020 - Deviap (deviap.com)
-local dir = "devgit:source/libraries/UI"
 
 local components = {
-	baseComponent = require("./baseComponent.lua")
+	baseComponent = require("./baseComponent.lua"),
 	
 	baseButton = require("./components/buttons/baseButton.lua"),
 	primaryButton = require("./components/buttons/primaryButton.lua"),
 	dangerButton = require("./components/buttons/dangerButton.lua"),
 	secondaryButton = require("./components/buttons/secondaryButton.lua"),
 	tertiaryButton = require("./components/buttons/tertiaryButton.lua"),
-	baseComponent = require("./components/baseComponent.lua"),
 
-	appCard = require("./cards/app.lua"),
+	appCard = require("devgit:source/libraries/UI/components/cards/app.lua"),
 
-	dropDown = require("./dropDowns/dropDown.lua"),
-	dropDownOptions = require("./dropDowns/dropDownOptions.lua"),
+	dropDown = require("devgit:source/libraries/UI/components/dropDowns/dropDown.lua"),
+	dropDownOptions = require("devgit:source/libraries/UI/components/dropDowns/dropDownOptions.lua"),
 
-	textInput = require("./inputs/textInput.lua")
+	textInput = require("./inputs/textInput.lua"),
 	numberInput = require("./inputs/numberInput.lua"),
 
-	inlineNotification = require("./notifications/inlineNotification.lua"),
-	multilineNotification = require("./notifications/multilineNotification.lua"),
+	inlineNotification = require("devgit:source/libraries/UI/components/notifications/inlineNotification.lua"),
+	multilineNotification = require("devgit:source/libraries/UI/components/notifications/multilineNotification.lua"),
 
-	tab = require("./tabs/tab.lua"),
-	tabs = require("./tabs/tabs.lua"),
+	tab = require("devgit:source/libraries/UI/components/tabs/tab.lua"),
+	tabs = require("devgit:source/libraries/UI/components/tabs/tabs.lua"),
 
-	checkbox = require("./checkbox.lua"),
-	loading = require("./loading.lua"),
-	modal = require("./modal.lua"),
-	toggle = require("./toggle.lua"),
-	tooltip = require("./tooltip.lua"),
+	checkbox = require("devgit:source/libraries/UI/components/checkbox.lua"),
+	loading = require("devgit:source/libraries/UI/components/loading.lua"),
+	modal = require("devgit:source/libraries/UI/components/modal.lua"),
+	toggle = require("devgit:source/libraries/UI/components/toggle.lua"),
+	tooltip = require("devgit:source/libraries/UI/components/tooltip.lua"),
 }
 
 return function(name, props)
@@ -42,5 +40,5 @@ return function(name, props)
 		@returns
 			table, component
 	]]
-	return components[name:gsub("^%.", dir)](props)
+	return components[name](props)
 end

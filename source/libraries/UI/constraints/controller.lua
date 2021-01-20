@@ -1,7 +1,7 @@
 -- Copyright 2020 - Deviap (deviap.com)
 local controllers = {
 	verticalLayoutAuto = require("devgit:source/libraries/UI/constraints/controllers/verticalLayoutAuto.lua"),
-	horizontialLayoutAuto = require("devgit:source/libraries/UI/constraints/controllers/horizontialLayoutAuto.lua"),
+	horziontalLayoutAuto = require("devgit:source/libraries/UI/constraints/controllers/horziontalLayoutAuto.lua"),
 	gridLayout = require("devgit:source/libraries/UI/constraints/controllers/gridLayout.lua"),
 	verticalNavLayout = require("devgit:source/libraries/UI/constraints/controllers/verticalNavLayout.lua")
 }

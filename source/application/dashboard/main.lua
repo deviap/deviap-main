@@ -1,8 +1,11 @@
 -- Copyright 2020 - Deviap (deviap.com)
 -- Author(s): Sanjay-B(Sanjay)
 -- Dashboard Entry file. 
+local devMode = core.dev.localDevGitEnabled
 local navbar = require("devgit:source/libraries/UI/components/navigation/navbar.lua")
---local profileNavItem = require("devgit:source/libraries/UI/components/misc/profileNavItem.lua")
+
+-- Temporary loading screen until we find a better way to do this..?
+local loadingScreen = require("devgit:source/application/loading/main.lua")
 
 -- Background
 core.construct("guiFrame", {
@@ -31,14 +34,15 @@ local verticalNav = navbar {
 	zIndex = 4
 }
 
--- Home Sidebar Button
+-- Dashboard/Home Sidebar Button
 verticalNav.addNavItem({
 	defaultPage = true,
 	relativeLocation = "top",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
-	iconId = "home",
-	tooltip = "Home",
+	iconMax = 24,
+	iconId = "dashboard",
+	tooltip = "Dashboard",
+	alertEnabled = true,
 	redirect = require("devgit:source/application/dashboard/pages/dashboard.lua")
 })
 
@@ -46,7 +50,7 @@ verticalNav.addNavItem({
 verticalNav.addNavItem({
 	relativeLocation = "top",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "apps",
 	tooltip = "Apps",
 	redirect = require("devgit:source/application/dashboard/pages/apps.lua")
@@ -56,40 +60,44 @@ verticalNav.addNavItem({
 verticalNav.addNavItem({
 	relativeLocation = "top",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "code",
 	tooltip = "Develop",
-	redirect = nil
+	redirect = require("devgit:source/application/dashboard/pages/develop.lua")
 })
 
+if devMode then
 -- Groups Sidebar Button
 verticalNav.addNavItem({
 	relativeLocation = "top",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "question_answer",
 	tooltip = "Groups",
-	redirect = nil
+	redirect = require("devgit:source/application/dashboard/pages/groups.lua")
 })
+end
 
+if devMode then
 -- Shop Sidebar Button
 verticalNav.addNavItem({
 	relativeLocation = "top",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "shopping_cart",
 	tooltip = "Shop",
 	redirect = nil
 })
+end
 
 -- Settings Sidebar Button
 verticalNav.addNavItem({
 	relativeLocation = "bottom",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "tune",
 	tooltip = "Settings",
-	redirect = nil
+	redirect = require("devgit:source/application/dashboard/pages/settings.lua")
 })
 
 -- Horizontal Navbar Instance
@@ -101,24 +109,27 @@ local horizontalNav = navbar {
 	containerBackgroundColour = colour.hex("#FFFFFF"),
 	iconColour = colour.hex("#212121"),
 	bottomOffset = navItemSpacing,
+	extensionNav = verticalNav,
 	zIndex = 3
 }
 
--- Notifications Navbar Button
+if devMode then
+-- Alerts Navbar Button
 horizontalNav.addNavItem({
 	relativeLocation = "top",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "notifications",
 	tooltip = "Alerts",
-	redirect = nil
+	alertEnabled = true,
+	redirect = require("devgit:source/application/dashboard/pages/alerts.lua")
 })
 
 -- Direct Messages Navbar Button
 horizontalNav.addNavItem({
 	relativeLocation = "top",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "email",
 	tooltip = "Inbox",
 	redirect = nil
@@ -128,7 +139,7 @@ horizontalNav.addNavItem({
 horizontalNav.addNavItem({
 	relativeLocation = "top",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "group",
 	tooltip = "Friends",
 	redirect = nil
@@ -138,11 +149,12 @@ horizontalNav.addNavItem({
 horizontalNav.addNavItem({
 	relativeLocation = "top",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "person_add",
 	tooltip = "Add Friend",
 	redirect = nil
 })
+end
 
 -- Tagging Render
 for _, roleName in pairs(tagsRoles) do
@@ -152,11 +164,12 @@ for _, roleName in pairs(tagsRoles) do
 	})
 end
 
+if devMode then
 -- Report Navbar Button
 horizontalNav.addNavItem({
 	relativeLocation = "bottom",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "announcement",
 	tooltip = "Report",
 	redirect = nil
@@ -166,8 +179,12 @@ horizontalNav.addNavItem({
 horizontalNav.addNavItem({
 	relativeLocation = "bottom",
 	size = guiCoord(0, 32, 0, 32),
-	iconMax = 32,
+	iconMax = 24,
 	iconId = "bug_report",
 	tooltip = "Feedback",
 	redirect = nil
 })
+end
+
+-- Remove loading screen when done
+loadingScreen:destroy()
