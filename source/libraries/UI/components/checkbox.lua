@@ -38,9 +38,10 @@ return function(props)
 			table, component
 	]]
 	props.text = props.text or ""
+	props.size = props.size or guiCoord(0, 120, 0, 18)
 
 	local self = newBaseComponent(props)
-	self.container.size = guiCoord(0, 120, 0, 18)
+	self.container.size = props.size
 	self.container.backgroundAlpha = 0
 
 	local box = core.construct("guiFrame", {

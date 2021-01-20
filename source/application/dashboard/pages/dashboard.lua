@@ -4,7 +4,7 @@
 -- Made available under the MIT License:                     --
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
-
+-- Author(s): Sanjay-B(Sanjay)
 -- Creates the Dashboard page.
 local card = require("devgit:source/libraries/UI/components/cards/app.lua")
 local comment = require("devgit:source/libraries/UI/components/cards/comment.lua")

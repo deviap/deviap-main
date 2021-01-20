@@ -14,7 +14,7 @@ local pattern = core.construct("guiImage", {
 	backgroundAlpha = 0,
 	image = "devgit:assets/images/tile.png",
 	patternScaleValues = false,
-	imageBottomRight = vector2(120, 120)
+	imageBottomRight = vector2(2, 2)
 })
 
 local tween;

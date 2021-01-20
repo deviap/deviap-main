@@ -1,9 +1,7 @@
 -- Copyright 2020 - Deviap (deviap.com)
 -- Author(s): Sanjay-B(Sanjay)
 -- Dashboard Entry file. 
-
 local devMode = core.dev.localDevGitEnabled
-
 local navbar = require("devgit:source/libraries/UI/components/navigation/navbar.lua")
 
 -- Temporary loading screen until we find a better way to do this..?
@@ -36,14 +34,14 @@ local verticalNav = navbar {
 	zIndex = 4
 }
 
--- Home Sidebar Button
+-- Dashboard/Home Sidebar Button
 verticalNav.addNavItem({
 	defaultPage = true,
 	relativeLocation = "top",
 	size = guiCoord(0, 32, 0, 32),
 	iconMax = 24,
-	iconId = "home",
-	tooltip = "Home",
+	iconId = "dashboard",
+	tooltip = "Dashboard",
 	alertEnabled = true,
 	redirect = require("devgit:source/application/dashboard/pages/dashboard.lua")
 })

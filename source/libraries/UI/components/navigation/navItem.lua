@@ -101,10 +101,12 @@ return function(props)
         ]]
 
         item.iconMax = props.iconMax
-        item.iconId = props.iconId
+		item.iconId = props.iconId
+		item.iconColour = props.iconColour
     end
 
     self.state.subscribe(function(state)
+		self.render()
 		if state.enabled then
 			if state.mode == "hover" then
 				item.iconColour = colour.hex("#0f62fe")
@@ -116,8 +118,6 @@ return function(props)
 		else -- disabled
 			item.iconColour = colour.hex("#E0E0E0")
 		end
-
-		self.render()
     end)
     
 	self.render()

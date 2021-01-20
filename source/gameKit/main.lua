@@ -23,6 +23,7 @@ local componentMap = {
 	["playerList"] = {client = true, server = false},
 	["disconnection"] = {client = true, server = false},
 	["character"] = {client = true, server = true},
+	["chat"] = {client = true, server = true},
 }
 
 local finished = false

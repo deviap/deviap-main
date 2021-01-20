@@ -18,11 +18,13 @@ return function(props)
 	props.borderAlpha = props.borderAlpha or 0
 	props.borderInset = props.borderInset or 2
 	props.position = props.position or guiCoord(0, 0, 0, 0)
+	props.size = props.size or guiCoord(0, 0, 0, 0)
 
 	local self = {}
 	self.container = core.construct("guiFrame", {
 		parent = props.parent,
 		position = props.position,
+		size = props.size,
 		backgroundColour = props.containerBackgroundColour,
 		backgroundAlpha = props.containerBackgroundAlpha
 	})
