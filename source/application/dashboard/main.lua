@@ -1,6 +1,7 @@
 -- Copyright 2020 - Deviap (deviap.com)
 -- Author(s): Sanjay-B(Sanjay)
--- Dashboard Entry file. 
+-- Dashboard Entry file.
+
 local navbar = require("devgit:source/libraries/UI/components/navigation/navbar.lua")
 --local profileNavItem = require("devgit:source/libraries/UI/components/misc/profileNavItem.lua")
 
