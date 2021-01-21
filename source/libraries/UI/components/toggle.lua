@@ -49,6 +49,11 @@ return function(props)
 	props.offStatus = props.offStatus or "Off"
 	props.onColour = props.onColour or colour.hex("24a148")
 	props.offColour = props.offColour or colour.hex("8d8d8d")
+	props.backdropStrokeRadius = props.backdropStrokeRadius or 12
+	props.dotStrokeRadius = props.dotStrokeRadius or 9
+	props.statusEnabled = props.statusEnabled or false
+
+	-- 5, 2
 
 	local self = newBaseComponent(props)
 	self.container.backgroundAlpha = 0
@@ -63,7 +68,6 @@ return function(props)
 		textColour = colour.hex("525252"),
 		size = guiCoord(1, 0, 0, 14),
 		position = guiCoord(0, 0, 0, 0),
-		text = "label",
 		textSize = 14
 	})
 
@@ -74,7 +78,7 @@ return function(props)
 		backgroundColour = colour.hex("8d8d8d"),
 		size = guiCoord(0, 48, 0, 24),
 		position = guiCoord(0, 0, 0, 18),
-		strokeRadius = 12
+		strokeRadius = props.backdropStrokeRadius
 	})
 
 	local dot = core.construct("guiFrame", {
@@ -84,7 +88,7 @@ return function(props)
 		backgroundColour = colour.hex("ffffff"),
 		size = guiCoord(0, 18, 0, 18),
 		position = self.on and guiCoord(1, -21, 0, 3) or guiCoord(0, 3, 0, 3),
-		strokeRadius = 9
+		strokeRadius = props.dotStrokeRadius
 	})
 
 	local status = core.construct("guiTextBox", {
@@ -97,7 +101,8 @@ return function(props)
 		position = guiCoord(0, 58, 0, 18),
 		text = "Off",
 		textAlign = "middleLeft",
-		textSize = 18
+		textSize = 18,
+		visible = props.statusEnabled
 	})
 
 	self.state = newState(reducer)

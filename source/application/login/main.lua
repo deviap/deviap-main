@@ -11,16 +11,20 @@ local container = core.construct("guiFrame", {
 
 local pattern = core.construct("guiImage", {
 	parent = container,
-	size = guiCoord(1, 0, 1, 0),
+	size = guiCoord(0, 3000, 0, 3000),
 	backgroundAlpha = 0,
 	image = "devgit:assets/images/tile.png",
 	patternScaleValues = false,
-	imageBottomRight = vector2(120, 120),
+	imageTopLeft = vector2(0, 0),
+	imageBottomRight = vector2(25, 25),
 	imageColour = colour.black()
 })
 
 local tween;
-tween = core.tween:begin(pattern, 10, {imageTopLeft = vector2(-120, 120)}, "linear", function()
+tween = core.tween:begin(pattern, 10, {
+	imageTopLeft = vector2(-1, 1),
+	imageBottomRight = vector2(24, 26)
+}, "linear", function()
 	tween:reset()
 	tween:resume()
 end)
@@ -40,14 +44,11 @@ breakpointer:bind(sideContainer, "md", {
 	position = guiCoord(0.5, 0, 0, 100)
 })
 
-local logoBg, logoShadow, logoText = require("devgit:source/application/utilities/logo.lua")(
-                                     				{
-					parent = sideContainer,
-					size = guiCoord(0, 100, 0, 40),
-					position = guiCoord(0.5, -50, 0.5, -80),
-					backgroundColour = colour.black(),
-					backgroundAlpha = 0.98
-				}, colour.white())
+require("devgit:source/application/utilities/logo.lua")({
+	parent = sideContainer,
+	size = guiCoord(0, 50, 0, 50),
+	position = guiCoord(0.5, -25, 0.5, -80)
+})
 
 local button = core.construct("guiFrame", {
 	parent = sideContainer,
@@ -103,8 +104,8 @@ end)
 
 button:on("mouseLeftUp", function()
 	if _DEVICE:sub(0, 6) == "iPhone" or _DEVICE:sub(0, 4) == "iPad" then
-		core.engine:openUrl("https://deviap.com/dashboard?client=2")
+		core.process:openUrl("https://deviap.com/dashboard?client=2")
 	else
-		core.engine:openUrl("https://deviap.com/dashboard?client=1")
+		core.process:openUrl("https://deviap.com/dashboard?client=1")
 	end
 end)
