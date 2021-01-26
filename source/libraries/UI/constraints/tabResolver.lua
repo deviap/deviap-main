@@ -1,4 +1,4 @@
--- Copyright 2020 - Deviap (deviap.com)
+-- Copyright 2021 - Deviap (deviap.com)
 -- Constraints using tabs. Weights are not implemented as of late.
 local function getMinMaxFromOffset(tab, offset, maxLength)
 	--[[

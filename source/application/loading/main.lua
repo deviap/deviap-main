@@ -1,4 +1,4 @@
--- Copyright 2020 - Deviap (deviap.com)
+-- Copyright 2021 - Deviap (deviap.com)
 -- Author(s): Sanjay-B(Sanjay)
 -- Loading screen.
 local colourMap = require("devgit:source/application/utilities/colourScheme.lua")

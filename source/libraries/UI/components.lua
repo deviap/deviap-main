@@ -1,4 +1,4 @@
--- Copyright 2020 - Deviap (deviap.com)
+-- Copyright 2021 - Deviap (deviap.com)
 
 local components = {
 	baseComponent = require("./baseComponent.lua"),

@@ -1,4 +1,4 @@
--- Copyright 2020 - Deviap (deviap.com)
+-- Copyright 2021 - Deviap (deviap.com)
 
 local newDropdown = require("devgit:source/libraries/UI/components/dropDowns/dropDown.lua")
 local newButton = require("devgit:source/libraries/UI/components/buttons/secondaryButton.lua")
