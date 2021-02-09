@@ -1,4 +1,4 @@
-local constraint = function()
+return function()
 	local public = {}
 	public.container = core.construct("guiScrollView")
 	public.yGap = 10
