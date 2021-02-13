@@ -18,7 +18,7 @@ return function(props)
     local padding = 15
     local size = 62-padding*2
 
-	local self = newBaseComponent(props)
+    local self = newBaseComponent(props)
     self.container.size = props.size
     self.container.position = props.position
     self.container.zIndex = props.zIndex
