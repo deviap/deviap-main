@@ -1,6 +1,16 @@
--- Copyright 2020 - Deviap (deviap.com)
--- Author(s): Sanjay-B(Sanjay)
--- Dashboard Entry file. 
+---------------------------------------------------------------
+-- Copyright 2021 Deviap (https://deviap.com/)               --
+---------------------------------------------------------------
+-- Made available under the MIT License:                     --
+-- https://github.com/deviap/deviap-main/blob/master/LICENSE --
+---------------------------------------------------------------
+
+-- SEND TO OVERLAY (DASHBOARD HAS BEEN MOVED TO LEGACY)
+require("devgit:source/application/overlay/main.lua")
+
+
+-- Dashboard Entry file.
+--[[ 
 local devMode = core.dev.localDevGitEnabled
 local navbar = require("devgit:source/libraries/UI/components/navigation/navbar.lua")
 
@@ -188,3 +198,4 @@ end
 
 -- Remove loading screen when done
 loadingScreen:destroy()
+]]--
