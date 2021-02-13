@@ -72,6 +72,11 @@ local horizontalNav = navbar {
 	zIndex = 3
 }
 
+local stats = core.networking:getStats()
+for i,v in pairs(stats) do
+	print(i,v)
+end
+
 --[[
 horizontalNav.addNavTextItem({
 	defaultPage = false,
