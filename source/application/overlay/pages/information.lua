@@ -59,7 +59,7 @@ return {
             position = guiCoord(0, 11, 0, 80),
             size = guiCoord(0, 260, 0, 83),
             title = "Developers",
-            content = "Jason Carr (Jay)\nSanjay Bhadra (Sanjay)\nUtrain (Utrain)"
+            content = "Jason Carr (Jay)\nSanjay Bhadra (Sanjay)\nutrain (utrain)"
         }
 
         -- Acknowledgements Card
