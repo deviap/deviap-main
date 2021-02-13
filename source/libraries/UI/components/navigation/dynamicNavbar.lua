@@ -7,7 +7,6 @@
 -- Creates a navbar instance
 local newBaseComponent = require("devgit:source/libraries/UI/components/customBaseComponent.lua")
 local navItem = require("devgit:source/libraries/UI/components/navigation/customNavItem.lua")
-local tagItem = require("devgit:source/libraries/UI/components/misc/tagItem.lua")
 
 return function(props)
 	--[[
