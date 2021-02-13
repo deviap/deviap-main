@@ -15,7 +15,7 @@ local verticalNav = navbar {
 	orientation = "vertical",
 	parent = core.engine.coreInterface,
 	size = guiCoord(0, 62, 1, 0),
-	position = guiCoord(0, 0, 0, 0),
+	position = guiCoord(0, -65, 0, 0),
 	iconColour = colour.hex("#FFFFFF"),
 	zIndex = 2
 }
