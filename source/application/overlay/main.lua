@@ -53,7 +53,7 @@ verticalNav.addNavItem({
 	size = guiCoord(0, 32, 0, 32),
 	iconMax = 24,
 	iconId = "tune",
-	redirect = nil
+	redirect = require("devgit:source/application/overlay/pages/settings.lua")
 })
 
 core.input:on("keyDown", function(key)
