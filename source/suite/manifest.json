@@ -14,7 +14,8 @@
             "scene": true,
             "graphics": true,
             "reflection": true,
-            "io": true
+            "io": true,
+            "networking": true
         }
     }
 }
