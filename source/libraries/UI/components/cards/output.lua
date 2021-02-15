@@ -7,6 +7,25 @@
 -- Creates a card component.
 local newBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
 local newState = require("devgit:source/libraries/state/main.lua")
+local defaultState = {}
+
+local MAX_PRINTOUTS = 100
+local OUTPUT_TYPES = {
+	PRINT = 1,
+	WARN = 2,
+	ERROR = 3,
+	PAST = 4,
+}
+
+local deepClone
+deepClone = function(target)
+	local newTbl = {}
+	for key, value in next, target do
+		if type(value) == "table" then newTbl[key] = deepClone(value)
+		else newTbl[key] = value end
+	end
+	return newTbl
+end
 
 local function reducer(state, action)
 	--[[
@@ -18,18 +37,48 @@ local function reducer(state, action)
 		@returns
 			any, state
 	]]
-	state = state or {enabled = true, mode = "idle"}
-	local newState = {enabled = state.enabled, mode = state.mode}
 
-	if action.type == "enable" then
-		newState.enabled = true
-	elseif action.type == "disable" then
-		newState.enabled = false
-	elseif action.type == "setMode" then
-		newState.mode = action.mode
+	local newState = deepClone(state or defaultState)
+
+	if action.type == "append" then
+		if #newState > MAX_PRINTOUTS - 1 then
+			table.remove(newState, 1)
+		end
+
+		newState[#newState + 1] = {
+			outputType = action.outputType,
+			content = action.content,
+			timeStamp = os.date("%H:%M:%S", os.time())
+		}
+	elseif action.type == "clear" then
+		newState = {}
 	end
 
 	return newState
+end
+
+local getDebugHistory = function()
+	local preformatted = core.debug:getOutputHistory()
+	local formatted = {}
+
+	for key, value in next, core.debug:getOutputHistory() do
+		formatted[key] = {
+			outputType = OUTPUT_TYPES.PAST,
+			content = value.message,
+			timeStamp = os.date("%H:%M:%S", value.time)
+		}
+
+		-- HACK: Try to color some of the errors correctly.
+		-- messageType is missing that would inform us the type of output
+		-- it actually is.
+		if value.message:match("ERROR") then
+			formatted[key].outputType = OUTPUT_TYPES.ERROR
+		elseif value.message:match("Trace %(thread%)") then
+			formatted[key].outputType = OUTPUT_TYPES.ERROR
+		end
+	end
+
+	return formatted
 end
 
 return function(props)
@@ -48,15 +97,12 @@ return function(props)
 
     props.title = props.title or "Title"
 
-    local maxEntries = 19
-    local debounce = false
-    local contents = {}
-
     local self = newBaseComponent(props)
     self.container.backgroundColour = colour.hex("FFFFFF")
     self.container.strokeRadius = 8
 
-    self.state = newState(reducer)
+    self.state = newState(reducer, getDebugHistory())
+	self.renderedPrintout = {}
 
     local heading = core.construct("guiTextBox", {
         parent = self.container,
@@ -77,54 +123,47 @@ return function(props)
         backgroundColour = colour.rgb(255, 0, 0),
         backgroundAlpha = 0,
         scrollbarAlpha = 0.8,
-        scrollbarColour = colour(0.75, 0.75, 0.75),
+        scrollbarColour = colour(0.50, 0.50, 0.50),
         scrollbarRadius = 0,
         scrollbarWidth = 5,
     })
 
-    core.debug:on("print", function(message)
-        contents[#contents + 1] = {
-            ["message"] = os.date("%H:%M:%S", os.time()) .. ": " .. message,
-            ["colour"] = (string.match(message, "ERROR:") and colour.rgb(229, 115, 115) or colour.rgb(102, 102, 102))
-        }
+	for i = 1, MAX_PRINTOUTS do
+		self.renderedPrintout[i] = core.construct("guiTextBox", {
+		    parent = scrollContents,
+		    size = guiCoord(1, 0, 0, 20),
+		    position = guiCoord(0, 0, 0, -20), -- Move it out of the way until needed.
+			backgroundColour = i % 2 == 0 
+				and colour(0.9, 0.9, 0.9) 
+				or colour(0.95, 0.95, 0.95),
+			textWrap = true,
+		    textSize = 14,
+		})
+	end
+
+    core.debug:on("print", function(content)
+        self.state.dispatch({
+			type = "append",
+			outputType = OUTPUT_TYPES.PRINT,
+			content = content,
+		})
+   end)
+
+    core.debug:on("warn", function(content)
+        self.state.dispatch({
+			type = "append",
+			outputType = OUTPUT_TYPES.WARN,
+			content = content,
+		})
     end)
 
-    core.debug:on("warn", function(message)
-        contents[#contents + 1] = {
-            ["message"] = os.date("%H:%M:%S", os.time()) .. ": " .. message,
-            ["colour"] = colour.rgb(255, 183, 77)
-        }
+	core.debug:on("error", function(content)
+        self.state.dispatch({
+			type = "append",
+			outputType = OUTPUT_TYPES.ERROR,
+			content = content,
+		})
     end)
-
-    -- Update Console Contents
-    spawn(function()
-        while sleep(0.3) do
-            scrollContents:destroyChildren()
-            scrollContents.canvasSize = guiCoord(1, 0, 0, 0)
-            for index, data in pairs(contents) do
-                local textLabel = core.construct("guiTextBox", {
-                    parent = scrollContents,
-                    size = guiCoord(1, 0, 1, 0),
-                    position = guiCoord(0, 0, 0, scrollContents.canvasSize.offset.y),
-                    backgroundColour = colour.rgb(255, 255, 255),
-                    text = data["message"],
-                    textColour = data["colour"],
-                    textSize = 14,
-                    textWrap = true,
-                    visible = true
-                })
-                textLabel.size = guiCoord(1, 0, 0, textLabel.textDimensions.y + 2)
-                scrollContents.canvasSize = scrollContents.canvasSize + guiCoord(0, 0, 0, textLabel.absoluteSize.y)
-            end
-        end
-    end)
-    
-	self.container:on("mouseEnter", function()
-		self.state.dispatch {type = "setMode", mode = "hover"}
-	end)
-	self.container:on("mouseExit", function()
-		self.state.dispatch {type = "setMode", mode = "idle"}
-	end)
 
 	self.render = function()
 		--[[
@@ -135,23 +174,37 @@ return function(props)
 			@returns
 				nil
         ]]
+
+		local height = 0
+		for key, value in next, self.state.getState() do
+			local obj = self.renderedPrintout[key]
+			obj.text = value.timeStamp .. " : " .. value.content
+			obj.size = guiCoord(0, scrollContents.absoluteSize.x, 0, obj.textDimensions.y)
+			obj.position = guiCoord(0, 0, 0, height)
+
+			if value.outputType == OUTPUT_TYPES.PRINT then
+				obj.textColour = colour.rgb(102, 102, 102)
+			elseif value.outputType == OUTPUT_TYPES.WARN then
+				obj.textColour = colour.rgb(255, 179, 0) -- Add more contrast
+			elseif value.outputType == OUTPUT_TYPES.ERROR then
+				obj.textColour = colour.rgb(229, 115, 115)
+			elseif value.outputType == OUTPUT_TYPES.PAST then
+				obj.textColour = colour.rgb(102, 102, 102)
+			end
+			
+			height = height + obj.textDimensions.y
+		end
+
+		scrollContents.canvasSize = guiCoord(0, scrollContents.absoluteSize.x, 0, height)
         heading.text = props.title
 	end
 	
-	self.state.subscribe(function(state)
-		if state.enabled then
-			if state.mode == "hover" then
-				
-			elseif state.mode == "idle" then
-				
-			end
-		else -- disabled
-		end
-
-		self.render()
-	end)
+	
+	self.state.subscribe(self.render)
 
 	self.render()
+
+	warn("WARNINGWARNINGWARNING")
 
 	return self
 end

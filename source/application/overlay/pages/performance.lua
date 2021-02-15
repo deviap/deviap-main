@@ -44,16 +44,16 @@ return {
         gridController.container.backgroundColour = colour.rgb(255, 0, 0)
         gridController.container.backgroundAlpha = 0
 
-        -- Extremely buggy rn; don't enable unless you're trying to fix it.
-        --[[
+       
         outputCard {
             parent = gridController.container,
             position = guiCoord(0, 11, 0, 80),
             size = guiCoord(0, 260, 0, 300),
             title = "Output"
         }
-        ]]--
+  
 
+		-- Extremely buggy rn; don't enable unless you're trying to fix it.
         -- DOT GRAPH TEST (PING)
         --[[
         dotGraphCard  {
