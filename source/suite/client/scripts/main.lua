@@ -34,7 +34,7 @@ local block = core.construct("block", {
 core.scene.camera:lookAt(base.position)
 
 -- MAIN INTERFACE IGNORE ABOVE
-local navbar = require("devgit:source/libraries/UI/components/navigation/navbarAnimated.lua")
+local navbar = require("devgit:source/libraries/legacy/UI/components/navigation/navbarAnimated.lua")
 
 -- Vertical Sidebar Instance
 local verticalNav = navbar {

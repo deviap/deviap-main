@@ -5,8 +5,8 @@
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
 -- Creates the Scene Edit toolbar.
-local gridLayout = require("devgit:source/libraries/UI/constraints/controllers/gridLayout.lua")
-local navItem = require("devgit:source/libraries/UI/components/navigation/navItem.lua")
+local gridLayout = require("devgit:source/libraries/legacy/UI/constraints/controllers/gridLayout.lua")
+local navItem = require("devgit:source/libraries/legacy/UI/components/navigation/navItem.lua")
 
 local activeDefinition = nil
 local function setActiveTool(toolDefinition)

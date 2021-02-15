@@ -59,7 +59,7 @@ local bindAll = function(object, events)
 end
 
 local createTooltip = function(parent)
-	local tooltip = require("devgit:source/libraries/UI/components/tooltip.lua") {
+	local tooltip = require("devgit:source/libraries/legacy/UI/components/tooltip.lua") {
 		parent = core.interface,
 	}
 

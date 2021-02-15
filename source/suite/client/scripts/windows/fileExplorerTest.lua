@@ -1,6 +1,6 @@
-local window = require("devgit:source/libraries/UI/components/widgets/window.lua")
-local primaryButton = require("devgit:source/libraries/UI/components/buttons/primaryButton.lua")
-local secondaryButton = require("devgit:source/libraries/UI/components/buttons/secondaryButton.lua")
+local window = require("devgit:source/libraries/legacy/UI/components/widgets/window.lua")
+local primaryButton = require("devgit:source/libraries/legacy/UI/components/buttons/primaryButton.lua")
+local secondaryButton = require("devgit:source/libraries/legacy/UI/components/buttons/secondaryButton.lua")
 
 local newFileExplorer = require("./fileExplorer.lua")
 

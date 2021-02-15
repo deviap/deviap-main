@@ -4,8 +4,8 @@
 -- Made available under the MIT License:                     --
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
-local textInput = require("devgit:source/libraries/UI/components/inputs/textInput.lua")
-local checkbox = require("devgit:source/libraries/UI/components/checkbox.lua")
+local textInput = require("devgit:source/libraries/legacy/UI/components/inputs/textInput.lua")
+local checkbox = require("devgit:source/libraries/legacy/UI/components/checkbox.lua")
 
 local inputsGivenType =
 {
