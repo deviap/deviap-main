@@ -12,7 +12,6 @@ core.construct("guiFrame", {
 	position = guiCoord(0, 0, 0, -100),
 	backgroundColour = colour.rgb(40, 40, 50),
 	zIndex = 32000
-	-- backgroundAlpha     = 0.75
 })
 
 if core.dev.localDevGitEnabled then
