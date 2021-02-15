@@ -31,11 +31,12 @@ if core.dev.localDevGitEnabled then
 	})
 end
 
-core.input:on("keyUp", function(key)
+-- Conflicts with Overlay keybind.
+--[[core.input:on("keyUp", function(key)
 	if key == "KEY_ESCAPE" then
 		menu.show()
 	end
-end)
+end)]]--
 
 if core.input.hasScreenKeyboard then
 	local settingsButton = core.construct("guiFrame", {
