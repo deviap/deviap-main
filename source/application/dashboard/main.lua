@@ -6,4 +6,4 @@
 ---------------------------------------------------------------
 -- Main Client Application Interface File
 -- This file is required first before any other file.
-require("devgit:source/application/overlay/main.lua")
+require("devgit:source/application/splashscreen/main.lua")
