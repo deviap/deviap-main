@@ -63,7 +63,8 @@ return function(props)
         size = guiCoord(0, 260, 0, 20),
         backgroundColour = colour.hex("212121"),
         backgroundAlpha = 0.8,
-        zIndex = 2
+        zIndex = 2,
+		active = false
     })
 
     local heading = core.construct("guiTextBox", {
@@ -76,7 +77,8 @@ return function(props)
         textFont = "deviap:fonts/openSansBold.ttf",
         textAlign = "middleLeft",
         textAlpha = 0.8,
-        textColour = props.titleColour
+        textColour = props.titleColour,
+		active = false
     })
 
     local content = core.construct("guiTextBox", {
@@ -91,7 +93,8 @@ return function(props)
         textAlpha = 0.5,
         textWrap = true,
         textColour = props.contentColour,
-        visible = false
+        visible = false,
+		active = false
     })
 
     local icon = core.construct("guiIcon", {
@@ -104,7 +107,8 @@ return function(props)
         iconAlpha = 0.5,
         backgroundColour = colour.hex("FF0000"),
 		backgroundAlpha = 0,
-        zIndex = 3
+        zIndex = 3,
+		active = false
 	})
     
 
