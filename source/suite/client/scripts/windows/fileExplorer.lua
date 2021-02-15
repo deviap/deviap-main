@@ -4,7 +4,7 @@
 -- Made available under the MIT License:                     --
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
-local newState = require("devgit:source/libraries/legacy/state/main.lua")
+local newState = require("devgit:source/libraries/state/main.lua")
 
 local extensionWhitelist = {
 	["lua"] = true,
