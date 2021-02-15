@@ -1,6 +1,6 @@
-return function()
+return function(params)
 	local public = {}
-	public.container = core.construct("guiScrollView")
+	public.container = core.construct("guiScrollView", params)
 	public.yGap = 10
 	
 	public.refresh = function()
