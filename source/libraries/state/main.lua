@@ -63,13 +63,13 @@ return function(reducer, startingState)
 				nil
 		]]
 
-		local newState = reducer(state, action)
+		local oldState = state
+		local state = reducer(state, action)
 
 		for _, callback in next, subscribers do
-			callback(newState, state, action)
+			callback(state, oldState, action)
 		end
 
-		state = newState
 	end
 
 	interface.getState = function()
