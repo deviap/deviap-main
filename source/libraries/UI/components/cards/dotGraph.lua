@@ -92,7 +92,9 @@ return function(props)
             core.tween:begin(point, 0.3, {position = newpos}, "linear", function()
                 sleep(14)
                 array[index] = nil -- Safe remove
-                point:destroy()
+                if point ~= nil then
+                    point:destroy()
+                end
             end)
         end
     end
