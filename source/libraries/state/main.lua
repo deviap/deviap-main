@@ -64,12 +64,11 @@ return function(reducer, startingState)
 		]]
 
 		local oldState = state
-		local state = reducer(state, action)
+		state = reducer(oldState, action)
 
 		for _, callback in next, subscribers do
 			callback(state, oldState, action)
 		end
-
 	end
 
 	interface.getState = function()
