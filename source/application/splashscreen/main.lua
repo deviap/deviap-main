@@ -38,21 +38,37 @@ local brandHeading = core.construct("guiTextBox", {
     strokeColour = colour.hex("F5F5F5"),
 })
 
-local editAppButton = button {
+local editPackedAppButton = button {
     parent = container,
     position = guiCoord(1, 250, 0.5, -40),
-    size = guiCoord(0, 180, 0, 50),
+    size = guiCoord(0, 270, 0, 50),
     containerBackgroundColour = colour.rgb(255, 138, 101),
-    text = "Edit Application",
+    text = "Run Packaged Application",
     textAlign = "middle",
     textSize = 24,
     strokeRadius = 10,
 }
 
-editAppButton.container:on("mouseLeftUp", function()
+editPackedAppButton.container:on("mouseLeftUp", function()
     -- Do something here, idk.
 end)
 
+local editUnpackedAppButton = button {
+    parent = container,
+    position = guiCoord(1, 250, 0.5, 20),
+    size = guiCoord(0, 270, 0, 50),
+    containerBackgroundColour = colour.rgb(255, 138, 101),
+    text = "Run Unpackaged Application",
+    textAlign = "middle",
+    textSize = 24,
+    strokeRadius = 10,
+}
+
+editUnpackedAppButton.container:on("mouseLeftUp", function()
+    -- Do something here, idk.
+end)
+
+--[[
 -- Only enabled if devgit is overriden.
 local overrideButton = button {
     parent = container,
@@ -72,12 +88,14 @@ overrideButton.container:on("mouseLeftUp", function()
     -- Load in overlay because, no reason not to.
     require("devgit:source/application/overlay/main.lua")
 end)
+]]--
 
 core.tween:begin(brandHeading, 1, {textAlpha = 0, position = guiCoord(0.5, -80, 0.5, 150)}, "outQuad")
 core.tween:begin(brandLogo, 1, {position = guiCoord(0.5, -60, 0.5, -200), size = guiCoord(0, 140, 0, 140)}, "outQuad")
-core.tween:begin(editAppButton.container, 0.8, {position = guiCoord(0.5, -70, 0.5, -40)}, "inQuad")
+core.tween:begin(editPackedAppButton.container, 0.8, {position = guiCoord(0.5, -110, 0.5, -40)}, "inQuad")
+core.tween:begin(editUnpackedAppButton.container, 0.8, {position = guiCoord(0.5, -110, 0.5, 20)}, "inQuad")
 
 -- Logic to enabled/put into view when devgit is enabled.
-if devGitEnabled then
+--[[if devGitEnabled then
     core.tween:begin(overrideButton.container, 0.8, {position = guiCoord(0.5, -70, 0.5, 20)}, "inQuad")
-end
+end]]--
