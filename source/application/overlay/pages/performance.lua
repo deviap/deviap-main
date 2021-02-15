@@ -55,11 +55,13 @@ return {
         ]]--
 
         -- DOT GRAPH TEST (PING)
+        --[[
         dotGraphCard  {
             parent = gridController.container,
             position = guiCoord(0, 11, 0, 80),
             size = guiCoord(0, 260, 0, 100),
             title = "FPS"
         }
+        ]]--
 	end
 }
