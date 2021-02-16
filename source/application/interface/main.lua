@@ -1,6 +1,10 @@
 -- This entrypoint is ALWAYS invoked
 --require("devgit:source/application/utilities/debug/output.lua")
-require("devgit:source/application/utilities/debug/keybinds.lua")
+
+require("devgit:source/application/overlay/main.lua")
+
+
+--require("devgit:source/application/utilities/debug/keybinds.lua")
 local menu = require("devgit:source/application/interface/menu.lua")
 
 -- Some devices (with notches, etc) have padding on the top of the viewport

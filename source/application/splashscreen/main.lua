@@ -5,6 +5,8 @@
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
 -- Splashscreen Entry Point
+local config = {cellSize = 70, offset = 10}
+
 local button = require(
                				"devgit:source/libraries/UI/components/buttons/baseButton.lua")
 
@@ -69,25 +71,27 @@ end)
 local buttons = {
 	{
 		text = "Docs",
-		icon = "apps",
+		icon = "api",
 		clicked = function()
-
+			print("click")
 		end
 	},
 	{
-		text = "LICENSE",
-		icon = "apps",
+		text = "Deviap.com",
+		icon = "web",
 		clicked = function()
 
 		end
 	}
 }
 
+local scaleWithOffset = config.cellSize + config.offset
+
 for i, v in pairs(buttons) do
 	local btn = core.construct("guiIcon", {
 		parent = container,
-		position = guiCoord(0.5, ((-#buttons*110)/2) + ((i-1) * 110), 0.5, -50),
-		size = guiCoord(0, 100, 0, 100),
+		position = guiCoord(0.5, ((-#buttons * scaleWithOffset) / 2) + ((i - 0.5) * scaleWithOffset) + (config.offset / 2), 0.5, 0),
+		size = guiCoord(0, 0, 0, 0),
 		iconMax = 24,
 		iconId = v.icon,
 		iconColour = colour.rgb(0, 0, 0),
@@ -95,21 +99,33 @@ for i, v in pairs(buttons) do
 		strokeRadius = 2
 	})
 
-    local txt = core.construct("guiTextBox", {
-        parent = btn,
-        backgroundAlpha = 0,
-        text = v.text,
-        position = guiCoord(0, 0, 0.5, 20),
-        size = guiCoord(1, 0, 0, 20),
-        textAlign = "topMiddle",
-        textSize = 14,
-        active = false
-    })
+	btn:on("mouseLeftUp", v.clicked)
+
+	core.tween:begin(btn, i / 5, {
+		position = guiCoord(0.5, ((-#buttons * scaleWithOffset) / 2) + ((i - 1) * scaleWithOffset) + (config.offset / 2), 0.5, -config.cellSize / 2),
+		size = guiCoord(0, config.cellSize, 0, config.cellSize),
+	}, "inOutQuad")
+
+	local txt = core.construct("guiTextBox", {
+		parent = btn,
+		backgroundAlpha = 0,
+		text = v.text,
+		position = guiCoord(0, 0, 0.5, 18),
+		size = guiCoord(1, 0, 0, 20),
+		textAlign = "topMiddle",
+		textSize = 12,
+		active = false,
+		textAlpha = 0
+	})
+
+	core.tween:begin(txt, (i / 10) + 0.5, {
+		textAlpha = 1
+	}, "inOutQuad")
 end
 
 core.tween:begin(brandLogo, 1, {
 	position = guiCoord(0.5, -32, 0.5, -132),
 	size = guiCoord(0, 64, 0, 64)
 }, "outQuad")
-core.tween:begin(versionInfo, 1.5,
-                 {textAlpha = 0.5, position = guiCoord(1, 0, 1, -24)}, "outQuad")
+
+core.tween:begin(versionInfo, 1.5, {textAlpha = 0.5, position = guiCoord(1, 0, 1, -24)}, "outQuad")
