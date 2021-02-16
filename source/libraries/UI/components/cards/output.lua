@@ -98,6 +98,8 @@ return function(props)
     props.title = props.title or "Title"
 
     local self = newBaseComponent(props)
+	local autoScrolling = true
+
     self.container.backgroundColour = colour.hex("FFFFFF")
     self.container.strokeRadius = 8
 
@@ -107,7 +109,7 @@ return function(props)
     local heading = core.construct("guiTextBox", {
         parent = self.container,
         position = guiCoord(0, 10, 0, 5),
-        size = guiCoord(0, 240, 0, 20),
+        size = guiCoord(0, 50, 0, 20),
         backgroundColour = colour.hex("FF0000"),
         backgroundAlpha = 0,
         textSize = 18,
@@ -115,6 +117,76 @@ return function(props)
         textAlign = "middleLeft",
         textColour = colour.hex("212121"),
     })
+
+	local follow = core.construct("guiTextBox", {
+        parent = self.container,
+        position = guiCoord(0, 225 - 80, 0, 5),
+        size = guiCoord(0, 80, 0, 14),
+		backgroundColour = colour.rgb(152, 152, 152),
+		strokeRadius = 7,
+        backgroundAlpha = 0,
+        textSize = 14,
+        textAlign = "middle",
+		strokeAlpha = 1,
+		strokeColour = colour.rgb(152, 152, 152),
+        textColour = colour.rgb(152, 152, 152),
+		text = "Auto-scroll: on"
+    })
+
+	follow:on("mouseEnter", function()
+		follow.strokeAlpha = 0
+		follow.backgroundAlpha = 1
+		follow.textColour = colour.white()
+	end)
+
+	follow:on("mouseExit", function()
+		follow.strokeAlpha = 1
+		follow.backgroundAlpha = 0
+		follow.textColour = colour.rgb(152, 152, 152)
+	end)
+
+	follow:on("mouseLeftDown", function()
+		autoScrolling = not autoScrolling
+
+		if autoScrolling then
+			follow.text = "Auto-scroll: on"
+		else
+			follow.text = "Auto-scroll: off"
+		end
+	end)
+
+	local clear = core.construct("guiIcon", {
+        parent = self.container,
+        position = guiCoord(0, 230, 0, 5),
+        size = guiCoord(0, 14, 0, 14),
+        backgroundColour = colour.rgb(152, 152, 152),
+		backgroundAlpha = 0,
+		strokeRadius = 7,
+		iconColour = colour.rgb(152, 152, 152),
+		iconId = "delete",
+		strokeAlpha = 1,
+		strokeColour = colour.rgb(152, 152, 152),
+        iconMax = 10,
+    })
+
+	clear:on("mouseEnter", function()
+		clear.strokeAlpha = 0
+		clear.backgroundAlpha = 1
+		clear.iconColour = colour.white()
+	end)
+
+	clear:on("mouseExit", function()
+		clear.strokeAlpha = 1
+		clear.backgroundAlpha = 0
+		clear.iconColour = colour.rgb(152, 152, 152)
+	end)
+
+	clear:on("mouseLeftDown", function()
+		core.debug:clearOutputHistory()
+		self.state.dispatch({
+			type = "clear"
+		})
+	end)
 
     local scrollContents = core.construct("guiScrollView", {
         parent = self.container,
@@ -132,7 +204,7 @@ return function(props)
 		self.renderedPrintout[i] = core.construct("guiTextBox", {
 		    parent = scrollContents,
 		    size = guiCoord(1, 0, 0, 20),
-		    position = guiCoord(0, 0, 0, -20), -- Moving it out of way.
+			visible = false,
 			backgroundColour = i % 2 == 0 
 				and colour(0.9, 0.9, 0.9) 
 				or colour(0.95, 0.95, 0.95),
@@ -176,26 +248,37 @@ return function(props)
         ]]
 
 		local height = 0
-		for key, value in next, self.state.getState() do
-			local obj = self.renderedPrintout[key]
-			obj.text = value.timeStamp .. " : " .. value.content
-			obj.size = guiCoord(0, scrollContents.absoluteSize.x, 0, obj.textDimensions.y)
-			obj.position = guiCoord(0, 0, 0, height)
+		local history = self.state:getState()
+		for key, obj in next, self.renderedPrintout do
+			local value = history[key]
 
-			if value.outputType == OUTPUT_TYPES.PRINT then
-				obj.textColour = colour.rgb(102, 102, 102)
-			elseif value.outputType == OUTPUT_TYPES.WARN then
-				obj.textColour = colour.rgb(255, 179, 0) -- Add more contrast
-			elseif value.outputType == OUTPUT_TYPES.ERROR then
-				obj.textColour = colour.rgb(229, 115, 115)
-			elseif value.outputType == OUTPUT_TYPES.PAST then
-				obj.textColour = colour.rgb(102, 102, 102)
+			if value then
+				obj.text = value.timeStamp .. " : " .. value.content
+				obj.size = guiCoord(0, scrollContents.absoluteSize.x, 0, obj.textDimensions.y)
+				obj.position = guiCoord(0, 0, 0, height)
+				obj.visible = true
+
+				if value.outputType == OUTPUT_TYPES.PRINT then
+					obj.textColour = colour.rgb(102, 102, 102)
+				elseif value.outputType == OUTPUT_TYPES.WARN then
+					obj.textColour = colour.rgb(255, 179, 0) -- Add more contrast
+				elseif value.outputType == OUTPUT_TYPES.ERROR then
+					obj.textColour = colour.rgb(229, 115, 115)
+				elseif value.outputType == OUTPUT_TYPES.PAST then
+					obj.textColour = colour.rgb(102, 102, 102)
+				end
+				
+				height = height + obj.textDimensions.y
+			else
+				obj.text = ""
+				obj.visible = false
 			end
-			
-			height = height + obj.textDimensions.y
 		end
 
 		scrollContents.canvasSize = guiCoord(0, scrollContents.absoluteSize.x, 0, height)
+		if autoScrolling then
+			scrollContents.canvasOffset = vector2(0, math.max(0, height - scrollContents.absoluteSize.y))
+		end
         heading.text = props.title
 	end
 	
@@ -204,9 +287,15 @@ return function(props)
 
 	-- Hack: Sleep then render since fonts aren't immediately loaded in.
 	spawn(function()
-		sleep(2)
+		sleep(3)
 		self.render()
+
+		for i = 1, 50 do
+			sleep(1)
+			print("Printout: "..i)
+		end
 	end)
 
+	
 	return self
 end
