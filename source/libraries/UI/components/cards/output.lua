@@ -198,6 +198,7 @@ return function(props)
         scrollbarColour = colour(0.50, 0.50, 0.50),
         scrollbarRadius = 0,
         scrollbarWidth = 5,
+		zIndex = -1,
     })
 
 	for i = 1, MAX_PRINTOUTS do
@@ -289,11 +290,6 @@ return function(props)
 	spawn(function()
 		sleep(3)
 		self.render()
-
-		for i = 1, 50 do
-			sleep(1)
-			print("Printout: "..i)
-		end
 	end)
 
 	
