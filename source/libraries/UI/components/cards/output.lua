@@ -61,8 +61,8 @@ local getDebugHistory = function()
 	local preformatted = core.debug:getOutputHistory()
 	local formatted = {}
 
-	for key, value in next, core.debug:getOutputHistory() do
-		formatted[key] = {
+	for _, value in next, core.debug:getOutputHistory() do
+		formatted[#formatted + 1] = {
 			outputType = OUTPUT_TYPES.PAST,
 			content = value.message,
 			timeStamp = os.date("%H:%M:%S", value.time)
@@ -72,9 +72,9 @@ local getDebugHistory = function()
 		-- messageType is missing that would inform us the type of output
 		-- it actually is.
 		if value.message:match("ERROR") then
-			formatted[key].outputType = OUTPUT_TYPES.ERROR
+			formatted[#formatted + 1].outputType = OUTPUT_TYPES.ERROR
 		elseif value.message:match("Trace %(thread%)") then
-			formatted[key].outputType = OUTPUT_TYPES.ERROR
+			formatted[#formatted + 1].outputType = OUTPUT_TYPES.ERROR
 		end
 	end
 
@@ -132,7 +132,7 @@ return function(props)
 		self.renderedPrintout[i] = core.construct("guiTextBox", {
 		    parent = scrollContents,
 		    size = guiCoord(1, 0, 0, 20),
-		    position = guiCoord(0, 0, 0, -20), -- Move it out of the way until needed.
+		    position = guiCoord(0, 0, 0, -20), -- Moving it out of way.
 			backgroundColour = i % 2 == 0 
 				and colour(0.9, 0.9, 0.9) 
 				or colour(0.95, 0.95, 0.95),
@@ -202,9 +202,11 @@ return function(props)
 	
 	self.state.subscribe(self.render)
 
-	self.render()
-
-	warn("WARNINGWARNINGWARNING")
+	-- Hack: Sleep then render since fonts aren't immediately loaded in.
+	spawn(function()
+		sleep(2)
+		self.render()
+	end)
 
 	return self
 end
