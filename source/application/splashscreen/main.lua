@@ -7,8 +7,7 @@
 -- Splashscreen Entry Point
 local config = {cellSize = 70, offset = 10}
 
-local button = require(
-               				"devgit:source/libraries/UI/components/buttons/baseButton.lua")
+local button = require("devgit:source/libraries/UI/components/buttons/baseButton.lua")
 
 local container = core.construct("guiFrame", {
 	parent = core.engine.coreInterface,
