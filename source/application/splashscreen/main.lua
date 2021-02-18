@@ -19,8 +19,8 @@ local container = core.construct("guiFrame", {
 
 local brandLogo = core.construct("guiImage", {
 	parent = container,
-	position = guiCoord(0.5, -32, 0, -64),
-	size = guiCoord(0, 64, 0, 64),
+	position = guiCoord(0.5, -24, 0, -48),
+	size = guiCoord(0, 48, 0, 48),
 	image = "devgit:assets/images/logo.png",
 	backgroundAlpha = 0
 })
@@ -63,8 +63,8 @@ spawn(function()
 	})
 
 	while sleep(.1) do
-		abstractShape1.rotation = abstractShape1.rotation + math.rad(0.01)
-		abstractShape1Blur.rotation = abstractShape1Blur.rotation - math.rad(0.01)
+		abstractShape1.rotation = abstractShape1.rotation + math.rad(0.03)
+		abstractShape1Blur.rotation = abstractShape1Blur.rotation - math.rad(0.065)
 	end
 end)
 
@@ -73,14 +73,14 @@ local buttons = {
 		text = "Docs",
 		icon = "api",
 		clicked = function()
-			print("click")
+			core.process:openUrl("https://docs.deviap.com")
 		end
 	},
 	{
 		text = "Deviap.com",
 		icon = "web",
 		clicked = function()
-
+			core.process:openUrl("https://deviap.com/dashboard")
 		end
 	}
 }
@@ -124,8 +124,8 @@ for i, v in pairs(buttons) do
 end
 
 core.tween:begin(brandLogo, 1, {
-	position = guiCoord(0.5, -32, 0.5, -132),
-	size = guiCoord(0, 64, 0, 64)
+	position = guiCoord(0.5, -28, 0.5, -90),
+	size = guiCoord(0, 48, 0, 48),
 }, "outQuad")
 
 core.tween:begin(versionInfo, 1.5, {textAlpha = 0.5, position = guiCoord(1, 0, 1, -24)}, "outQuad")
