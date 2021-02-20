@@ -68,7 +68,7 @@ return function(blacklisted, cancel, allow)
 		cancelBtn.position = guiCoord(0, 0, 1, -30)
 		cancelBtn.size = guiCoord(1, 0, 0, 30)
 		cancelBtn.text = "OK"
-		label.text = "This app was blocked; please speak to core for more details."
+		label.text = "This app was blocked; it may have been corrupted or tampered with. Contact Deviap support for help."
 	end
 	-- allow()
 end
