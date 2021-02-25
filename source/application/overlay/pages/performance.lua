@@ -40,7 +40,7 @@ return {
         local gridController = autoCollectionGrid()
         gridController.container.parent = parent
         gridController.container.position = guiCoord(0, 11, 0, 80)
-        gridController.container.size = guiCoord(0, 260, 0, 703)
+        gridController.container.size = guiCoord(0, 260, 1, -85)
         gridController.container.backgroundColour = colour.rgb(255, 0, 0)
         gridController.container.backgroundAlpha = 0
 
