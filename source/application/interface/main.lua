@@ -69,7 +69,7 @@ end
 core.engine:on("debuggerConnected", function(id, ip, name)
 	local frame = core.construct("guiFrame", {
 		name = "_UpdateStatus",
-		parent = core.interface,
+		parent = core.engine.coreInterface,
 		size = guiCoord(1, 0, 0, 75),
 		position = guiCoord(0, 0, 0, -200),
 		backgroundColour = colour.rgb(234, 234, 234),
