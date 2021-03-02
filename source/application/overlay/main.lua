@@ -59,23 +59,24 @@ local box = core.construct("guiFrame", {
 	size = guiCoord(1, 0, 1, 0),
 	backgroundAlpha = 0,
 	zIndex = 2,
+	active = false
 })
 
 local active = false
-
 
 box:on("mouseLeftDown", function()
 	if not active then return end
 	active = false
 	verticalNav.hardReset()
 	core.tween:begin(verticalNav.container, 0.3, {position = guiCoord(0, -65, 0, 0)}, "outQuad", nil)
+	box.active = false
 end)
-
 
 core.input:on("keyDown", function(key)
 	if key == "KEY_ESCAPE" then
 		verticalNav.hardReset()
 		core.tween:begin(verticalNav.container, 0.3, {position = (active and guiCoord(0, -65, 0, 0)) or guiCoord(0, 0, 0, 0)}, "outQuad", nil)
 		active = not active
+		box.active = active
 	end
 end)
