@@ -69,7 +69,7 @@ end
 core.engine:on("debuggerConnected", function(id, ip, name)
 	local frame = core.construct("guiFrame", {
 		name = "_UpdateStatus",
-		parent = core.interface,
+		parent = core.engine.coreInterface,
 		size = guiCoord(1, 0, 0, 75),
 		position = guiCoord(0, 0, 0, -200),
 		backgroundColour = colour.rgb(234, 234, 234),
@@ -105,7 +105,8 @@ core.engine:on("debuggerConnected", function(id, ip, name)
 	allow.container.size = guiCoord(0, 60, 0, 30)
 	allow.container:on("mouseLeftUp", function()
 		core.engine:approveConnection(id)
-		frame:destroy()
+		core.interface:destroyChildren()
+		core.engine.coreInterface:destroyChildren()
 	end)
 
 	local block = button {
