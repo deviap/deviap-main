@@ -72,9 +72,9 @@ local getDebugHistory = function()
 		-- messageType is missing that would inform us the type of output
 		-- it actually is.
 		if value.message:match("ERROR") then
-			formatted[#formatted + 1].outputType = OUTPUT_TYPES.ERROR
+			formatted[#formatted].outputType = OUTPUT_TYPES.ERROR
 		elseif value.message:match("Trace %(thread%)") then
-			formatted[#formatted + 1].outputType = OUTPUT_TYPES.ERROR
+			formatted[#formatted].outputType = OUTPUT_TYPES.ERROR
 		end
 	end
 
