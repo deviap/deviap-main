@@ -1,9 +1,11 @@
--- Copyright 2021 - Deviap (deviap.com)
+---------------------------------------------------------------
+-- Copyright 2021 Deviap (https://deviap.com/)               --
+---------------------------------------------------------------
+-- Made available under the MIT License:                     --
+-- https://github.com/deviap/deviap-main/blob/master/LICENSE --
+---------------------------------------------------------------
 -- Entry point for UI library.
 
 return {
-    newComponent = require("devgit:source/libraries/UI/components.lua"),
-    newTabResolver = require("devgit:source/libraries/UI/constraints.lua").newTabResolver,
-    newController = require("devgit:source/libraries/UI/constraints.lua").newController,
-    newEnum = require("devgit:source/libraries/UI/enum.lua"),
+    -- RESET
 }

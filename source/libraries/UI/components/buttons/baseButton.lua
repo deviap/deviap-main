@@ -56,10 +56,18 @@ return function(props)
 	props.textSize = props.textSize or 16
 	props.text = props.text or ""
 	props.iconId = props.iconId or ""
+	props.strokeRadius = props.strokeRadius or 0
+	props.visible = props.visible
+
+	-- Backwards Compatibility
+	if props.visible == nil then
+		props.visible = true
+	end
 
 	local self = newBaseComponent(props)
-	self.container.strokeRadius = props.strokeRadius or 0
-
+	self.container.strokeRadius = props.strokeRadius
+	self.container.visible = props.visible
+	
 	self.tooltip = nil
 
 	-- If tooltip is specified in props, create tooltip.
@@ -108,6 +116,7 @@ return function(props)
 		label.size = guiCoord(1, ((props.iconId and props.iconId ~= "") and -props.textSize or 0) - (props.borderInset * 4), 1, 0)
 		label.textAlign = props.textAlign or "middleLeft"
 		label.textColour = props.secondaryColour
+		label.textFont = "deviap:fonts/openSansSemiBold.ttf"
 
 		icon.backgroundAlpha = 0
 		icon.position = guiCoord(1, -props.textSize * 2, 0, 0)

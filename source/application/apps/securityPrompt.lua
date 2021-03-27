@@ -44,7 +44,7 @@ return function(blacklisted, cancel, allow)
 			position = guiCoord(0, 0, 1, -30),
 			backgroundAlpha = 0,
 			text = "ALLOW",
-			textFont = "tevurl:fonts/openSansBold.ttf",
+			--textFont = "tevurl:fonts/openSansBold.ttf",
 			textAlign = "middle"
 		})
 
@@ -58,7 +58,7 @@ return function(blacklisted, cancel, allow)
 		backgroundColour = colour.rgb(74, 140, 122),
 		textColour = colour.white(),
 		text = "BLOCK",
-		textFont = "tevurl:fonts/openSansBold.ttf",
+		--textFont = "tevurl:fonts/openSansBold.ttf",
 		textAlign = "middle"
 	})
 
@@ -68,7 +68,7 @@ return function(blacklisted, cancel, allow)
 		cancelBtn.position = guiCoord(0, 0, 1, -30)
 		cancelBtn.size = guiCoord(1, 0, 0, 30)
 		cancelBtn.text = "OK"
-		label.text = "This app was blocked; please speak to core for more details."
+		label.text = "This app was blocked; it may have been corrupted or tampered with. Contact Deviap support for help."
 	end
 	-- allow()
 end

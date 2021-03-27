@@ -1,5 +1,9 @@
--- Copyright 2021 - Deviap (deviap.com)
+---------------------------------------------------------------
+-- Copyright 2021 Deviap (https://deviap.com/)               --
+---------------------------------------------------------------
+-- Made available under the MIT License:                     --
+-- https://github.com/deviap/deviap-main/blob/master/LICENSE --
+---------------------------------------------------------------
 return {
-	newTabResolver = require("devgit:source/libraries/UI/constraints/tabResolver.lua"),
-	newController = require("devgit:source/libraries/UI/constraints/controller.lua")
+	-- RESET
 }

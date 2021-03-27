@@ -17,7 +17,7 @@ For those that have contributed, we thank you for your time and service to make 
 
 # Copyright
 
-Copyright (c) 2020 [deviap.com](https://deviap.com/)
+Copyright (c) 2021 [deviap.com](https://deviap.com/)
 
 # Acknowledgements
 - sound/click.ogg sourced from http://soundbible.com/1705-Click2.html

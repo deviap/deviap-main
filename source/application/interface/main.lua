@@ -1,5 +1,8 @@
 -- This entrypoint is ALWAYS invoked
 --require("devgit:source/application/utilities/debug/output.lua")
+
+require("devgit:source/application/overlay/main.lua")
+
 require("devgit:source/application/utilities/debug/keybinds.lua")
 local menu = require("devgit:source/application/interface/menu.lua")
 
@@ -12,7 +15,6 @@ core.construct("guiFrame", {
 	position = guiCoord(0, 0, 0, -100),
 	backgroundColour = colour.rgb(40, 40, 50),
 	zIndex = 32000
-	-- backgroundAlpha     = 0.75
 })
 
 if core.dev.localDevGitEnabled then
@@ -32,11 +34,12 @@ if core.dev.localDevGitEnabled then
 	})
 end
 
-core.input:on("keyUp", function(key)
+-- Conflicts with Overlay keybind.
+--[[core.input:on("keyUp", function(key)
 	if key == "KEY_ESCAPE" then
 		menu.show()
 	end
-end)
+end)]]--
 
 if core.input.hasScreenKeyboard then
 	local settingsButton = core.construct("guiFrame", {
@@ -66,7 +69,7 @@ end
 core.engine:on("debuggerConnected", function(id, ip, name)
 	local frame = core.construct("guiFrame", {
 		name = "_UpdateStatus",
-		parent = core.interface,
+		parent = core.engine.coreInterface,
 		size = guiCoord(1, 0, 0, 75),
 		position = guiCoord(0, 0, 0, -200),
 		backgroundColour = colour.rgb(234, 234, 234),

@@ -4,7 +4,7 @@
 -- Made available under the MIT License:                     --
 -- https://github.com/deviap/deviap-main/blob/master/LICENSE --
 ---------------------------------------------------------------
-
+-- Loading overlay/screen.
 local newBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
 
 return function(props)

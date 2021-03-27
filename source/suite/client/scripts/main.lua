@@ -34,7 +34,7 @@ local block = core.construct("block", {
 core.scene.camera:lookAt(base.position)
 
 -- MAIN INTERFACE IGNORE ABOVE
-local navbar = require("devgit:source/libraries/UI/components/navigation/navbarAnimated.lua")
+local navbar = require("devgit:source/libraries/legacy/UI/components/navigation/navbarAnimated.lua")
 
 -- Vertical Sidebar Instance
 local verticalNav = navbar {
@@ -71,6 +71,11 @@ local horizontalNav = navbar {
 	iconColour = colour.hex("#212121"),
 	zIndex = 3
 }
+
+local stats = core.networking:getStats()
+for i,v in pairs(stats) do
+	print(i,v)
+end
 
 --[[
 horizontalNav.addNavTextItem({
