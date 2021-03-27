@@ -1,4 +1,4 @@
--- Copyright 2020 - Deviap (deviap.com)
+-- Copyright 2021 - Deviap (deviap.com)
 -- Contains uilities, soon to become a tiling manager. 
 
 local libs = require("scripts/libraries.lua")

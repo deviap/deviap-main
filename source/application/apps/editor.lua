@@ -7,7 +7,7 @@
 
 -- Porting over to somewhere better suited.
 
---[[
+
 local share = core.construct("guiTextBox", {
 	parent = core.engine.coreInterface,
 	size = guiCoord(0, 60, 0, 16),
@@ -34,6 +34,16 @@ local test = core.construct("guiTextBox", {
 	position = guiCoord(1.0, -140, 1, -16),
 	strokeRadius = 2,
 	text = "Local Test",
+	textAlign = "middle",
+	textSize = 12
+})
+
+local remoteTest = core.construct("guiTextBox", {
+	parent = core.engine.coreInterface,
+	size = guiCoord(0, 90, 0, 16),
+	position = guiCoord(1.0, -140, 1, -36),
+	strokeRadius = 2,
+	text = "Remote Test",
 	textAlign = "middle",
 	textSize = 12
 })
@@ -129,4 +139,10 @@ test:on("mouseLeftUp", function()
 
 	core.apps:localTest()
 end)
-]]--
+
+remoteTest:on("mouseLeftUp", function()
+	remoteTest.visible = false
+	--reload.visible = false
+
+	core.apps:remoteTest()
+end)

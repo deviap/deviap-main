@@ -1,4 +1,4 @@
--- Copyright 2020 - Deviap (deviap.com)
+-- Copyright 2021 - Deviap (deviap.com)
 -- Author(s): Sanjay-B(Sanjay)
 -- Creates the Appearance Setting subpage.
 local toggle = require("devgit:source/libraries/UI/components/toggle.lua")

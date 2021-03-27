@@ -1,4 +1,4 @@
--- Copyright 2020 - Deviap (deviap.com)
+-- Copyright 2021 - Deviap (deviap.com)
 -- Author(s): Sanjay-B(Sanjay)
 -- Creates an text component.
 local newBaseComponent = require("devgit:source/libraries/UI/components/baseComponent.lua")
