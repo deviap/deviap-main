@@ -62,7 +62,7 @@ spawn(function()
 	})
 	
 	local destroyed = false
-	container:on("destroying", function() destroyed =true end)
+	container:on("destroying", function() destroyed = true end)
 	while sleep(.1) do
 		if destroyed then return end
 		abstractShape1.rotation = abstractShape1.rotation + math.rad(0.03)
