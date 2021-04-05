@@ -60,9 +60,13 @@ spawn(function()
 		rotation = math.rad(90),
 		zIndex = -2
 	})
-
+	
+	local destroyed = false
+	container:on("destroying", function() destroyed = true end)
 	while sleep(.1) do
+		if destroyed then return end
 		abstractShape1.rotation = abstractShape1.rotation + math.rad(0.03)
+		if destroyed then return end
 		abstractShape1Blur.rotation = abstractShape1Blur.rotation - math.rad(0.065)
 	end
 end)

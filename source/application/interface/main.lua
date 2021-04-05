@@ -105,7 +105,8 @@ core.engine:on("debuggerConnected", function(id, ip, name)
 	allow.container.size = guiCoord(0, 60, 0, 30)
 	allow.container:on("mouseLeftUp", function()
 		core.engine:approveConnection(id)
-		frame:destroy()
+		core.interface:destroyChildren()
+		core.engine.coreInterface:destroyChildren()
 	end)
 
 	local block = button {

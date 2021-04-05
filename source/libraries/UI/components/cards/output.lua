@@ -284,7 +284,8 @@ return function(props)
 	end
 	
 	
-	self.state.subscribe(self.render)
+	local disconnectRender = self.state.subscribe(self.render)
+	self.container:on("destroying", disconnectRender)
 
 	-- Hack: Sleep then render since fonts aren't immediately loaded in.
 	spawn(function()
@@ -292,6 +293,6 @@ return function(props)
 		self.render()
 	end)
 
-	
+
 	return self
 end

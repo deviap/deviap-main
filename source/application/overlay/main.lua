@@ -8,8 +8,6 @@
 local devMode = core.dev.localDevGitEnabled
 local navbar = require("devgit:source/libraries/UI/components/navigation/dynamicNavbar.lua")
 
-local active = false
-
 -- Vertical Sidebar Instance
 local verticalNav = navbar {
 	orientation = "vertical",
@@ -17,7 +15,7 @@ local verticalNav = navbar {
 	size = guiCoord(0, 62, 1, 0),
 	position = guiCoord(0, -65, 0, 0),
 	iconColour = colour.hex("#FFFFFF"),
-	zIndex = 2
+	zIndex = 3
 }
 
 -- General Information/Acknowledgements Sidebar Button
@@ -56,10 +54,29 @@ verticalNav.addNavItem({
 	redirect = require("devgit:source/application/overlay/pages/settings.lua")
 })
 
+local box = core.construct("guiFrame", {
+	parent = core.engine.coreInterface,
+	size = guiCoord(1, 0, 1, 0),
+	backgroundAlpha = 0,
+	zIndex = 2,
+	active = false
+})
+
+local active = false
+
+box:on("mouseLeftDown", function()
+	if not active then return end
+	active = false
+	verticalNav.hardReset()
+	core.tween:begin(verticalNav.container, 0.3, {position = guiCoord(0, -65, 0, 0)}, "outQuad", nil)
+	box.active = false
+end)
+
 core.input:on("keyDown", function(key)
 	if key == "KEY_ESCAPE" then
 		verticalNav.hardReset()
 		core.tween:begin(verticalNav.container, 0.3, {position = (active and guiCoord(0, -65, 0, 0)) or guiCoord(0, 0, 0, 0)}, "outQuad", nil)
 		active = not active
+		box.active = active
 	end
 end)
