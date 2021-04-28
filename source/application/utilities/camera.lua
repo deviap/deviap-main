@@ -32,8 +32,10 @@ core.input:on("keyDown", function(key, systemHandled)
 end)
 
 core.input:on("mouseMoved", function(movement, systemHandled)
-	if systemHandled then return end
-	
+
+	--print("movoed", systemHandled)
+--	if systemHandled then return end
+	--print("movoed")
 	if core.input:isMouseButtonDown(3) and not globals.ignoreCameraInput then
 		local pitch = quaternion.euler(-movement.y * rotateStep, 0, 0)
 		local yaw = quaternion.euler(0, -movement.x * rotateStep, 0)

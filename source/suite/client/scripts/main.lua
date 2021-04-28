@@ -25,6 +25,20 @@ local base = core.construct("block", {
 	colour = colour.hex("#ffffff")
 })
 
+local a = core.construct("block", {
+	position = vector3(0, 0, 0),
+	colour = colour(1, 0, 0),
+	scale = vector3(1, 1, 1)
+})
+
+
+local b = core.construct("block", {
+	parent = a,
+	position = vector3(1, 0, 0),
+	colour = colour(1, 1, 0),
+	scale = vector3(1, 1, 1)
+})
+
 local block = core.construct("block", {
 	position = vector3(0, -9, 0),
 	scale = vector3(2, 1, 2),

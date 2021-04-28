@@ -6,7 +6,7 @@
 ---------------------------------------------------------------
 local camera = core.scene.camera
 local selection = require("client/scripts/controllers/selection.lua")
-
+core.graphics.sky = ""
 return {
 	name = "select",
 	iconId = "gps_not_fixed",
@@ -14,7 +14,7 @@ return {
 	activate = function(self)
 		-- A cylinder which follows the user's cursor:
 		self.cursorHighlighter = core.construct("block", {
-			renderQueue = 200, -- this render the block over the rest of the scene
+			renderQueue = 201, -- this render the block over the rest of the scene
 			emissiveColour = colour.rgb(0, 255, 0),
 			scale = vector3(0.25, 0.01, 0.25),
 			mesh = "deviap:3d/torus.glb",

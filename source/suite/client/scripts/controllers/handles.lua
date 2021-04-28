@@ -74,10 +74,10 @@ local function attachHandles(obj, props, lookVector3d)
             rotation = quaternion.lookRotation(data[1]) * quaternion.euler(0, math.rad(90), math.rad(90)),
             colour = data[2],
             emissiveColour = data[2] * 0.75,
+            renderQueue = 202,
             inheritsScale = false,
             visible = props.arms,
-            simulated = false
-        })
+            simulated = false        })
 
         --[[
             Now we create the actual handle and nest it in root, which sits

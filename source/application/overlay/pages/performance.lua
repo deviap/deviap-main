@@ -6,7 +6,7 @@
 ---------------------------------------------------------------
 -- Creates the Performance page.
 local dotGraphCard = require("devgit:source/libraries/UI/components/cards/dotGraph.lua")
-local outputCard = require("devgit:source/libraries/UI/components/cards/output.lua")
+--local outputCard = require("devgit:source/libraries/UI/components/cards/output.lua")
 local autoCollectionGrid = require("devgit:source/libraries/UI/constraints/controllers/collectionLayoutAuto.lua")
 
 return {
@@ -46,14 +46,14 @@ return {
             scrollbarAlpha = 0
         })
        
-        outputCard {
+        --[[outputCard {
             parent = gridController.container,
             position = guiCoord(0, 11, 0, 80),
             size = guiCoord(0, 260, 0, 300),
             title = "Output"
         }
   
-
+]]
 		-- Extremely buggy rn; don't enable unless you're trying to fix it.
         -- DOT GRAPH TEST (PING)
         --[[
