@@ -11,7 +11,9 @@ return function()
 	]]
 
 	local public = {}
-	public.container = core.construct("guiScrollView")
+	public.container = core.construct("guiScrollView", {
+		size = guiCoord(1, 0, 1, 0)
+	})
 	public.rows = 3
 	public.columns = 3
 	public.cellSize = vector2(100, 100)
