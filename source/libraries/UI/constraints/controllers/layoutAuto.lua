@@ -19,7 +19,7 @@ return function()
 	public.cellSize = vector2(100, 100)
 	public.cellSpacing = vector2(10, 10)
 	public.fitX = false
-	public.fitY = true
+	public.fitY = false
 	public.wrap = false
 
 	public.refresh = function()
